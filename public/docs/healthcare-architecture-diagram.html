@@ -1,0 +1,707 @@
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare System Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #6b7280;
+        }
+
+        .architecture-canvas {
+            width: 100%;
+            height: 900px;
+            margin: 40px 0;
+            background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+            border-radius: 16px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .card-content {
+            color: #4b5563;
+            line-height: 1.7;
+        }
+
+        .card-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card-content li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .card-content li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #ede9fe;
+            color: #7c3aed;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            margin: 4px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 Healthcare System</h1>
+            <p>Modern Microservices Architecture with Cloud-Native Technologies</p>
+        </div>
+
+        <svg class="architecture-canvas" viewBox="0 0 1400 900">
+            <defs>
+                <!-- Gradients -->
+                <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="gradGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="gradOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="gradPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#6d28d9;stop-opacity:1" />
+                </linearGradient>
+                
+                <!-- Filters -->
+                <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.15"/>
+                </filter>
+                
+                <!-- Arrow Marker -->
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#94a3b8" />
+                </marker>
+            </defs>
+
+            <!-- Client Layer -->
+            <g id="client-layer">
+                <rect x="50" y="50" width="1300" height="140" rx="12" fill="url(#gradBlue)" opacity="0.1" stroke="url(#gradBlue)" stroke-width="2"/>
+                <text x="700" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#667eea">CLIENT LAYER</text>
+                
+                <!-- React App -->
+                <g filter="url(#shadow)">
+                    <rect x="100" y="80" width="180" height="80" rx="10" fill="#61dafb"/>
+                    <text x="190" y="115" text-anchor="middle" font-weight="bold" fill="#fff" font-size="14">React 18</text>
+                    <text x="190" y="135" text-anchor="middle" fill="#fff" font-size="11">SPA + TypeScript</text>
+                </g>
+                
+                <!-- Redux -->
+                <g filter="url(#shadow)">
+                    <rect x="310" y="80" width="160" height="80" rx="10" fill="#764abc"/>
+                    <text x="390" y="115" text-anchor="middle" font-weight="bold" fill="#fff" font-size="14">Redux Toolkit</text>
+                    <text x="390" y="135" text-anchor="middle" fill="#fff" font-size="11">State Management</text>
+                </g>
+                
+                <!-- Material UI -->
+                <g filter="url(#shadow)">
+                    <rect x="500" y="80" width="160" height="80" rx="10" fill="#007fff"/>
+                    <text x="580" y="115" text-anchor="middle" font-weight="bold" fill="#fff" font-size="14">Material-UI</text>
+                    <text x="580" y="135" text-anchor="middle" fill="#fff" font-size="11">UI Components</text>
+                </g>
+                
+                <!-- WebRTC -->
+                <g filter="url(#shadow)">
+                    <rect x="690" y="80" width="150" height="80" rx="10" fill="#ff6b6b"/>
+                    <text x="765" y="115" text-anchor="middle" font-weight="bold" fill="#fff" font-size="14">WebRTC</text>
+                    <text x="765" y="135" text-anchor="middle" fill="#fff" font-size="11">Video Calls</text>
+                </g>
+                
+                <!-- Socket.IO -->
+                <g filter="url(#shadow)">
+                    <rect x="870" y="80" width="150" height="80" rx="10" fill="#010101"/>
+                    <text x="945" y="115" text-anchor="middle" font-weight="bold" fill="#fff" font-size="14">Socket.IO</text>
+                    <text x="945" y="135" text-anchor="middle" fill="#fff" font-size="11">Real-time</text>
+                </g>
+                
+                <!-- PWA -->
+                <g filter="url(#shadow)">
+                    <rect x="1050" y="80" width="150" height="80" rx="10" fill="#5a0fc8"/>
+                    <text x="1125" y="115" text-anchor="middle" font-weight="bold" fill="#fff" font-size="14">PWA</text>
+                    <text x="1125" y="135" text-anchor="middle" fill="#fff" font-size="11">Mobile Ready</text>
+                </g>
+            </g>
+
+            <!-- API Gateway / Load Balancer -->
+            <g id="gateway">
+                <g filter="url(#shadow)">
+                    <rect x="400" y="230" width="600" height="80" rx="12" fill="url(#gradOrange)"/>
+                    <text x="700" y="260" text-anchor="middle" font-weight="bold" fill="#fff" font-size="16">API Gateway (Nginx)</text>
+                    <text x="700" y="285" text-anchor="middle" fill="#fff" font-size="12">Load Balancing • Rate Limiting • SSL/TLS • CORS</text>
+                </g>
+            </g>
+
+            <!-- Spring Boot Microservices -->
+            <g id="services-layer">
+                <rect x="50" y="360" width="1300" height="200" rx="12" fill="url(#gradGreen)" opacity="0.1" stroke="url(#gradGreen)" stroke-width="2"/>
+                <text x="700" y="345" text-anchor="middle" font-size="16" font-weight="bold" fill="#10b981">MICROSERVICES LAYER (Spring Boot 3.x)</text>
+                
+                <!-- User Service -->
+                <g filter="url(#shadow)">
+                    <rect x="100" y="390" width="180" height="70" rx="10" fill="#10b981"/>
+                    <text x="190" y="420" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">👤 User Service</text>
+                    <text x="190" y="440" text-anchor="middle" fill="#fff" font-size="10">Auth • Profiles</text>
+                </g>
+                
+                <!-- Appointment Service -->
+                <g filter="url(#shadow)">
+                    <rect x="310" y="390" width="180" height="70" rx="10" fill="#10b981"/>
+                    <text x="400" y="420" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">📅 Appointment</text>
+                    <text x="400" y="440" text-anchor="middle" fill="#fff" font-size="10">Booking • Scheduling</text>
+                </g>
+                
+                <!-- Consultation Service -->
+                <g filter="url(#shadow)">
+                    <rect x="520" y="390" width="180" height="70" rx="10" fill="#10b981"/>
+                    <text x="610" y="420" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">🩺 Consultation</text>
+                    <text x="610" y="440" text-anchor="middle" fill="#fff" font-size="10">Video • Records</text>
+                </g>
+                
+                <!-- Payment Service -->
+                <g filter="url(#shadow)">
+                    <rect x="730" y="390" width="180" height="70" rx="10" fill="#10b981"/>
+                    <text x="820" y="420" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">💳 Payment</text>
+                    <text x="820" y="440" text-anchor="middle" fill="#fff" font-size="10">Billing • Stripe</text>
+                </g>
+                
+                <!-- Notification Service -->
+                <g filter="url(#shadow)">
+                    <rect x="940" y="390" width="180" height="70" rx="10" fill="#10b981"/>
+                    <text x="1030" y="420" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">🔔 Notification</text>
+                    <text x="1030" y="440" text-anchor="middle" fill="#fff" font-size="10">Email • SMS • Push</text>
+                </g>
+                
+                <!-- Security Layer Overlay -->
+                <rect x="100" y="480" width="1020" height="50" rx="8" fill="#dc2626" opacity="0.15" stroke="#dc2626" stroke-width="2" stroke-dasharray="8,4"/>
+                <text x="610" y="510" text-anchor="middle" fill="#991b1b" font-weight="bold" font-size="13">🔒 Spring Security • JWT • OAuth 2.0 • RBAC</text>
+            </g>
+
+            <!-- Infrastructure Layer -->
+            <g id="infrastructure">
+                <rect x="50" y="610" width="1300" height="120" rx="12" fill="url(#gradPurple)" opacity="0.1" stroke="url(#gradPurple)" stroke-width="2"/>
+                <text x="700" y="595" text-anchor="middle" font-size="16" font-weight="bold" fill="#8b5cf6">INFRASTRUCTURE LAYER</text>
+                
+                <!-- Redis -->
+                <g filter="url(#shadow)">
+                    <rect x="150" y="640" width="160" height="60" rx="10" fill="#dc2626"/>
+                    <text x="230" y="670" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">Redis</text>
+                    <text x="230" y="687" text-anchor="middle" fill="#fff" font-size="10">Cache • Session</text>
+                </g>
+                
+                <!-- RabbitMQ -->
+                <g filter="url(#shadow)">
+                    <rect x="340" y="640" width="160" height="60" rx="10" fill="#ff6600"/>
+                    <text x="420" y="670" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">RabbitMQ</text>
+                    <text x="420" y="687" text-anchor="middle" fill="#fff" font-size="10">Message Queue</text>
+                </g>
+                
+                <!-- Elasticsearch -->
+                <g filter="url(#shadow)">
+                    <rect x="530" y="640" width="160" height="60" rx="10" fill="#005571"/>
+                    <text x="610" y="670" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">Elasticsearch</text>
+                    <text x="610" y="687" text-anchor="middle" fill="#fff" font-size="10">Search • Logs</text>
+                </g>
+                
+                <!-- Prometheus -->
+                <g filter="url(#shadow)">
+                    <rect x="720" y="640" width="160" height="60" rx="10" fill="#e6522c"/>
+                    <text x="800" y="670" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">Prometheus</text>
+                    <text x="800" y="687" text-anchor="middle" fill="#fff" font-size="10">Monitoring</text>
+                </g>
+                
+                <!-- Grafana -->
+                <g filter="url(#shadow)">
+                    <rect x="910" y="640" width="160" height="60" rx="10" fill="#f46800"/>
+                    <text x="990" y="670" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">Grafana</text>
+                    <text x="990" y="687" text-anchor="middle" fill="#fff" font-size="10">Dashboards</text>
+                </g>
+            </g>
+
+            <!-- Data Layer -->
+            <g id="data-layer">
+                <rect x="50" y="760" width="1300" height="100" rx="12" fill="#1e3a8a" opacity="0.1" stroke="#1e3a8a" stroke-width="2"/>
+                <text x="700" y="745" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e3a8a">DATA PERSISTENCE LAYER</text>
+                
+                <!-- MySQL -->
+                <g filter="url(#shadow)">
+                    <rect x="250" y="785" width="200" height="50" rx="10" fill="#00758f"/>
+                    <text x="350" y="818" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">MySQL 8.x (Primary + Replica)</text>
+                </g>
+                
+                <!-- S3 -->
+                <g filter="url(#shadow)">
+                    <rect x="480" y="785" width="180" height="50" rx="10" fill="#ff9900"/>
+                    <text x="570" y="818" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">AWS S3 Storage</text>
+                </g>
+                
+                <!-- Backup -->
+                <g filter="url(#shadow)">
+                    <rect x="690" y="785" width="180" height="50" rx="10" fill="#7c3aed"/>
+                    <text x="780" y="818" text-anchor="middle" font-weight="bold" fill="#fff" font-size="13">Automated Backup</text>
+                </g>
+            </g>
+
+            <!-- Connections -->
+            <g id="connections" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)">
+                <!-- Client to Gateway -->
+                <path d="M 700 160 L 700 230"/>
+                
+                <!-- Gateway to Services -->
+                <path d="M 550 310 L 190 390"/>
+                <path d="M 620 310 L 400 390"/>
+                <path d="M 700 310 L 610 390"/>
+                <path d="M 780 310 L 820 390"/>
+                <path d="M 850 310 L 1030 390"/>
+                
+                <!-- Services to Infrastructure -->
+                <path d="M 190 460 L 230 640"/>
+                <path d="M 400 460 L 420 640"/>
+                <path d="M 610 460 L 610 640"/>
+                <path d="M 820 460 L 800 640"/>
+                <path d="M 1030 460 L 990 640"/>
+                
+                <!-- Infrastructure to Data -->
+                <path d="M 230 700 L 350 785"/>
+                <path d="M 420 700 L 570 785"/>
+                <path d="M 610 700 L 570 785"/>
+                <path d="M 800 700 L 780 785"/>
+            </g>
+
+            <!-- Kubernetes/Docker Overlay -->
+            <g id="orchestration">
+                <rect x="1140" y="640" width="180" height="200" rx="12" fill="#326ce5" opacity="0.1" stroke="#326ce5" stroke-width="2" stroke-dasharray="10,5"/>
+                <text x="1230" y="670" text-anchor="middle" font-weight="bold" fill="#326ce5" font-size="14">☸️ Kubernetes</text>
+                <text x="1230" y="690" text-anchor="middle" fill="#326ce5" font-size="11">Orchestration</text>
+                <text x="1230" y="720" text-anchor="middle" font-weight="bold" fill="#0db7ed" font-size="14">🐳 Docker</text>
+                <text x="1230" y="740" text-anchor="middle" fill="#0db7ed" font-size="11">Containerization</text>
+                <text x="1230" y="770" text-anchor="middle" font-weight="bold" fill="#2088ff" font-size="13">CI/CD Pipeline</text>
+                <text x="1230" y="790" text-anchor="middle" fill="#6b7280" font-size="10">Jenkins/GitLab</text>
+                <text x="1230" y="810" text-anchor="middle" fill="#6b7280" font-size="10">Helm Charts</text>
+            </g>
+        </svg>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #667eea;"></div>
+                <span>Client Layer (React)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #f59e0b;"></div>
+                <span>API Gateway</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #10b981;"></div>
+                <span>Microservices (Spring Boot)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #8b5cf6;"></div>
+                <span>Infrastructure</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #1e3a8a;"></div>
+                <span>Data Persistence</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🎯 Key Architecture Principles</h2>
+            
+            <div class="highlight-box">
+                <h3 style="margin-bottom: 15px; color: #1f2937;">Cloud-Native Design Patterns</h3>
+                <p style="color: #4b5563; line-height: 1.8;">
+                    Built on microservices architecture with containerized deployment, this system leverages Kubernetes for orchestration, 
+                    ensuring high availability, scalability, and resilience. Each service is independently deployable and scalable, 
+                    following the twelve-factor app methodology.
+                </p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">⚛️</div>
+                        Modern Frontend Stack
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>React 18 with Concurrent Features</li>
+                            <li>TypeScript for type safety</li>
+                            <li>Redux Toolkit + RTK Query</li>
+                            <li>Material-UI v5 with custom theme</li>
+                            <li>React Router v6 for navigation</li>
+                            <li>WebRTC for video consultations</li>
+                            <li>Socket.IO for real-time updates</li>
+                            <li>Progressive Web App (PWA)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #10b981, #059669);">🍃</div>
+                        Spring Boot Microservices
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Spring Boot 3.2+ (Java 17+)</li>
+                            <li>Spring Cloud for microservices</li>
+                            <li>Spring Security + JWT/OAuth2</li>
+                            <li>Spring Data JPA + Hibernate</li>
+                            <li>RESTful API design</li>
+                            <li>OpenAPI/Swagger documentation</li>
+                            <li>Resilience4j for circuit breakers</li>
+                            <li>Spring Actuator for health checks</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #326ce5, #2088ff);">☸️</div>
+                        Container Orchestration
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Docker containers for all services</li>
+                            <li>Kubernetes (K8s) orchestration</li>
+                            <li>Helm charts for deployments</li>
+                            <li>Horizontal Pod Autoscaling (HPA)</li>
+                            <li>Ingress controller (Nginx)</li>
+                            <li>ConfigMaps and Secrets</li>
+                            <li>Persistent Volume Claims</li>
+                            <li>Service mesh (Istio/Linkerd)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #dc2626, #991b1b);">🔒</div>
+                        Security & Authentication
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>JWT token-based authentication</li>
+                            <li>OAuth 2.0 + OpenID Connect</li>
+                            <li>Role-Based Access Control (RBAC)</li>
+                            <li>API rate limiting & throttling</li>
+                            <li>HTTPS/TLS everywhere</li>
+                            <li>CORS policy configuration</li>
+                            <li>OWASP security best practices</li>
+                            <li>Data encryption (at rest & transit)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">⚡</div>
+                        Performance & Caching
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Redis for distributed caching</li>
+                            <li>Session management with Redis</li>
+                            <li>Database query optimization</li>
+                            <li>CDN for static assets</li>
+                            <li>Lazy loading & code splitting</li>
+                            <li>Database connection pooling</li>
+                            <li>Async processing with @Async</li>
+                            <li>HTTP/2 and compression</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #ff6600, #cc5200);">📨</div>
+                        Messaging & Events
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>RabbitMQ for async messaging</li>
+                            <li>Event-driven architecture</li>
+                            <li>WebSocket for real-time data</li>
+                            <li>Email notifications (SMTP)</li>
+                            <li>SMS integration (Twilio)</li>
+                            <li>Push notifications (FCM)</li>
+                            <li>Dead letter queue handling</li>
+                            <li>Message retry mechanisms</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #00758f, #005571);">💾</div>
+                        Data Management
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>MySQL 8.x primary database</li>
+                            <li>Read replicas for scaling</li>
+                            <li>Database migrations (Flyway)</li>
+                            <li>AWS S3 for file storage</li>
+                            <li>Automated daily backups</li>
+                            <li>Point-in-time recovery</li>
+                            <li>Data anonymization for GDPR</li>
+                            <li>Audit logging</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #e6522c, #c44028);">📊</div>
+                        Monitoring & Observability
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Prometheus for metrics collection</li>
+                            <li>Grafana dashboards</li>
+                            <li>ELK Stack (Elasticsearch, Logstash, Kibana)</li>
+                            <li>Distributed tracing (Jaeger)</li>
+                            <li>Application Performance Monitoring</li>
+                            <li>Alert Manager for notifications</li>
+                            <li>Health checks & readiness probes</li>
+                            <li>Custom business metrics</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #2088ff, #1668dc);">🚀</div>
+                        CI/CD Pipeline
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Git-based version control</li>
+                            <li>Jenkins/GitLab CI automation</li>
+                            <li>Automated testing (unit, integration)</li>
+                            <li>SonarQube code quality</li>
+                            <li>Docker image builds</li>
+                            <li>Helm chart deployments</li>
+                            <li>Blue-green deployments</li>
+                            <li>Rollback capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🏗️ Technology Stack Overview</h2>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 30px;">
+                <span class="tech-badge">React 18</span>
+                <span class="tech-badge">TypeScript</span>
+                <span class="tech-badge">Spring Boot 3.x</span>
+                <span class="tech-badge">Java 17+</span>
+                <span class="tech-badge">Docker</span>
+                <span class="tech-badge">Kubernetes</span>
+                <span class="tech-badge">MySQL 8</span>
+                <span class="tech-badge">Redis</span>
+                <span class="tech-badge">RabbitMQ</span>
+                <span class="tech-badge">Nginx</span>
+                <span class="tech-badge">AWS S3</span>
+                <span class="tech-badge">Prometheus</span>
+                <span class="tech-badge">Grafana</span>
+                <span class="tech-badge">ELK Stack</span>
+                <span class="tech-badge">WebRTC</span>
+                <span class="tech-badge">Socket.IO</span>
+                <span class="tech-badge">Material-UI</span>
+                <span class="tech-badge">Redux Toolkit</span>
+                <span class="tech-badge">Spring Security</span>
+                <span class="tech-badge">JWT</span>
+                <span class="tech-badge">OAuth 2.0</span>
+                <span class="tech-badge">Helm</span>
+                <span class="tech-badge">Jenkins</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
