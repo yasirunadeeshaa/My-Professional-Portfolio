@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, ExternalLink, Github, Calendar, Users, Award, Heart, Code2, Sparkles, CheckCircle2, Play, Download, Monitor, Smartphone, Globe, Lock, TrendingUp, Activity, Camera, Music, MapPin, Bell, DollarSign, MessageCircle } from 'lucide-react';
 // Import Wedding Desktop Screenshots
-import weddingHero from '../assets/Wedding/Hero.png';
+import weddingHero from '../assets/Wedding/hero.png';
 import vendors from '../assets/Wedding/vendors.png';
-import adminPortal from '../assets/Wedding/adminPortal.png';
+import adminPortal from '../assets/Wedding/AdminPortal.png';
 import testimonials from '../assets/Wedding/says.png';
-import successStories from '../assets/Wedding/wedstory.png';
+import successStories from '../assets/Wedding/Wedstory.png';
 import weddingTrends from '../assets/Wedding/trends.png';
 import winterWedding from '../assets/Wedding/winter.png';
 import summerWedding from '../assets/Wedding/Summer.png';
