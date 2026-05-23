@@ -39,9 +39,9 @@ const PremiumNavigation = () => {
     { id: 'home', label: 'Home', icon: Home },
     { id: 'about', label: 'About', icon: User },
     { id: 'projects', label: 'Projects', icon: Briefcase },
-    { id: 'contact', label: 'Contact', icon: Mail },
     { id: 'skills', label: 'Skills', icon: FileText },
-    { id: 'testimonials', label: 'Testimonials', icon: Users }
+    { id: 'contact', label: 'Contact', icon: Mail },
+    // { id: 'testimonials', label: 'Testimonials', icon: Users }
   ];
 
   const socialLinks = [
@@ -112,11 +112,11 @@ const PremiumNavigation = () => {
               </div>
             </button>
 
-            <button className="nav-cta">
+            <a href="/yasiru.pdf" download="Yasiru_Nadeesha_CV.pdf" className="nav-cta" style={{textDecoration:'none'}}>
               <FileText size={18} />
               <span>Resume</span>
               <div className="btn-shine"></div>
-            </button>
+            </a>
 
             <button
               className="mobile-toggle"
@@ -180,10 +180,10 @@ const PremiumNavigation = () => {
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
               <span>{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
             </button>
-            <button className="mobile-cta">
+            <a href="/yasiru.pdf" download="Yasiru_Nadeesha_CV.pdf" className="mobile-cta" style={{textDecoration:'none'}}>
               <FileText size={20} />
               <span>Download Resume</span>
-            </button>
+            </a>
           </div>
         </div>
         <div className="mobile-menu-overlay" onClick={() => setIsMobileMenuOpen(false)}></div>
