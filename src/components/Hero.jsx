@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Github, Linkedin, Mail, Code2, Sparkles, Terminal, Zap, Download, ExternalLink, Briefcase } from 'lucide-react';
+import { ArrowRight, Github, Linkedin, Mail, Code2, Sparkles, Terminal, Zap, Download, ExternalLink, Briefcase, User, MapPin, GraduationCap, Heart } from 'lucide-react';
 import Fiverr from '../assets/fiverr.png';
 import Upwork from '../assets/upwok2.png';
 
@@ -120,8 +120,7 @@ const PortfolioHero = () => {
                 <span className="ph-cursor-blink">|</span>
               </h1>
               <h2 className="ph-hero-title">
-                Full Stack
-                <span className="ph-gradient-text"> Developer</span>
+                <span className="ph-gradient-text">Full Stack Developer</span>
               </h2>
 
               <p className="ph-hero-description">
@@ -129,19 +128,28 @@ const PortfolioHero = () => {
                 Specialized in building scalable web applications with modern technologies.
               </p>
 
-              {/* Stats */}
-              <div className="ph-hero-stats">
-                <div className="ph-stat-item">
-                  <span className="ph-stat-number">20+</span>
-                  <span className="ph-stat-label">Projects</span>
+              {/* About Me Section */}
+              <div className="ph-about-me">
+                <div className="ph-about-header">
+                  <User size={18} className="ph-about-icon" />
+                  <span className="ph-about-title">About Me</span>
                 </div>
-                <div className="ph-stat-item">
-                  <span className="ph-stat-number">5+</span>
-                  <span className="ph-stat-label">Years Exp</span>
-                </div>
-                <div className="ph-stat-item">
-                  <span className="ph-stat-number">98%</span>
-                  <span className="ph-stat-label">Satisfaction</span>
+                <p className="ph-about-text">
+                  I'm a results-driven Full Stack Developer based in Sri Lanka, passionate about 
+                  engineering robust, scalable software solutions. With hands-on experience across 
+                  the full development lifecycle, I bridge the gap between thoughtful architecture 
+                  and intuitive user experiences — turning complex problems into clean, maintainable code.
+                </p>
+                <div className="ph-about-tags">
+                  <span className="ph-about-tag">
+                    <MapPin size={13} /> Sri Lanka, Colombo
+                  </span>
+                  <span className="ph-about-tag">
+                    <Code2  size={13} /> Full Stack Engineer
+                  </span>
+                  <span className="ph-about-tag">
+                    <Zap size={13} /> Problem Solver
+                  </span>
                 </div>
               </div>
 
@@ -152,10 +160,14 @@ const PortfolioHero = () => {
                   <ArrowRight size={20} className="ph-btn-icon" />
                   <div className="ph-btn-shine"></div>
                 </button>
-                <button className="ph-btn-secondary">
+                <a href="/yasiru.pdf" target="_blank" rel="noopener noreferrer" className="ph-btn-secondary" style={{textDecoration:'none'}}>
+                  <ExternalLink size={20} />
+                  <span>View CV</span>
+                </a>
+                <a href="/yasiru.pdf" download="Yasiru_Nadeesha_CV.pdf" className="ph-btn-secondary" style={{textDecoration:'none'}}>
                   <Download size={20} />
                   <span>Download CV</span>
-                </button>
+                </a>
               </div>
 
               {/* Social Links */}
@@ -190,7 +202,7 @@ const PortfolioHero = () => {
                     <span className="ph-dot ph-dot-yellow"></span>
                     <span className="ph-dot ph-dot-green"></span>
                   </div>
-                  <span className="ph-file-name">developer.js</span>
+                  <span className="ph-file-name">developer</span>
                 </div>
                 <div className="ph-card-body">
                   <div className="ph-code-line">
@@ -201,7 +213,7 @@ const PortfolioHero = () => {
                   <div className="ph-code-line">
                     <span className="ph-line-number">2</span>
                     <span className="ph-indent">name: </span>
-                    <span className="ph-code-string">'Your Name'</span>,
+                    <span className="ph-code-string">'A. Yasiru Nadeesha Aththanayaka'</span>,
                   </div>
                   <div className="ph-code-line">
                     <span className="ph-line-number">3</span>
@@ -211,8 +223,8 @@ const PortfolioHero = () => {
                   <div className="ph-code-line">
                     <span className="ph-line-number">4</span>
                     <span className="ph-indent">skills: [</span>
-                    <span className="ph-code-string">'React'</span>,{' '}
-                    <span className="ph-code-string">'Node.js'</span>],
+                    <span className="ph-code-string">'Spring Boot'</span>,{' '}
+                    <span className="ph-code-string">'React'</span>],
                   </div>
                   <div className="ph-code-line">
                     <span className="ph-line-number">5</span>
@@ -267,9 +279,20 @@ const PortfolioHero = () => {
                 <div className="ph-float-card ph-achievement-card">
                   <Sparkles size={20} className="ph-card-icon" />
                   <div className="ph-card-content">
-                    <h4>Latest Achievement</h4>
-                    <p>🏆 Best Project Award</p>
-                    <span className="ph-achievement-badge">2024</span>
+                    {/* <h4>Latest Achievement</h4>
+                    <p>🏆 Best Project Award</p> */}
+                    <span className="ph-status-badge">
+                      <Sparkles size={16} className="ph-badge-icon" />
+                      Available for Opportunities
+                    </span>
+                    <span className="ph-verified-badge">
+                      <Zap size={16} />
+                      Developer
+                    </span>
+                    <span className="ph-freelancer-badge">
+                      <Briefcase size={16} />
+                      Freelancer
+                    </span>
                   </div>
                 </div>
               </div>
@@ -356,9 +379,10 @@ const PortfolioHero = () => {
         }
 
         .ph-status-badge, .ph-verified-badge , .ph-freelancer-badge {
-          display: inline-flex;
+          display: flex;
           align-items: center;
           gap: 8px;
+          margin-bottom: 10px;
           padding: 10px 20px;
           border-radius: 50px;
           font-size: 14px;
@@ -411,22 +435,27 @@ const PortfolioHero = () => {
         }
 
         .ph-hero-name {
-          font-size: 72px;
+          font-size: 52px;
           font-weight: 900;
           line-height: 1.1;
           margin-bottom: 15px;
           letter-spacing: -2px;
+          
         }
 
         .ph-name-text {
-          background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+          background: linear-gradient(120deg, #7c8cf8, #e879a0);
+          -webkit-background-clip: text;
+          -webkit-text-fill-colo
+          font-style: italic;
+          background: linear-gradient(135deg, #a4c8d8 0%, #3684cc 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
         }
 
         .ph-cursor-blink {
-          color: #667eea;
+          color: #939bc0;
           animation: ph-blink 1s infinite;
         }
 
@@ -443,7 +472,7 @@ const PortfolioHero = () => {
         }
 
         .ph-gradient-text {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+          background: linear-gradient(135deg, #3b87a5 0%, #764ba2 50%, #f093fb 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -460,35 +489,68 @@ const PortfolioHero = () => {
           font-size: 18px;
           line-height: 1.8;
           color: #cbd5e1;
-          margin-bottom: 40px;
+          margin-bottom: 30px;
         }
 
-        .ph-hero-stats {
+        /* About Me */
+        .ph-about-me {
+          background: rgba(102, 126, 234, 0.07);
+          border: 1px solid rgba(102, 126, 234, 0.2);
+          border-radius: 16px;
+          padding: 22px 26px;
+          margin-bottom: 36px;
+          backdrop-filter: blur(10px);
+          animation: ph-fadeInUp 1s ease-out 0.4s both;
+        }
+
+        @keyframes ph-fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ph-about-header {
           display: flex;
-          gap: 40px;
-          margin-bottom: 40px;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 12px;
         }
 
-        .ph-stat-item {
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
+        .ph-about-icon {
+          color: #667eea;
         }
 
-        .ph-stat-number {
-          font-size: 36px;
-          font-weight: 800;
-          background: linear-gradient(135deg, #667eea, #764ba2);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .ph-stat-label {
-          font-size: 14px;
-          color: #94a3b8;
+        .ph-about-title {
+          font-size: 13px;
+          font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: 1px;
+          letter-spacing: 2px;
+          color: #a5b4fc;
+        }
+
+        .ph-about-text {
+          font-size: 15px;
+          line-height: 1.75;
+          color: #cbd5e1;
+          margin-bottom: 16px;
+        }
+
+        .ph-about-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .ph-about-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 14px;
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 30px;
+          font-size: 13px;
+          color: #94a3b8;
+          font-weight: 500;
         }
 
         .ph-hero-cta {
@@ -584,13 +646,12 @@ const PortfolioHero = () => {
         }
 
         .ph-fiverr-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: contain;
-  transition: filter 0.3s ease;
-}
-
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          object-fit: contain;
+          transition: filter 0.3s ease;
+        }
 
         /* Right Visual */
         .ph-hero-right {
@@ -764,7 +825,7 @@ const PortfolioHero = () => {
 
         .ph-project-card {
           bottom: 10%;
-          left: -120px;
+          left: -50px;
           animation: ph-float-2 10s ease-in-out infinite;
         }
 
@@ -790,7 +851,7 @@ const PortfolioHero = () => {
         }
 
         .ph-achievement-card {
-          bottom: -30px;
+          bottom: -90px;
           right: 40px;
           animation: ph-float-3 12s ease-in-out infinite;
         }
@@ -926,7 +987,6 @@ const PortfolioHero = () => {
             order: -1;
           }
 
-
           .ph-visual-container {
             height: 400px;
           }
@@ -953,12 +1013,8 @@ const PortfolioHero = () => {
             font-size: 28px;
           }
 
-          .ph-hero-stats {
-            gap: 20px;
-          }
-
-          .ph-stat-number {
-            font-size: 28px;
+          .ph-about-tags {
+            flex-direction: column;
           }
 
           .ph-hero-cta {
