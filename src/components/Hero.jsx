@@ -97,7 +97,7 @@ const PortfolioHero = () => {
           {/* Left Content */}
           <div className="ph-hero-left">
             {/* Status Badge */}
-            <div className="ph-badge-group">
+            {/* <div className="ph-badge-group">
               <span className="ph-status-badge">
                 <Sparkles size={16} className="ph-badge-icon" />
                 Available for Opportunities
@@ -110,7 +110,7 @@ const PortfolioHero = () => {
                 <Briefcase size={16} />
                 Freelancer
               </span>
-            </div>
+            </div> */}
 
             {/* Main Content */}
             <div className="ph-hero-main-content">
@@ -424,13 +424,14 @@ const PortfolioHero = () => {
         }
 
         .ph-hero-main-content {
-          max-width: 800px;
+          max-width: 1100px;
+          margin-top: 60px;
         }
 
         .ph-hero-greeting {
           font-size: 18px;
           color: #a5b4fc;
-          margin-bottom: 10px;
+          margin-bottom: 20px;
           font-weight: 500;
         }
 
@@ -538,6 +539,7 @@ const PortfolioHero = () => {
           display: flex;
           flex-wrap: wrap;
           gap: 10px;
+          padding-top: 10px;
         }
 
         .ph-about-tag {
@@ -573,6 +575,7 @@ const PortfolioHero = () => {
           position: relative;
           overflow: hidden;
           border: none;
+          margin-top: 10px;
         }
 
         .ph-btn-primary {
@@ -804,7 +807,7 @@ const PortfolioHero = () => {
 
         .ph-tech-card {
           top: -140px;
-          right: -30px;
+          right: 10px;
           animation: ph-float-1 8s ease-in-out infinite;
         }
 
@@ -1034,6 +1037,155 @@ const PortfolioHero = () => {
             display: none;
           }
         }
+
+        /* Responsive */
+@media (max-width: 1024px) {
+  .ph-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .ph-hero-right {
+    order: -1;
+  }
+
+  .ph-visual-container {
+    height: 400px;
+  }
+
+  .ph-hero-name {
+    font-size: 40px;
+  }
+
+  .ph-hero-title {
+    font-size: 32px;
+  }
+
+  .ph-code-card {
+    width: 100%;
+    margin-top: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ph-hero-container {
+    padding: 80px 20px 60px;
+  }
+
+  .ph-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .ph-hero-right {
+    display: none;
+  }
+
+  .ph-hero-name {
+    font-size: 30px;
+    letter-spacing: -1px;
+  }
+
+  .ph-hero-title {
+    font-size: 24px;
+  }
+
+  .ph-hero-description {
+    font-size: 15px;
+  }
+
+  .ph-hero-greeting {
+    font-size: 15px;
+  }
+
+  .ph-badge-group {
+    gap: 8px;
+  }
+
+  .ph-status-badge,
+  .ph-verified-badge,
+  .ph-freelancer-badge {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .ph-about-me {
+    padding: 16px 18px;
+  }
+
+  .ph-about-text {
+    font-size: 14px;
+  }
+
+  .ph-about-tags {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .ph-hero-cta {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ph-btn-primary,
+  .ph-btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 15px 24px;
+    font-size: 15px;
+  }
+
+  .ph-social-links {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .ph-scroll-indicator {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .ph-hero-container {
+    padding: 50px 16px 50px;
+  }
+
+  .ph-hero-name {
+    font-size: 36px;
+  }
+
+  .ph-hero-title {
+    font-size: 20px;
+  }
+
+  .ph-badge-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .ph-status-badge,
+  .ph-verified-badge,
+  .ph-freelancer-badge {
+    width: fit-content;
+  }
+
+  .ph-about-tags {
+    flex-direction: column;
+  }
+
+  .ph-social-link {
+    width: 42px;
+    height: 42px;
+  }
+
+  .ph-fiverr-icon {
+    width: 42px;
+    height: 42px;
+  }
+}
       `}</style>
     </section>
   );
