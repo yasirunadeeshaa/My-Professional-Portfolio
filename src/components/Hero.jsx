@@ -1,16 +1,51 @@
-import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Github, Linkedin, Mail, Code2, Sparkles, Terminal, Zap, Download, ExternalLink, Briefcase, User, MapPin, GraduationCap, Heart } from 'lucide-react';
-import Fiverr from '../assets/fiverr.png';
-import Upwork from '../assets/upwok2.png';
+import React, { useEffect, useRef } from "react";
+import {
+  ArrowRight,
+  Github,
+  Linkedin,
+  Mail,
+  Code2,
+  Sparkles,
+  Terminal,
+  Zap,
+  Download,
+  ExternalLink,
+  Briefcase,
+  User,
+  MapPin,
+  GraduationCap,
+  Heart,
+} from "lucide-react";
+import Fiverr from "../assets/fiverr.png";
+import Upwork from "../assets/upwok2.png";
 
-const PortfolioHero = () => {
+const TICKER_ITEMS = [
+  ["React & Spring Boot", "Full Stack"],
+  ["University of Westminster", "BEng Software Eng"],
+  ["Fiverr & Upwork", "Freelancer"],
+  ["Projects Delivered", "16+"],
+  ["Open to Work", "Available Now"],
+  ["Sri Lanka", "Colombo"],
+  ["TypeScript · Node.js", "Tech Stack"],
+  ["Clean Architecture", "Always"],
+  // duplicate for seamless loop
+  ["React & Spring Boot", "Full Stack"],
+  ["University of Westminster", "BEng Software Engineering"],
+  ["Fiverr & Upwork", "Freelancer"],
+  ["Open to Work", "Available Now"],
+  ["Sri Lanka", "Colombo"],
+  ["Passionate ", "DevOps Enthusiast"],
+  ["Clean Architecture", "Always"],
+];
+
+const PortfolioHero = ({ isDarkMode }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
+
+    const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -38,7 +73,8 @@ const PortfolioHero = () => {
       }
 
       draw() {
-        ctx.fillStyle = `rgba(102, 126, 234, ${this.opacity})`;
+        const color = isDarkMode ? "102, 126, 234" : "79, 70, 229";
+        ctx.fillStyle = `rgba(${color}, ${this.opacity})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -51,20 +87,22 @@ const PortfolioHero = () => {
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(particle => {
+
+      particles.forEach((particle) => {
         particle.update();
         particle.draw();
       });
 
+      const lineColor = isDarkMode ? "102, 126, 234" : "79, 70, 229";
+
       particles.forEach((a, i) => {
-        particles.slice(i + 1).forEach(b => {
+        particles.slice(i + 1).forEach((b) => {
           const dx = a.x - b.x;
           const dy = a.y - b.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < 120) {
-            ctx.strokeStyle = `rgba(102, 126, 234, ${0.1 * (1 - distance / 120)})`;
+            ctx.strokeStyle = `rgba(${lineColor}, ${0.1 * (1 - distance / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
@@ -84,14 +122,16 @@ const PortfolioHero = () => {
       canvas.height = window.innerHeight;
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isDarkMode]);
 
   return (
-    <section className="ph-portfolio-hero">
+    <section
+      className={`ph-portfolio-hero ${isDarkMode ? "ph-dark-theme" : "ph-light-theme"}`}
+    >
       <canvas ref={canvasRef} className="ph-hero-canvas" />
-      
+
       <div className="ph-hero-container">
         <div className="ph-hero-grid">
           {/* Left Content */}
@@ -116,7 +156,9 @@ const PortfolioHero = () => {
             <div className="ph-hero-main-content">
               <p className="ph-hero-greeting">Hello, I'm</p>
               <h1 className="ph-hero-name">
-                <span className="ph-name-text">A.Yasiru Nadeesha Aththanayaka</span>
+                <span className="ph-name-text">
+                  A.Yasiru Nadeesha Aththanayaka
+                </span>
                 <span className="ph-cursor-blink">|</span>
               </h1>
               <h2 className="ph-hero-title">
@@ -124,8 +166,9 @@ const PortfolioHero = () => {
               </h2>
 
               <p className="ph-hero-description">
-                Crafting exceptional digital experiences through elegant code and innovative solutions. 
-                Specialized in building scalable web applications with modern technologies.
+                Crafting exceptional digital experiences through elegant code
+                and innovative solutions. Specialized in building scalable web
+                applications with modern technologies.
               </p>
 
               {/* About Me Section */}
@@ -135,17 +178,19 @@ const PortfolioHero = () => {
                   <span className="ph-about-title">About Me</span>
                 </div>
                 <p className="ph-about-text">
-                  I'm a results-driven Full Stack Developer based in Sri Lanka, passionate about 
-                  engineering robust, scalable software solutions. With hands-on experience across 
-                  the full development lifecycle, I bridge the gap between thoughtful architecture 
-                  and intuitive user experiences — turning complex problems into clean, maintainable code.
+                  I'm a results-driven Full Stack Developer based in Sri Lanka,
+                  passionate about engineering robust, scalable software
+                  solutions. With hands-on experience across the full
+                  development lifecycle, I bridge the gap between thoughtful
+                  architecture and intuitive user experiences — turning complex
+                  problems into clean, maintainable code.
                 </p>
                 <div className="ph-about-tags">
                   <span className="ph-about-tag">
                     <MapPin size={13} /> Sri Lanka, Colombo
                   </span>
                   <span className="ph-about-tag">
-                    <Code2  size={13} /> Full Stack Engineer
+                    <Code2 size={13} /> Full Stack Engineer
                   </span>
                   <span className="ph-about-tag">
                     <Zap size={13} /> Problem Solver
@@ -160,11 +205,22 @@ const PortfolioHero = () => {
                   <ArrowRight size={20} className="ph-btn-icon" />
                   <div className="ph-btn-shine"></div>
                 </button>
-                <a href="/yasiru.pdf" target="_blank" rel="noopener noreferrer" className="ph-btn-secondary" style={{textDecoration:'none'}}>
+                <a
+                  href="/yasiru.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ph-btn-secondary"
+                  style={{ textDecoration: "none" }}
+                >
                   <ExternalLink size={20} />
                   <span>View CV</span>
                 </a>
-                <a href="/yasiru.pdf" download="Yasiru_Nadeesha_CV.pdf" className="ph-btn-secondary" style={{textDecoration:'none'}}>
+                <a
+                  href="/yasiru.pdf"
+                  download="Yasiru_Nadeesha_CV.pdf"
+                  className="ph-btn-secondary"
+                  style={{ textDecoration: "none" }}
+                >
                   <Download size={20} />
                   <span>Download CV</span>
                 </a>
@@ -172,19 +228,39 @@ const PortfolioHero = () => {
 
               {/* Social Links */}
               <div className="ph-social-links">
-                <a href="https://github.com/yasirunadeeshaa" className="ph-social-link" aria-label="GitHub">
+                <a
+                  href="https://github.com/yasirunadeeshaa"
+                  className="ph-social-link"
+                  aria-label="GitHub"
+                >
                   <Github size={20} />
                 </a>
-                <a href="https://www.linkedin.com/in/yasiru-nadeesha-aththanayaka/" className="ph-social-link" aria-label="LinkedIn">
+                <a
+                  href="https://www.linkedin.com/in/yasiru-nadeesha-aththanayaka/"
+                  className="ph-social-link"
+                  aria-label="LinkedIn"
+                >
                   <Linkedin size={20} />
                 </a>
-                <a href="mailto:your.a.y.n.aththanayaka@gmail.com" className="ph-social-link" aria-label="Email">
+                <a
+                  href="mailto:your.a.y.n.aththanayaka@gmail.com"
+                  className="ph-social-link"
+                  aria-label="Email"
+                >
                   <Mail size={20} />
                 </a>
-                <a href="https://www.fiverr.com/s/5r9pj1z" className="ph-social-link ph-fiverr-link" aria-label="Fiverr">
+                <a
+                  href="https://www.fiverr.com/s/5r9pj1z"
+                  className="ph-social-link ph-fiverr-link"
+                  aria-label="Fiverr"
+                >
                   <img src={Fiverr} alt="Fiverr" className="ph-fiverr-icon" />
                 </a>
-                <a href="https://www.upwork.com/freelancers/~01179d06700874ce52?mp_source=share" className="ph-social-link ph-fiverr-link" aria-label="Upwork">
+                <a
+                  href="https://www.upwork.com/freelancers/~01179d06700874ce52?mp_source=share"
+                  className="ph-social-link ph-fiverr-link"
+                  aria-label="Upwork"
+                >
                   <img src={Upwork} alt="Upwork" className="ph-fiverr-icon" />
                 </a>
               </div>
@@ -207,33 +283,41 @@ const PortfolioHero = () => {
                 <div className="ph-card-body">
                   <div className="ph-code-line">
                     <span className="ph-line-number">1</span>
-                    <span className="ph-code-keyword">const</span>{' '}
-                    <span className="ph-code-variable">developer</span> = {'{'}
+                    <span className="ph-code-keyword">const</span>{" "}
+                    <span className="ph-code-variable">developer</span> = {"{"}
                   </div>
                   <div className="ph-code-line">
                     <span className="ph-line-number">2</span>
                     <span className="ph-indent">name: </span>
-                    <span className="ph-code-string">'A. Yasiru Nadeesha Aththanayaka'</span>,
+                    <span className="ph-code-string">
+                      'A. Yasiru Nadeesha Aththanayaka'
+                    </span>
+                    ,
                   </div>
                   <div className="ph-code-line">
                     <span className="ph-line-number">3</span>
                     <span className="ph-indent">role: </span>
-                    <span className="ph-code-string">'Full Stack Developer'</span>,
+                    <span className="ph-code-string">
+                      'Full Stack Developer'
+                    </span>
+                    ,
                   </div>
                   <div className="ph-code-line">
                     <span className="ph-line-number">4</span>
                     <span className="ph-indent">skills: [</span>
-                    <span className="ph-code-string">'Spring Boot'</span>,{' '}
+                    <span className="ph-code-string">'Spring Boot'</span>,{" "}
                     <span className="ph-code-string">'React'</span>],
                   </div>
                   <div className="ph-code-line">
                     <span className="ph-line-number">5</span>
                     <span className="ph-indent">passion: </span>
-                    <span className="ph-code-string">'Building Amazing Things'</span>
+                    <span className="ph-code-string">
+                      'Building Amazing Things'
+                    </span>
                   </div>
                   <div className="ph-code-line">
                     <span className="ph-line-number">6</span>
-                    {'};'}
+                    {"};"}
                   </div>
                 </div>
               </div>
@@ -246,7 +330,9 @@ const PortfolioHero = () => {
                   <div className="ph-card-content">
                     <h4>Currently Working On</h4>
                     <p>HealthCare Application</p>
-                    <span className="ph-current-working-badge">Final Year Project</span>
+                    <span className="ph-current-working-badge">
+                      Final Year Project
+                    </span>
                   </div>
                 </div>
 
@@ -311,6 +397,19 @@ const PortfolioHero = () => {
           <div className="ph-wheel"></div>
         </div>
         <span className="ph-scroll-text">Scroll to explore</span>
+      </div>
+      {/* Ticker */}
+      <div className="ph-ticker-wrap">
+        <span className="ph-ticker-label">↑ Live</span>
+        <div className="ph-ticker-inner">
+          <div className="ph-ticker-track">
+            {TICKER_ITEMS.map(([label, val], i) => (
+              <span className="ph-ticker-item" key={i}>
+                {label} — <span>{val}</span>
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
 
       <style>{`
@@ -1039,153 +1138,422 @@ const PortfolioHero = () => {
         }
 
         /* Responsive */
-@media (max-width: 1024px) {
-  .ph-hero-grid {
-    grid-template-columns: 1fr;
-    gap: 60px;
-  }
+        @media (max-width: 1024px) {
+          .ph-hero-grid {
+            grid-template-columns: 1fr;
+            gap: 60px;
+          }
 
-  .ph-hero-right {
-    order: -1;
-  }
+          .ph-hero-right {
+            order: -1;
+          }
 
-  .ph-visual-container {
-    height: 400px;
-  }
+          .ph-visual-container {
+            height: 400px;
+          }
 
-  .ph-hero-name {
-    font-size: 40px;
-  }
+          .ph-hero-name {
+            font-size: 40px;
+          }
 
-  .ph-hero-title {
-    font-size: 32px;
-  }
+          .ph-hero-title {
+            font-size: 32px;
+          }
 
-  .ph-code-card {
-    width: 100%;
-    margin-top: 80px;
-  }
-}
+          .ph-code-card {
+            width: 100%;
+            margin-top: 80px;
+          }
+        }
 
-@media (max-width: 768px) {
-  .ph-hero-container {
-    padding: 80px 20px 60px;
-  }
+        @media (max-width: 768px) {
+          .ph-hero-container {
+            padding: 80px 20px 60px;
+          }
 
-  .ph-hero-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
+          .ph-hero-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+          }
 
-  .ph-hero-right {
-    display: none;
-  }
+          .ph-hero-right {
+            display: none;
+          }
 
-  .ph-hero-name {
-    font-size: 30px;
-    letter-spacing: -1px;
-  }
+          .ph-hero-name {
+            font-size: 30px;
+            letter-spacing: -1px;
+          }
 
-  .ph-hero-title {
-    font-size: 24px;
-  }
+          .ph-hero-title {
+            font-size: 24px;
+          }
 
-  .ph-hero-description {
-    font-size: 15px;
-  }
+          .ph-hero-description {
+            font-size: 15px;
+          }
 
-  .ph-hero-greeting {
-    font-size: 15px;
-  }
+          .ph-hero-greeting {
+            font-size: 15px;
+          }
 
-  .ph-badge-group {
-    gap: 8px;
-  }
+          .ph-badge-group {
+            gap: 8px;
+          }
 
-  .ph-status-badge,
-  .ph-verified-badge,
-  .ph-freelancer-badge {
-    font-size: 12px;
-    padding: 8px 14px;
-  }
+          .ph-status-badge,
+          .ph-verified-badge,
+          .ph-freelancer-badge {
+            font-size: 12px;
+            padding: 8px 14px;
+          }
 
-  .ph-about-me {
-    padding: 16px 18px;
-  }
+          .ph-about-me {
+            padding: 16px 18px;
+          }
 
-  .ph-about-text {
-    font-size: 14px;
-  }
+          .ph-about-text {
+            font-size: 14px;
+          }
 
-  .ph-about-tags {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+          .ph-about-tags {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 8px;
+          }
 
-  .ph-hero-cta {
-    flex-direction: column;
-    gap: 12px;
-  }
+          .ph-hero-cta {
+            flex-direction: column;
+            gap: 12px;
+          }
 
-  .ph-btn-primary,
-  .ph-btn-secondary {
-    width: 100%;
-    justify-content: center;
-    padding: 15px 24px;
-    font-size: 15px;
-  }
+          .ph-btn-primary,
+          .ph-btn-secondary {
+            width: 100%;
+            justify-content: center;
+            padding: 15px 24px;
+            font-size: 15px;
+          }
 
-  .ph-social-links {
-    gap: 10px;
-    flex-wrap: wrap;
-  }
+          .ph-social-links {
+            gap: 10px;
+            flex-wrap: wrap;
+          }
 
-  .ph-scroll-indicator {
-    display: none;
-  }
-}
+          .ph-scroll-indicator {
+            display: none;
+          }
+        }
 
-@media (max-width: 480px) {
-  .ph-hero-container {
-    padding: 50px 16px 50px;
-  }
+        @media (max-width: 480px) {
+          .ph-hero-container {
+            padding: 50px 16px 50px;
+          }
 
-  .ph-hero-name {
-    font-size: 36px;
-  }
+          .ph-hero-name {
+            font-size: 36px;
+          }
 
-  .ph-hero-title {
-    font-size: 20px;
-  }
+          .ph-hero-title {
+            font-size: 20px;
+          }
 
-  .ph-badge-group {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    margin-bottom: 16px;
-  }
+          .ph-badge-group {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 16px;
+          }
 
-  .ph-status-badge,
-  .ph-verified-badge,
-  .ph-freelancer-badge {
-    width: fit-content;
-  }
+          .ph-status-badge,
+          .ph-verified-badge,
+          .ph-freelancer-badge {
+            width: fit-content;
+          }
 
-  .ph-about-tags {
-    flex-direction: column;
-  }
+          .ph-about-tags {
+            flex-direction: column;
+          }
 
-  .ph-social-link {
-    width: 42px;
-    height: 42px;
-  }
+          .ph-social-link {
+            width: 42px;
+            height: 42px;
+          }
 
-  .ph-fiverr-icon {
-    width: 42px;
-    height: 42px;
-  }
-}
+          .ph-fiverr-icon {
+            width: 42px;
+            height: 42px;
+          }
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* ═══ LIGHT MODE — added on top, dark mode CSS above is untouched ═══ */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .ph-light-theme.ph-portfolio-hero {
+          background: linear-gradient(135deg, #f8f9fc 0%, #eef1fa 50%, #e9edf8 100%);
+          color: #1e2433;
+        }
+
+        .ph-light-theme .ph-status-badge {
+          background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(118, 75, 162, 0.12));
+          border: 1px solid rgba(102, 126, 234, 0.25);
+          color: #4f46e5;
+        }
+
+        .ph-light-theme .ph-verified-badge {
+          background: rgba(16, 163, 74, 0.12);
+          border: 1px solid rgba(16, 163, 74, 0.25);
+          color: #15803d;
+        }
+
+        .ph-light-theme .ph-freelancer-badge {
+          background: rgba(161, 90, 49, 0.12);
+          border: 1px solid rgba(161, 90, 49, 0.25);
+          color: #9333ea;
+        }
+
+        .ph-light-theme .ph-hero-greeting {
+          color: #4f46e5;
+        }
+
+        .ph-light-theme .ph-name-text {
+          background: linear-gradient(135deg, #1e3a8a 0%, #4f46e5 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .ph-light-theme .ph-cursor-blink {
+          color: #4f46e5;
+        }
+
+        .ph-light-theme .ph-gradient-text {
+          background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #db2777 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .ph-light-theme .ph-hero-description {
+          color: #475569;
+        }
+
+        .ph-light-theme .ph-about-me {
+          background: rgba(102, 126, 234, 0.05);
+          border: 1px solid rgba(102, 126, 234, 0.15);
+        }
+
+        .ph-light-theme .ph-about-icon {
+          color: #4f46e5;
+        }
+
+        .ph-light-theme .ph-about-title {
+          color: #4f46e5;
+        }
+
+        .ph-light-theme .ph-about-text {
+          color: #475569;
+        }
+
+        .ph-light-theme .ph-about-tag {
+          background: rgba(15, 23, 42, 0.04);
+          border: 1px solid rgba(15, 23, 42, 0.1);
+          color: #475569;
+        }
+
+        .ph-light-theme .ph-btn-primary {
+          background: linear-gradient(135deg, #4f46e5, #7c3aed);
+          color: white;
+          box-shadow: 0 10px 40px rgba(79, 70, 229, 0.25);
+        }
+
+        .ph-light-theme .ph-btn-primary:hover {
+          box-shadow: 0 15px 50px rgba(79, 70, 229, 0.35);
+        }
+
+        .ph-light-theme .ph-btn-secondary {
+          background: rgba(15, 23, 42, 0.04);
+          border: 2px solid rgba(15, 23, 42, 0.12);
+          color: #1e2433;
+        }
+
+        .ph-light-theme .ph-btn-secondary:hover {
+          background: rgba(15, 23, 42, 0.07);
+        }
+
+        .ph-light-theme .ph-social-link {
+          background: rgba(15, 23, 42, 0.04);
+          border: 2px solid rgba(15, 23, 42, 0.1);
+          color: #1e2433;
+        }
+
+        .ph-light-theme .ph-social-link:hover {
+          background: rgba(79, 70, 229, 0.12);
+          border-color: rgba(79, 70, 229, 0.3);
+        }
+
+        .ph-light-theme .ph-code-card {
+          background: rgba(255, 255, 255, 0.85);
+          border: 1px solid rgba(15, 23, 42, 0.1);
+          box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
+        }
+
+        .ph-light-theme .ph-card-header {
+          background: rgba(241, 245, 249, 0.9);
+          border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        .ph-light-theme .ph-file-name {
+          color: #64748b;
+        }
+
+        .ph-light-theme .ph-line-number {
+          color: #94a3b8;
+        }
+
+        .ph-light-theme .ph-code-keyword {
+          color: #9333ea;
+        }
+
+        .ph-light-theme .ph-code-variable {
+          color: #2563eb;
+        }
+
+        .ph-light-theme .ph-code-string {
+          color: #16a34a;
+        }
+
+        .ph-light-theme .ph-indent {
+          color: #334155;
+        }
+
+        .ph-light-theme .ph-float-card {
+          background: rgba(255, 255, 255, 0.9);
+          border: 1px solid rgba(15, 23, 42, 0.08);
+          box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1);
+        }
+
+        .ph-light-theme .ph-card-icon {
+          color: #4f46e5;
+        }
+
+        .ph-light-theme .ph-card-content h4 {
+          color: #1e2433;
+        }
+
+        .ph-light-theme .ph-card-content p {
+          color: #64748b;
+        }
+
+        .ph-light-theme .ph-tech-tag {
+          background: rgba(79, 70, 229, 0.1);
+          border: 1px solid rgba(79, 70, 229, 0.25);
+          color: #4f46e5;
+        }
+
+        .ph-light-theme .ph-progress-bar {
+          background: rgba(15, 23, 42, 0.08);
+        }
+
+        .ph-light-theme .ph-progress-fill {
+          background: linear-gradient(90deg, #4f46e5, #7c3aed);
+        }
+
+        .ph-light-theme .ph-current-working-badge {
+          background: rgba(16, 163, 74, 0.12);
+          border: 1px solid rgba(16, 163, 74, 0.25);
+          color: #15803d;
+        }
+
+        .ph-light-theme .ph-achievement-badge {
+          background: rgba(217, 119, 6, 0.12);
+          border: 1px solid rgba(217, 119, 6, 0.25);
+          color: #b45309;
+        }
+
+        .ph-light-theme .ph-animated-ring {
+          border: 2px solid rgba(79, 70, 229, 0.15);
+        }
+
+        .ph-light-theme .ph-mouse {
+          border: 2px solid rgba(15, 23, 42, 0.3);
+        }
+
+        .ph-light-theme .ph-wheel {
+          background: rgba(15, 23, 42, 0.5);
+        }
+
+        .ph-light-theme .ph-scroll-text {
+          color: rgba(15, 23, 42, 0.5);
+        }
+
+        /* ── Ticker (same as POS hero) ── */
+        .ph-ticker-wrap {
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          height: 36px;
+          border-top: 1px solid rgba(255,255,255,0.08);
+          overflow: hidden;
+          z-index: 10;
+          background: rgba(8, 10, 25, 0.85);
+          backdrop-filter: blur(10px);
+          display: flex;
+          align-items: center;
+        }
+
+        .ph-ticker-label {
+          font-size: 10px;
+          font-family: monospace;
+          color: #a5b4fc;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          padding: 0 20px;
+          border-right: 1px solid rgba(255,255,255,0.08);
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+
+        .ph-ticker-inner {
+          display: flex;
+          white-space: nowrap;
+          overflow: hidden;
+          flex: 1;
+        }
+
+        .ph-ticker-track {
+          display: flex;
+          animation: ph-ticker 28s linear infinite;
+        }
+
+        .ph-ticker-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 0 28px;
+          border-right: 1px solid rgba(255,255,255,0.06);
+          font-size: 11px;
+          font-family: monospace;
+          color: #94a3b8;
+          white-space: nowrap;
+        }
+
+        .ph-ticker-item span {
+          background: linear-gradient(135deg, #667eea, #a5b4fc);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-weight: 700;
+        }
+
+        @keyframes ph-ticker {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 768px) {
+          .ph-ticker-wrap { display: none; }
+        }
       `}</style>
     </section>
   );
