@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
@@ -18,15 +19,20 @@ import AIchat from './projects/AIChat';
 import './App.css';
 
 function App() {
+  // Single source of truth for the site-wide theme.
+  // Passed down to Navigation and Hero (and any other theme-aware
+  // component) so one toggle controls everything.
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
   return (
     <Router>
       <div className="app">
-        <Navigation />
+        <Navigation isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
         <Routes>
           <Route path="/" element={
             <>
               <section id="home">
-                <Hero />
+                <Hero isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
               </section>
               <section id="about">
                 <AboutMe />
