@@ -532,7 +532,7 @@ const handleSubmit = async (e) => {
 
         .ct-panel-sub {
           font-size: 13px;
-          color: #4a5568;
+          color: #8a8e96;
           font-weight: 300;
         }
 
@@ -598,7 +598,7 @@ const handleSubmit = async (e) => {
           font-weight: 600;
           letter-spacing: 2px;
           text-transform: uppercase;
-          color: #4a5568;
+          color: #9aabc9;
         }
 
         .ct-form-group input,
@@ -617,7 +617,7 @@ const handleSubmit = async (e) => {
 
         .ct-form-group input::placeholder,
         .ct-form-group textarea::placeholder {
-          color: #2d3748;
+          color: #737981;
         }
 
         .ct-form-group input:focus,
@@ -737,7 +737,7 @@ const handleSubmit = async (e) => {
           font-weight: 600;
           letter-spacing: 2px;
           text-transform: uppercase;
-          color: #2d3748;
+          color: #45829b;
           margin-bottom: 4px;
         }
 
@@ -768,7 +768,7 @@ const handleSubmit = async (e) => {
           font-weight: 600;
           letter-spacing: 2px;
           text-transform: uppercase;
-          color: #2d3748;
+          color: #559eb1;
           margin-bottom: 16px;
         }
 
@@ -787,7 +787,7 @@ const handleSubmit = async (e) => {
           border: 1px solid rgba(255,255,255,0.06);
           border-radius: 12px;
           text-decoration: none;
-          color: #64748b;
+          color: #6f7885;
           font-size: 13px;
           font-weight: 500;
           transition: all 0.3s ease;
@@ -819,7 +819,7 @@ const handleSubmit = async (e) => {
           font-size: 11px;
           font-weight: 600;
           letter-spacing: 2px;
-          color: #2d3748;
+          color: #8596b4;
           margin-bottom: 10px;
         }
 
@@ -849,7 +849,7 @@ const handleSubmit = async (e) => {
 
         .ct-resp-body {
           font-size: 13px;
-          color: #4a5568;
+          color: #828fa5;
           font-weight: 300;
           line-height: 1.7;
           margin: 0;
@@ -889,7 +889,7 @@ const handleSubmit = async (e) => {
           font-weight: 500;
           letter-spacing: 1.5px;
           text-transform: uppercase;
-          color: #2d3748;
+          color: #3b879e;
           transition: color 0.3s ease;
         }
 
