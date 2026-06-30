@@ -13,6 +13,7 @@ import HealthcareProjectDetail from './projects/HealthCareApplication';
 import WeddingProjectDetail from './projects/Wedding';
 import EcommerceDetail from './projects/Ecommerce';
 import StudentManagementDetail from './projects/StudentManagement';
+import TicketBookingSystem from './projects/TicketBookingSystem';
 import TaskManagement from './projects/TaskManagement';
 import AIchat from './projects/AIChat';
 
@@ -64,6 +65,8 @@ function App() {
           <Route path="/projects/task-management" element={<TaskManagement />} />
           
           <Route path="/projects/aichat" element={<AIchat />} />
+          
+          <Route path="/projects/ticket-booking" element={<TicketBookingSystem />} />
           
         </Routes>
         <Footer />
