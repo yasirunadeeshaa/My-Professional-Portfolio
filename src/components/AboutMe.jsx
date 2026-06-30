@@ -47,6 +47,7 @@ const AboutMe = () => {
   ];
 
   const education = [
+    
     {
       degree: 'B.Eng (Hons) Software Engineering',
       institution: 'University of Westminster UK',
@@ -65,6 +66,15 @@ const AboutMe = () => {
       accentAlpha: 'rgba(251,146,60,',
       highlights: ['Professional Level', 'AI / ML', 'System Design'],
     },
+    {
+      degree: 'G.C.E. Advanced Level (A/L) Mathematics Stream',
+      institution: 'Royal College',
+      period: '2022',
+      gpa: null,
+      accent: '#1ca3a3',
+      accentAlpha: 'rgba(167,139,250,',
+      highlights: ["Combined Mathematics", 'Physics', 'Chemistry'],
+    },
   ];
 
   const interests = [
@@ -77,20 +87,20 @@ const AboutMe = () => {
   ];
 
   const miniCards = [
-    {
-      id: 'exp-card',
-      num: '02',
-      title: 'G.C.E. Advanced Level (A/L) Mathematics Stream',
-      accent: '#38bdf8',
-      items: [
-        { company: 'Combined Maths', period: '' },
-        { company: 'Physics', period: '' },
-        { company: 'Chemistry', period: '' },
-      ],
-    },
+    // {
+    //   id: 'exp-card',
+    //   num: '02',
+    //   title: 'G.C.E. Advanced Level (A/L) Mathematics Stream',
+    //   accent: '#38bdf8',
+    //   items: [
+    //     { company: 'Combined Maths', period: '' },
+    //     { company: 'Physics', period: '' },
+    //     { company: 'Chemistry', period: '' },
+    //   ],
+    // },
     {
       id: 'edu-card',
-      num: '03',
+      num: '01',
       title: 'Memberships & Societies',
       accent: '#a78bfa',
       items: [
@@ -134,8 +144,12 @@ const AboutMe = () => {
               <div className="ab-name">A. Yasiru Nadeesha Aththanayaka</div>
               <div className="ab-role">Full Stack Developer</div>
               <p className="ab-bio">
-                I'm a passionate full stack developer who loves turning ideas into reality through code.
-                With expertise in modern web technologies, I create scalable and user-friendly applications.
+                I'm a Full Stack Developer and BEng Software Engineering student 
+                at the University of Westminster, with hands-on experience 
+                building scalable, production-ready web applications from the 
+                ground up.
+                I'm passionate about DevOps engineering: infrastructure automation, 
+                CI/CD pipelines, containerisation, and cloud architecture.
               </p>
 
               {/* Interests */}
@@ -518,10 +532,10 @@ const AboutMe = () => {
         }
 
         .ab-bio {
-          font-size: 13px;
+          font-size: 14px;
           line-height: 1.8;
-          color: #64748b;
-          font-weight: 300;
+          color: #379eb1;
+          font-weight: 500;
           position: relative;
           z-index: 1;
         }
@@ -540,7 +554,7 @@ const AboutMe = () => {
           font-weight: 600;
           letter-spacing: 2px;
           text-transform: uppercase;
-          color: #2d3748;
+          color: #939fb4;
           margin-bottom: 16px;
         }
 
@@ -851,7 +865,7 @@ const AboutMe = () => {
 
         .ab-panel-sub {
           font-size: 13px;
-          color: #4a5568;
+          color: #c3cbda;
           font-weight: 300;
         }
 
@@ -920,7 +934,7 @@ const AboutMe = () => {
         .ab-t-desc {
           font-size: 13px;
           line-height: 1.8;
-          color: #4a5568;
+          color: #b6beca;
           margin-bottom: 14px;
           font-weight: 300;
         }
@@ -1007,7 +1021,7 @@ const AboutMe = () => {
 
         .ab-edu-inst {
           font-size: 13px;
-          color: #64748b;
+          color: #bdc0c4;
           margin-bottom: 12px;
           font-weight: 300;
         }
@@ -1078,12 +1092,12 @@ const AboutMe = () => {
           font-weight: 500;
           letter-spacing: 1.5px;
           text-transform: uppercase;
-          color: #2d3748;
+          color: #4088aa;
           transition: color 0.3s ease;
         }
 
         .ab-strip-item:hover {
-          color: #4a5568;
+          color: #dee6f3;
         }
 
         .ab-strip-dot {
