@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, ExternalLink, Github, Calendar, Users, Award, Heart, Code2, Sparkles, CheckCircle2, Play, Download, Monitor, Smartphone, Globe, Lock, TrendingUp, Activity, Camera, Music, MapPin, Bell, DollarSign, MessageCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import {
+  ArrowLeft, ExternalLink, Github, Calendar, Users, Award,
+  Heart, Sparkles, CheckCircle2, Play, Download,
+  Monitor, Smartphone, Globe, Lock, TrendingUp, Activity,
+  Camera, Bell, DollarSign, MessageCircle, MapPin,
+} from 'lucide-react';
+
 // Import Wedding Desktop Screenshots
-import weddingHero from '../assets/Wedding/hero.png';
-import vendors from '../assets/Wedding/vendors.png';
-import adminPortal from '../assets/Wedding/AdminPortal.png';
-import testimonials from '../assets/Wedding/says.png';
+import weddingHero   from '../assets/wedding.jpg';
+import weddingHero2   from '../assets/Wedding/lapimage.png';
+import vendors       from '../assets/Wedding/vendors.png';
+import adminPortal   from '../assets/Wedding/AdminPortal.png';
+import testimonials  from '../assets/Wedding/says.png';
 import successStories from '../assets/Wedding/Wedstory.png';
 import weddingTrends from '../assets/Wedding/trends.png';
 import winterWedding from '../assets/Wedding/winter.png';
@@ -32,1963 +40,1056 @@ import mobile16 from '../assets/Wedding/16.png';
 import mobile17 from '../assets/Wedding/17.png';
 import mobile18 from '../assets/Wedding/18.png';
 
-const WeddingProjectDetail = () => {
-  const [activeTab, setActiveTab] = useState('overview');
-  const [activeWebScreenshot, setActiveWebScreenshot] = useState(0);
-const [activeMobileScreenshot, setActiveMobileScreenshot] = useState(0);
-const webThumbnailScrollRef = React.useRef(null);
-const mobileThumbnailScrollRef = React.useRef(null);
+/* ─── data ─────────────────────────────────────────────────── */
+const technologies = [
+  { name: 'React',        category: 'Frontend',          icon: '⚛️', color: '#61dafb' },
+  { name: 'Node.js',      category: 'Backend',           icon: '🟢', color: '#68a063' },
+  { name: 'MongoDB',      category: 'Database',          icon: '🍃', color: '#47a248' },
+  { name: 'Express.js',   category: 'Backend',           icon: '⚡', color: '#888888' },
+  { name: 'Redux',        category: 'State Management',  icon: '🔄', color: '#764abc' },
+  { name: 'Socket.io',    category: 'Real-time',         icon: '🔌', color: '#888888' },
+  { name: 'Stripe',       category: 'Payments',          icon: '💳', color: '#635bff' },
+  { name: 'AWS S3',       category: 'Storage',           icon: '☁️', color: '#ff9900' },
+  { name: 'Twilio',       category: 'Communication',     icon: '📱', color: '#f22f46' },
+  { name: 'Google Maps',  category: 'Location',          icon: '🗺️', color: '#4285f4' },
+];
 
-const scrollThumbnails = (direction, ref) => {
-  if (ref.current) {
-    const scrollAmount = 300;
-    ref.current.scrollBy({
-      left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth'
-    });
-  }
-};
+const features = [
+  {
+    title: 'Vendor Management',
+    description: 'Comprehensive vendor directory with profiles, portfolios, reviews, and real-time availability tracking for photographers, caterers, venues, and more.',
+    icon: <Users />, color: '#7c8cf8',
+  },
+  {
+    title: 'Event Planning Tools',
+    description: 'Interactive timeline builder, checklist management, and task assignments with automated reminders and progress tracking.',
+    icon: <Calendar />, color: '#e879a0',
+  },
+  {
+    title: 'Guest Management',
+    description: 'Digital RSVP system, seating arrangements, dietary preferences tracking, and automated guest communication.',
+    icon: <MessageCircle />, color: '#38bdf8',
+  },
+  {
+    title: 'Budget Tracker',
+    description: 'Real-time expense tracking, vendor payment scheduling, budget allocation tools, and financial reporting dashboard.',
+    icon: <DollarSign />, color: '#a78bfa',
+  },
+  {
+    title: 'Photo Gallery',
+    description: 'Cloud-based photo and video storage with AI-powered organisation, sharing capabilities, and collaborative albums.',
+    icon: <Camera />, color: '#34d399',
+  },
+  {
+    title: 'Live Notifications',
+    description: 'Real-time updates for guests, vendor confirmations, payment reminders, and event changes via SMS and email.',
+    icon: <Bell />, color: '#e879a0',
+  },
+  {
+    title: 'Location & Venues',
+    description: 'Interactive map-based venue discovery with capacity filters, photo tours, and instant enquiry tools.',
+    icon: <MapPin />, color: '#7c8cf8',
+  },
+  {
+    title: 'Secure Payments',
+    description: 'End-to-end encrypted payment processing with split billing, deposit scheduling, and instant receipts.',
+    icon: <Lock />, color: '#38bdf8',
+  },
+];
 
-  const technologies = [
-    { name: 'React', category: 'Frontend', icon: '⚛️', color: '#61dafb' },
-    { name: 'Node.js', category: 'Backend', icon: '🟢', color: '#68a063' },
-    { name: 'MongoDB', category: 'Database', icon: '🍃', color: '#47a248' },
-    { name: 'Express.js', category: 'Backend', icon: '⚡', color: '#000000' },
-    { name: 'Redux', category: 'State Management', icon: '🔄', color: '#764abc' },
-    { name: 'Socket.io', category: 'Real-time', icon: '🔌', color: '#010101' },
-    { name: 'Stripe', category: 'Payments', icon: '💳', color: '#635bff' },
-    { name: 'AWS S3', category: 'Storage', icon: '☁️', color: '#ff9900' },
-    { name: 'Twilio', category: 'Communication', icon: '📱', color: '#f22f46' },
-    { name: 'Google Maps', category: 'Location', icon: '🗺️', color: '#4285f4' }
-  ];
-
-  const features = [
-    {
-      title: 'Vendor Management',
-      description: 'Comprehensive vendor directory with profiles, portfolios, reviews, and real-time availability tracking for photographers, caterers, venues, and more.',
-      icon: <Users />,
-      color: '#f093fb'
-    },
-    {
-      title: 'Event Planning Tools',
-      description: 'Interactive timeline builder, checklist management, and task assignments with automated reminders and progress tracking.',
-      icon: <Calendar />,
-      color: '#667eea'
-    },
-    {
-      title: 'Guest Management',
-      description: 'Digital RSVP system, seating arrangements, dietary preferences tracking, and automated guest communication.',
-      icon: <MessageCircle />,
-      color: '#43e97b'
-    },
-    {
-      title: 'Budget Tracker',
-      description: 'Real-time expense tracking, vendor payment scheduling, budget allocation tools, and financial reporting dashboard.',
-      icon: <DollarSign />,
-      color: '#fa709a'
-    },
-    {
-      title: 'Photo Gallery',
-      description: 'Cloud-based photo and video storage with AI-powered organization, sharing capabilities, and collaborative albums.',
-      icon: <Camera />,
-      color: '#4facfe'
-    },
-    {
-      title: 'Live Notifications',
-      description: 'Real-time updates for guests, vendor confirmations, payment reminders, and event changes via SMS and email.',
-      icon: <Bell />,
-      color: '#764ba2'
-    }
-  ];
-
- const webScreenshots = [
-  {
-    id: 1,
-    title: 'Wedding Planning Platform Hero',
-    url: weddingHero,
-    description: 'Main landing page featuring elegant wedding planning services and vendor showcase'
-  },
-  {
-    id: 2,
-    title: 'Vendors',
-    url: vendors,
-    description: 'Comprehensive directory of wedding vendors including photographers, caterers, venues, and decorators'
-  },
-  {
-    id: 3,
-    title: 'Admin Portal',
-    url: adminPortal,
-    description: 'Administrative dashboard for managing vendors, bookings, users, and platform analytics'
-  },
-  {
-    id: 4,
-    title: 'Testimonials',
-    url: testimonials,
-    description: 'Customer testimonials and reviews highlighting successful wedding planning experiences'
-  },
-  {
-    id: 5,
-    title: 'Success Stories',
-    url: successStories,
-    description: 'Real couples sharing their wedding journey and experiences with the platform'
-  },
-  {
-    id: 6,
-    title: 'Wedding Trends',
-    url: weddingTrends,
-    description: 'Latest wedding trends, themes, color palettes, and style inspirations for modern celebrations'
-  },
-  {
-    id: 7,
-    title: 'Winter Season Wedding Planning',
-    url: winterWedding,
-    description: 'Winter-themed wedding ideas featuring cozy venues, seasonal decor, and cold-weather planning tips'
-  },
-  {
-    id: 8,
-    title: 'Summer Season Wedding Planning',
-    url: summerWedding,
-    description: 'Summer wedding inspiration with outdoor venues, bright florals, and warm-weather celebration ideas'
-  },
-  {
-    id: 9,
-    title: 'Spring Season Wedding Planning',
-    url: springWedding,
-    description: 'Spring wedding themes featuring blooming gardens, pastel colors, and fresh seasonal arrangements'
-  },
-  {
-    id: 10,
-    title: 'Autumn Season Wedding Planning',
-    url: autumnWedding,
-    description: 'Fall wedding concepts with rich colors, rustic venues, and harvest-inspired decorations'
-  }
+const webScreenshots = [
+  { id:1,  title:'Wedding Planning Platform Hero',       url: weddingHero,    description:'Main landing page featuring elegant wedding planning services and vendor showcase.' },
+  { id:2,  title:'Vendors Directory',                    url: vendors,        description:'Comprehensive directory of wedding vendors including photographers, caterers, and venues.' },
+  { id:3,  title:'Admin Portal',                         url: adminPortal,    description:'Administrative dashboard for managing vendors, bookings, users, and analytics.' },
+  { id:4,  title:'Testimonials',                         url: testimonials,   description:'Customer testimonials and reviews highlighting successful wedding planning experiences.' },
+  { id:5,  title:'Success Stories',                      url: successStories, description:'Real couples sharing their wedding journey and experiences with the platform.' },
+  { id:6,  title:'Wedding Trends',                       url: weddingTrends,  description:'Latest wedding trends, themes, colour palettes, and style inspirations.' },
+  { id:7,  title:'Winter Season Weddings',               url: winterWedding,  description:'Winter-themed ideas featuring cosy venues, seasonal décor, and cold-weather planning tips.' },
+  { id:8,  title:'Summer Season Weddings',               url: summerWedding,  description:'Summer wedding inspiration with outdoor venues, bright florals, and warm-weather ideas.' },
+  { id:9,  title:'Spring Season Weddings',               url: springWedding,  description:'Spring themes featuring blooming gardens, pastel colours, and fresh seasonal arrangements.' },
+  { id:10, title:'Autumn Season Weddings',               url: autumnWedding,  description:'Fall concepts with rich colours, rustic venues, and harvest-inspired decorations.' },
 ];
 
 const mobileScreenshots = [
-  {
-    id: 1,
-    title: 'Mobile Home',
-    url: mobile01,
-    description: 'Mobile home screen with quick access to vendors, planning tools, and upcoming wedding tasks'
-  },
-  {
-    id: 2,
-    title: 'Sign In page',
-    url: mobile02,
-    description: 'Secure login interface for couples to access their personalized wedding planning dashboard'
-  },
-  {
-    id: 3,
-    title: 'Sign Up Page',
-    url: mobile03,
-    description: 'Registration page for new users to create their wedding planning account and profile'
-  },
-  {
-    id: 4,
-    title: 'Vendors Page',
-    url: mobile04,
-    description: 'Mobile vendor browsing interface with categories and search filters for easy discovery'
-  },
-  {
-    id: 5,
-    title: 'Florist page',
-    url: mobile05,
-    description: 'Browse florists and floral designers with portfolios, pricing, and availability information'
-  },
-  {
-    id: 6,
-    title: 'Florist Details',
-    url: mobile06,
-    description: 'Detailed florist profile showing services, gallery, reviews, and booking options'
-  },
-  {
-    id: 7,
-    title: 'Photographer page',
-    url: mobile07,
-    description: 'Explore wedding photographers with portfolio previews, packages, and client testimonials'
-  },
-  {
-    id: 8, 
-    title: 'Photographer Details',
-    url: mobile08,
-    description: 'Complete photographer profile with full portfolio, pricing packages, and contact information'
-  },
-  {
-    id: 9,
-    title: 'Entertainment page',
-    url: mobile09,
-    description: 'Find DJs, bands, and entertainment services for your wedding celebration'
-  },
-  {
-    id: 10,
-    title: 'Entertainment Details',
-    url: mobile10,
-    description: 'Detailed entertainment vendor profile with music samples, equipment, and performance details'
-  },
-  {
-    id: 11,
-    title: 'Vehicle page',
-    url: mobile11,
-    description: 'Browse wedding transportation options including luxury cars, vintage vehicles, and limousines'
-  },
-  {
-    id: 12,
-    title: 'Vehicle Details',
-    url: mobile12,
-    description: 'Vehicle rental details with photos, specifications, pricing, and availability calendar'
-  },
-  {
-    id: 13,
-    title: 'Dressing page',
-    url: mobile13,
-    description: 'Discover bridal boutiques, groom attire, and wedding fashion services'
-  },
-  {
-    id: 14,
-    title: 'Dressing Details',
-    url: mobile14,
-    description: 'Bridal shop profile showcasing dress collections, fitting services, and designer information'
-  },
-  {
-    id: 15,
-    title: 'Locations',
-    url: mobile15,
-    description: 'Browse wedding venues and ceremony locations with photos and capacity information'
-  },
-  {
-    id: 16,
-    title: 'Location Details',
-    url: mobile16,
-    description: 'Venue details including amenities, floor plans, catering options, and booking availability'
-  },
-  {
-    id: 17,
-    title: 'Payment',
-    url: mobile17,
-    description: 'Secure payment screen for vendor bookings and service deposits'
-  },
-  {
-    id: 18,
-    title: 'Payment Methods',
-    url: mobile18,
-    description: 'Select payment method including credit cards, digital wallets, and bank transfers'
-  }
+  { id:1,  title:'Mobile Home',           url: mobile01, description:'Home screen with quick access to vendors, planning tools, and upcoming tasks.' },
+  { id:2,  title:'Sign In',               url: mobile02, description:'Secure login interface for couples to access their personalised dashboard.' },
+  { id:3,  title:'Sign Up',               url: mobile03, description:'Registration page for new users to create their wedding planning account.' },
+  { id:4,  title:'Vendors Page',          url: mobile04, description:'Mobile vendor browsing with categories and search filters for easy discovery.' },
+  { id:5,  title:'Florist Page',          url: mobile05, description:'Browse florists with portfolios, pricing, and availability information.' },
+  { id:6,  title:'Florist Details',       url: mobile06, description:'Detailed florist profile showing services, gallery, reviews, and booking options.' },
+  { id:7,  title:'Photographer Page',     url: mobile07, description:'Explore wedding photographers with portfolio previews and client testimonials.' },
+  { id:8,  title:'Photographer Details',  url: mobile08, description:'Complete photographer profile with full portfolio, pricing packages, and contact info.' },
+  { id:9,  title:'Entertainment Page',    url: mobile09, description:'Find DJs, bands, and entertainment services for your celebration.' },
+  { id:10, title:'Entertainment Details', url: mobile10, description:'Detailed entertainment vendor profile with music samples and equipment list.' },
+  { id:11, title:'Vehicle Page',          url: mobile11, description:'Browse wedding transportation including luxury cars and vintage vehicles.' },
+  { id:12, title:'Vehicle Details',       url: mobile12, description:'Vehicle rental details with photos, specs, pricing, and availability calendar.' },
+  { id:13, title:'Dressing Page',         url: mobile13, description:'Discover bridal boutiques, groom attire, and wedding fashion services.' },
+  { id:14, title:'Dressing Details',      url: mobile14, description:'Bridal shop profile showcasing dress collections and fitting services.' },
+  { id:15, title:'Locations',             url: mobile15, description:'Browse wedding venues and ceremony locations with photos and capacity info.' },
+  { id:16, title:'Location Details',      url: mobile16, description:'Venue details including amenities, floor plans, and booking availability.' },
+  { id:17, title:'Payment',               url: mobile17, description:'Secure payment screen for vendor bookings and service deposits.' },
+  { id:18, title:'Payment Methods',       url: mobile18, description:'Select payment method including credit cards, digital wallets, and bank transfers.' },
 ];
 
-  const projectStats = [
-    { label: 'Development Time', value: '12 Months', icon: <Calendar /> },
-    { label: 'Team Size', value: '1 Member', icon: <Users /> },
-    { label: 'Target Active Couples', value: '5,000+', icon: <Heart /> },
-    { label: 'Target Vendor Partners', value: '500+', icon: <Award /> }
-  ];
+const projectStats = [
+  { label:'Development Time',      value:'12 Months', icon:<Calendar /> },
+  { label:'Team Size',             value:'1 Member',  icon:<Users /> },
+  { label:'Target Active Couples', value:'5,000+',    icon:<Heart /> },
+  { label:'Target Vendor Partners',value:'500+',      icon:<Award /> },
+];
 
+const achievements = [
+  'End-to-end encrypted data storage',
+  'Multi-currency payment processing',
+  'Real-time vendor availability sync',
+  'Mobile-first responsive design',
+];
 
- useEffect(() => {
-  const webInterval = setInterval(() => {
-    setActiveWebScreenshot((prev) => (prev + 1) % webScreenshots.length);
-  }, 5000);
-  
-  const mobileInterval = setInterval(() => {
-    setActiveMobileScreenshot((prev) => (prev + 1) % mobileScreenshots.length);
-  }, 5000);
-  
-  return () => {
-    clearInterval(webInterval);
-    clearInterval(mobileInterval);
+/* ─── component ─────────────────────────────────────────────── */
+const WeddingProjectDetail = () => {
+  const [activeTab, setActiveTab]                     = useState('overview');
+  const [activeWebScreenshot, setActiveWebScreenshot] = useState(0);
+  const [activeMobileScreenshot, setActiveMobileScreenshot] = useState(0);
+  const [isVisible, setIsVisible]                     = useState(false);
+  const navigate = useNavigate();
+
+  const webThumbRef    = React.useRef(null);
+  const mobileThumbRef = React.useRef(null);
+  const sectionRef     = React.useRef(null);
+
+  /* intersection → fade-in */
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setIsVisible(true); }, { threshold: 0.05 });
+    if (sectionRef.current) obs.observe(sectionRef.current);
+    return () => obs.disconnect();
+  }, []);
+
+  /* auto-advance */
+  useEffect(() => {
+    const w = setInterval(() => setActiveWebScreenshot(p => (p + 1) % webScreenshots.length), 5000);
+    const m = setInterval(() => setActiveMobileScreenshot(p => (p + 1) % mobileScreenshots.length), 4500);
+    return () => { clearInterval(w); clearInterval(m); };
+  }, []);
+
+  const scrollThumbs = (dir, ref) => {
+    if (ref.current) ref.current.scrollBy({ left: dir === 'left' ? -300 : 300, behavior: 'smooth' });
   };
-}, [webScreenshots.length, mobileScreenshots.length]);
 
   return (
-    <div className="wpd-container">
-      {/* Hero Section */}
-      <section className="wpd-hero">
-        <div className="wpd-hero-background">
-          <div className="wpd-gradient-blur wpd-blur-1"></div>
-          <div className="wpd-gradient-blur wpd-blur-2"></div>
-          <div className="wpd-gradient-blur wpd-blur-3"></div>
-        </div>
-        
-        <div className="wpd-hero-content">
-          <button className="wpd-back-btn">
-            <ArrowLeft size={20} />
-            <span>Back to Projects</span>
-          </button>
+    <div ref={sectionRef} className="wd-root">
+      {/* ── shared background ── */}
+      <div className="wd-grid-bg" />
+      <div className="wd-glow-1" />
+      <div className="wd-glow-2" />
 
-          <div className="wpd-hero-badge">
-            <Heart size={16} />
-            <span>Wedding Platform</span>
+      <div className={`wd-inner ${isVisible ? 'wd-in' : ''}`}>
+
+        {/* ════════════════════ HERO ════════════════════ */}
+        <section className="wd-hero">
+          <div className="wd-hero-bg-img">
+            <img src={weddingHero} alt="" aria-hidden="true" className="wd-hero-bg-photo" />
+            <div className="wd-hero-bg-overlay" />
           </div>
 
-          <h1 className="wpd-hero-title">
-            Wedding <span className="wpd-gradient-text">Management</span> System
-          </h1>
-
-          <p className="wpd-hero-subtitle">
-            Complete digital platform revolutionizing wedding planning with intelligent vendor matching, 
-            real-time collaboration tools, budget tracking, and seamless guest management for the perfect celebration.
-          </p>
-
-          <div className="wpd-hero-stats">
-            {projectStats.map((stat, index) => (
-              <div key={index} className="wpd-stat-card">
-                <div className="wpd-stat-icon">{stat.icon}</div>
-                <div className="wpd-stat-content">
-                  <div className="wpd-stat-value">{stat.value}</div>
-                  <div className="wpd-stat-label">{stat.label}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="wpd-hero-actions">
-            <button className="wpd-btn-primary">
-              <ExternalLink size={20} />
-              <span>View Live Demo</span>
-            </button>
-            <button className="wpd-btn-secondary">
-              <Github size={20} />
-              <span>View on GitHub</span>
-            </button>
-            <button className="wpd-btn-secondary">
-              <Download size={20} />
-              <span>Download Report</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Navigation Tabs */}
-      <section className="wpd-tabs-section">
-        <div className="wpd-tabs-container">
-          <div className="wpd-tabs">
-            {['overview', 'features', 'technologies'].map((tab) => (
-              <button
-                key={tab}
-                className={`wpd-tab ${activeTab === tab ? 'wpd-tab-active' : ''}`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          <div className="wd-hero-content">
+            <div className="wd-hero-left">
+              <button className="wd-back-btn" onClick={() => navigate('/')}>
+                <ArrowLeft size={16} /><span>Back to Projects</span>
               </button>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Content Sections */}
-      <div className="wpd-content-wrapper">
-        {/* Overview Section */}
-        {activeTab === 'overview' && (
-          <section className="wpd-section wpd-fade-in">
-            <div className="wpd-section-grid">
-              <div className="wpd-overview-main">
-                <h2 className="wpd-section-title">Project Overview</h2>
-                <div className="wpd-overview-content">
-                  <p className="wpd-text">
-                    The Wedding Management System is a comprehensive digital platform designed to simplify and 
-                    streamline every aspect of wedding planning. From vendor selection to guest management, 
-                    budget tracking to event coordination, our platform brings together all the tools couples 
-                    need to plan their perfect day.
-                  </p>
-                  
-                  <h3 className="wpd-subsection-title">Problem Statement</h3>
-                  <p className="wpd-text">
-                    Wedding planning is complex, stressful, and time-consuming. Couples struggle with vendor 
-                    coordination, budget management, guest tracking, and timeline organization. Traditional 
-                    methods involve spreadsheets, multiple apps, and endless email chains, leading to confusion 
-                    and missed details.
-                  </p>
-
-                  <h3 className="wpd-subsection-title">Solution</h3>
-                  <p className="wpd-text">
-                    Our platform provides an all-in-one solution that centralizes wedding planning. With 
-                    intelligent vendor matching, automated task management, real-time collaboration, and 
-                    integrated payment processing, couples can plan their entire wedding from a single 
-                    intuitive platform. Features include guest RSVP tracking, seating arrangements, budget 
-                    monitoring, and vendor coordination tools.
-                  </p>
-                </div>
+              <div className="wd-eyebrow">
+                <span className="wd-eyebrow-line" />
+                <Sparkles size={13} />
+                <span>Full Stack Project · 2023</span>
+                <Sparkles size={13} />
+                <span className="wd-eyebrow-line" />
               </div>
 
-              <div className="wpd-overview-sidebar">
-                <div className="wpd-info-card">
-                  <h3 className="wpd-info-title">Project Details</h3>
-                  <div className="wpd-info-list">
-                    <div className="wpd-info-item">
-                      <span className="wpd-info-label">Status</span>
-                      <span className="wpd-info-value wpd-status-live">
-                        <span className="wpd-status-dot"></span>
-                        Live & Active
-                      </span>
-                    </div>
-                    <div className="wpd-info-item">
-                      <span className="wpd-info-label">Timeline</span>
-                      <span className="wpd-info-value">Jun 2023 - Dec 2023</span>
-                    </div>
-                    <div className="wpd-info-item">
-                      <span className="wpd-info-label">Role</span>
-                      <span className="wpd-info-value">Lead Developer</span>
-                    </div>
-                    <div className="wpd-info-item">
-                      <span className="wpd-info-label">Category</span>
-                      <span className="wpd-info-value">Event Tech, SaaS</span>
-                    </div>
-                  </div>
-                </div>
+              <h1 className="wd-hero-title">
+                Complete Wedding<br />
+                <em className="wd-title-em">Management Platform</em>
+              </h1>
 
-                <div className="wpd-info-card">
-                  <h3 className="wpd-info-title">Platform Support</h3>
-                  <div className="wpd-platform-icons">
-                    <div className="wpd-platform-item">
-                      <Monitor size={24} />
-                      <span>Web</span>
-                    </div>
-                    <div className="wpd-platform-item">
-                      <Smartphone size={24} />
-                      <span>Mobile</span>
-                    </div>
-                    <div className="wpd-platform-item">
-                      <Globe size={24} />
-                      <span>Cloud</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
+              <p className="wd-hero-subtitle">
+                Revolutionising wedding planning through intelligent vendor matching,
+                real-time collaboration, budget tracking, and seamless guest management
+                for the perfect celebration.
+              </p>
 
-        {/* Features Section */}
-        {activeTab === 'features' && (
-          <section className="wpd-section wpd-fade-in">
-            <h2 className="wpd-section-title">Core Features</h2>
-            <div className="wpd-features-grid">
-              {features.map((feature, index) => (
-                <div key={index} className="wpd-feature-card">
-                  <div className="wpd-feature-icon" style={{ background: `${feature.color}15`, color: feature.color }}>
-                    {feature.icon}
-                  </div>
-                  <h3 className="wpd-feature-title">{feature.title}</h3>
-                  <p className="wpd-feature-description">{feature.description}</p>
-                  <div className="wpd-feature-gradient" style={{ background: `linear-gradient(135deg, ${feature.color}20, transparent)` }}></div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Technologies Section */}
-        {activeTab === 'technologies' && (
-          <section className="wpd-section wpd-fade-in">
-            <h2 className="wpd-section-title">Technology Stack</h2>
-            <p className="wpd-section-description">
-              Built with modern, scalable technologies ensuring reliability, performance, and exceptional user experience.
-            </p>
-            <div className="wpd-tech-grid">
-              {technologies.map((tech, index) => (
-                <div key={index} className="wpd-tech-card">
-                  <div className="wpd-tech-icon">{tech.icon}</div>
-                  <div className="wpd-tech-content">
-                    <h3 className="wpd-tech-name">{tech.name}</h3>
-                    <span className="wpd-tech-category">{tech.category}</span>
-                  </div>
-                  <div className="wpd-tech-indicator" style={{ background: tech.color }}></div>
-                </div>
-              ))}
-            </div>
-
-            <div className="wpd-architecture-section">
-              <h3 className="wpd-subsection-title">System Architecture</h3>
-              <div className="wpd-architecture-card">
-                <div className="wpd-architecture-layer">
-                  <div className="wpd-layer-title">Frontend Layer</div>
-                  <div className="wpd-layer-content">React, Redux, Socket.io Client, Tailwind CSS, React Router</div>
-                </div>
-                <div className="wpd-architecture-arrow">↓</div>
-                <div className="wpd-architecture-layer">
-                  <div className="wpd-layer-title">API Gateway</div>
-                  <div className="wpd-layer-content">Express.js, JWT Authentication, Rate Limiting, CORS</div>
-                </div>
-                <div className="wpd-architecture-arrow">↓</div>
-                <div className="wpd-architecture-layer">
-                  <div className="wpd-layer-title">Business Logic</div>
-                  <div className="wpd-layer-content">Node.js Services, Stripe Integration, Twilio SMS, Email Services</div>
-                </div>
-                <div className="wpd-architecture-arrow">↓</div>
-                <div className="wpd-architecture-layer">
-                  <div className="wpd-layer-title">Data Layer</div>
-                  <div className="wpd-layer-content">MongoDB, Redis Cache, AWS S3, CloudFront CDN</div>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Web Screenshots */}
-        <div className="ash-screenshots-section ash-fade-in">
-          <h3 className="ash-screenshots-heading">Web Application Overview</h3>
-          <p className="ash-screenshots-subheading">
-            Full-featured desktop experience for comprehensive wedding planning
-          </p>
-          
-          <div className="ash-screenshots-wrapper">
-            <div className="ash-featured-screenshot">
-              <div className="ash-screenshot-frame">
-                <div className="ash-browser-bar">
-                  <div className="ash-browser-dots">
-                    <span className="ash-dot ash-dot-red"></span>
-                    <span className="ash-dot ash-dot-yellow"></span>
-                    <span className="ash-dot ash-dot-green"></span>
-                  </div>
-                  <div className="ash-browser-url">wedding-planner.app</div>
-                </div>
-                
-                <img 
-                  src={webScreenshots[activeWebScreenshot].url} 
-                  alt={webScreenshots[activeWebScreenshot].title}
-                  className="ash-screenshot-image"
-                />
-              </div>
-              
-              <div className="ash-screenshot-details">
-                <h3 className="ash-screenshot-title">{webScreenshots[activeWebScreenshot].title}</h3>
-                <p className="ash-screenshot-description">{webScreenshots[activeWebScreenshot].description}</p>
-              </div>
-            </div>
-
-            <div className="ash-thumbnails-container">
-              <button className="ash-scroll-button ash-scroll-left" onClick={() => scrollThumbnails('left', webThumbnailScrollRef)}>
-                <ArrowLeft size={24} />
-              </button>
-              
-              <div className="ash-thumbnails-horizontal" ref={webThumbnailScrollRef}>
-                {webScreenshots.map((screenshot, index) => (
-                  <div
-                    key={screenshot.id}
-                    className={`ash-thumbnail-card ${activeWebScreenshot === index ? 'ash-thumbnail-active' : ''}`}
-                    onClick={() => setActiveWebScreenshot(index)}
-                  >
-                    <div className="ash-thumbnail-wrapper">
-                      <img src={screenshot.url} alt={screenshot.title} className="ash-thumbnail-image" />
-                      <div className="ash-thumbnail-overlay">
-                        <div className="ash-play-button">
-                          <Play size={20} />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="ash-thumbnail-label">
-                      <span className="ash-thumbnail-number">{String(index + 1).padStart(2, '0')}</span>
-                      <span className="ash-thumbnail-name">{screenshot.title}</span>
+              <div className="wd-hero-stats">
+                {projectStats.map((s, i) => (
+                  <div key={i} className="wd-stat-card">
+                    <div className="wd-stat-icon">{s.icon}</div>
+                    <div>
+                      <div className="wd-stat-value">{s.value}</div>
+                      <div className="wd-stat-label">{s.label}</div>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <button className="ash-scroll-button ash-scroll-right" onClick={() => scrollThumbnails('right', webThumbnailScrollRef)}>
-                <ArrowLeft size={24} style={{ transform: 'rotate(180deg)' }} />
+              <div className="wd-hero-actions">
+                <button className="wd-btn-primary" onClick={() => window.open('https://wedify.netlify.app/', '_blank')}>
+                  <ExternalLink size={17} /><span>View Live Demo</span>
+                </button>
+                <button className="wd-btn-secondary">
+                  <Github size={17} /><span>Source Code</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="wd-hero-right">
+              <div className="wd-hero-img-wrap">
+                <img src={weddingHero2} alt="Wedding Platform" className="wd-hero-img" />
+                <div className="wd-img-glow" />
+                <div className="wd-img-border" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════ STICKY TABS ════════════ */}
+        <div className="wd-tabs-bar">
+          {['overview', 'features', 'technologies'].map(tab => (
+            <button
+              key={tab}
+              className={`wd-tab ${activeTab === tab ? 'wd-tab-active' : ''}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {/* ════════════ CONTENT ════════════ */}
+        <div className="wd-content">
+
+          {/* ── OVERVIEW ── */}
+          {activeTab === 'overview' && (
+            <section className="wd-section wd-fade-in">
+              <h2 className="wd-section-title">Project Overview</h2>
+              <div className="wd-overview-grid">
+                <div className="wd-bento-card">
+                  <p className="wd-text">
+                    The Wedding Management System is a comprehensive digital platform designed to simplify
+                    and streamline every aspect of wedding planning. From vendor selection to guest
+                    management, budget tracking to event coordination, our platform brings together all
+                    the tools couples need to plan their perfect day.
+                  </p>
+                  <h3 className="wd-sub-title">Problem Statement</h3>
+                  <p className="wd-text">
+                    Wedding planning is complex, stressful, and time-consuming. Couples struggle with
+                    vendor coordination, budget management, guest tracking, and timeline organisation.
+                    Traditional methods involve spreadsheets, multiple apps, and endless email chains,
+                    leading to confusion and missed details.
+                  </p>
+                  <h3 className="wd-sub-title">Solution</h3>
+                  <p className="wd-text">
+                    Our platform provides an all-in-one solution that centralises wedding planning.
+                    With intelligent vendor matching, automated task management, real-time collaboration,
+                    and integrated payment processing, couples can plan their entire wedding from a
+                    single intuitive platform across web and mobile.
+                  </p>
+                  <h3 className="wd-sub-title">Technical Highlights</h3>
+                  <div className="wd-highlights">
+                    {[
+                      'MERN stack with real-time Socket.io communication layer',
+                      'JWT-based authentication with role-specific dashboards',
+                      'Stripe payment integration with split billing and deposits',
+                      'AWS S3 cloud storage for photos and vendor media',
+                      'Twilio SMS notifications for guests and vendor alerts',
+                      'Google Maps API for interactive venue discovery',
+                    ].map((h, i) => (
+                      <div key={i} className="wd-highlight-item">
+                        <CheckCircle2 size={17} /><span>{h}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="wd-sidebar">
+                  <div className="wd-bento-card wd-bento-sm">
+                    <h3 className="wd-card-title">Project Details</h3>
+                    {[
+                      ['Status',   <span className="wd-status-live"><span className="wd-status-dot"/>Live &amp; Active</span>],
+                      ['Timeline', 'Jun 2023 – Dec 2023'],
+                      ['Role',     'Lead Developer'],
+                      ['Category', 'Event Tech, SaaS'],
+                    ].map(([label, val], i) => (
+                      <div key={i} className="wd-info-row">
+                        <span className="wd-info-label">{label}</span>
+                        <span className="wd-info-value">{val}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="wd-bento-card wd-bento-sm">
+                    <h3 className="wd-card-title">Platform Support</h3>
+                    <div className="wd-platform-row">
+                      {[['Web', <Monitor size={22}/>], ['Mobile', <Smartphone size={22}/>], ['Cloud', <Globe size={22}/>]].map(([name, icon], i) => (
+                        <div key={i} className="wd-platform-item">{icon}<span>{name}</span></div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="wd-bento-card wd-bento-sm">
+                    <h3 className="wd-card-title">Key Achievements</h3>
+                    {achievements.map((a, i) => (
+                      <div key={i} className="wd-achievement-item">
+                        <Award size={15} style={{ color:'#fcd34d', flexShrink:0 }} />
+                        <span>{a}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* ── FEATURES ── */}
+          {activeTab === 'features' && (
+            <section className="wd-section wd-fade-in">
+              <h2 className="wd-section-title">Core <em className="wd-em">Features</em></h2>
+              <p className="wd-section-desc">
+                A full-featured wedding ecosystem built around the real needs of couples, vendors, and administrators.
+              </p>
+              <div className="wd-features-grid">
+                {features.map((f, i) => (
+                  <div key={i} className="wd-feature-card" style={{'--fa': f.color}}>
+                    <div className="wd-feature-icon">{f.icon}</div>
+                    <h3 className="wd-feature-title">{f.title}</h3>
+                    <p className="wd-feature-desc">{f.description}</p>
+                    <div className="wd-feature-glow" />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* ── TECHNOLOGIES ── */}
+          {activeTab === 'technologies' && (
+            <section className="wd-section wd-fade-in">
+              <h2 className="wd-section-title">Technology <em className="wd-em">Stack</em></h2>
+              <p className="wd-section-desc">
+                Built with modern, scalable technologies ensuring reliability, performance, and exceptional user experience.
+              </p>
+              <div className="wd-tech-grid">
+                {technologies.map((t, i) => (
+                  <div key={i} className="wd-tech-card" style={{'--tc': t.color}}>
+                    <span className="wd-tech-indicator" />
+                    <span className="wd-tech-icon">{t.icon}</span>
+                    <div>
+                      <div className="wd-tech-name">{t.name}</div>
+                      <div className="wd-tech-cat">{t.category}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Architecture */}
+              <div style={{ marginTop: 60 }}>
+                <h3 className="wd-sub-title">System Architecture</h3>
+                <div className="wd-arch-card">
+                  {[
+                    ['Frontend Layer',  'React, Redux, Socket.io Client, Tailwind CSS, React Router'],
+                    ['API Gateway',     'Express.js, JWT Authentication, Rate Limiting, CORS'],
+                    ['Business Logic',  'Node.js Services, Stripe Integration, Twilio SMS, Email Services'],
+                    ['Data Layer',      'MongoDB, Redis Cache, AWS S3, CloudFront CDN'],
+                  ].map(([title, content], i, arr) => (
+                    <React.Fragment key={i}>
+                      <div className="wd-arch-layer">
+                        <div className="wd-arch-layer-title">{title}</div>
+                        <div className="wd-arch-layer-content">{content}</div>
+                      </div>
+                      {i < arr.length - 1 && <div className="wd-arch-arrow">↓</div>}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+        </div>
+
+        {/* ════════════ WEB SCREENSHOTS ════════════ */}
+        <div className="wd-ss-section wd-fade-in">
+          <div className="wd-divider">
+            <span className="wd-divider-line" />
+            <span className="wd-divider-label">Web Application Overview</span>
+            <span className="wd-divider-line" />
+          </div>
+          <h2 className="wd-section-title" style={{ textAlign:'center', marginBottom:8 }}>
+            Explore the <em className="wd-em">Web Interface</em>
+          </h2>
+          <p className="wd-section-desc" style={{ textAlign:'center', marginBottom:48 }}>
+            Full-featured desktop experience for comprehensive wedding planning.
+          </p>
+
+          <div className="wd-ss-main">
+            <div className="wd-browser-frame">
+              <div className="wd-browser-bar">
+                <div className="wd-browser-dots">
+                  <span className="wd-dot wd-dot-r"/><span className="wd-dot wd-dot-y"/><span className="wd-dot wd-dot-g"/>
+                </div>
+                <div className="wd-browser-url">wedding-planner.app</div>
+              </div>
+              <img src={webScreenshots[activeWebScreenshot].url} alt={webScreenshots[activeWebScreenshot].title} className="wd-ss-img" />
+            </div>
+            <div className="wd-ss-meta">
+              <h3 className="wd-ss-title">{webScreenshots[activeWebScreenshot].title}</h3>
+              <p className="wd-ss-desc">{webScreenshots[activeWebScreenshot].description}</p>
+            </div>
+          </div>
+
+          <div className="wd-thumb-breakout">
+            <div className="wd-thumb-row">
+              <button className="wd-thumb-scroll-btn" onClick={() => scrollThumbs('left', webThumbRef)}>
+                <ArrowLeft size={20} />
+              </button>
+              <div className="wd-thumb-track" ref={webThumbRef}>
+                {webScreenshots.map((s, i) => (
+                  <div
+                    key={s.id}
+                    className={`wd-thumb-card ${activeWebScreenshot === i ? 'wd-thumb-active' : ''}`}
+                    onClick={() => setActiveWebScreenshot(i)}
+                  >
+                    <div className="wd-thumb-img-wrap">
+                      <img src={s.url} alt={s.title} className="wd-thumb-img" />
+                      <div className="wd-thumb-overlay"><Play size={18} className="wd-thumb-play" /></div>
+                    </div>
+                    <div className="wd-thumb-label">
+                      <span className="wd-thumb-num">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="wd-thumb-name">{s.title}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <button className="wd-thumb-scroll-btn" onClick={() => scrollThumbs('right', webThumbRef)}>
+                <ArrowLeft size={20} style={{ transform:'rotate(180deg)' }} />
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Screenshots */}
-        <div className="ash-screenshots-section ash-fade-in" style={{ marginTop: '80px' }}>
-          <h3 className="ash-screenshots-heading">Mobile Application Overview</h3>
-          <p className="ash-screenshots-subheading">
-            Plan your wedding on-the-go with our intuitive mobile interface
+        {/* ════════════ MOBILE SCREENSHOTS ════════════ */}
+        <div className="wd-ss-section wd-fade-in" style={{ paddingTop: 0 }}>
+          <div className="wd-divider">
+            <span className="wd-divider-line" />
+            <span className="wd-divider-label">Mobile Application Overview</span>
+            <span className="wd-divider-line" />
+          </div>
+          <h2 className="wd-section-title" style={{ textAlign:'center', marginBottom:8 }}>
+            Plan On the <em className="wd-em">Go</em>
+          </h2>
+          <p className="wd-section-desc" style={{ textAlign:'center', marginBottom:48 }}>
+            Intuitive mobile interface keeps couples connected to every detail wherever they are.
           </p>
-          
-          <div className="ash-screenshots-wrapper">
-            <div className="ash-featured-screenshot-web ash-mobile-featured">
-              <div className="ash-mobile-frame">
-                <div className="ash-mobile-notch"></div>
-                <img 
-                  src={mobileScreenshots[activeMobileScreenshot].url} 
+
+          {/* Mobile featured frame */}
+          <div className="wd-ss-main wd-ss-mobile-main">
+            <div className="wd-mobile-frame-wrap">
+              <div className="wd-mobile-frame">
+                <div className="wd-mobile-notch" />
+                <img
+                  src={mobileScreenshots[activeMobileScreenshot].url}
                   alt={mobileScreenshots[activeMobileScreenshot].title}
-                  className="ash-mobile-screenshot-image"
+                  className="wd-mobile-img"
                 />
               </div>
-              
-              <div className="ash-screenshot-details">
-                <h3 className="ash-screenshot-title">{mobileScreenshots[activeMobileScreenshot].title}</h3>
-                <p className="ash-screenshot-description">{mobileScreenshots[activeMobileScreenshot].description}</p>
-              </div>
             </div>
+            <div className="wd-ss-meta">
+              <h3 className="wd-ss-title">{mobileScreenshots[activeMobileScreenshot].title}</h3>
+              <p className="wd-ss-desc">{mobileScreenshots[activeMobileScreenshot].description}</p>
+            </div>
+          </div>
 
-            <div className="ash-thumbnails-container">
-              <button className="ash-scroll-button ash-scroll-left" onClick={() => scrollThumbnails('left', mobileThumbnailScrollRef)}>
-                <ArrowLeft size={24} />
+          <div className="wd-thumb-breakout">
+            <div className="wd-thumb-row">
+              <button className="wd-thumb-scroll-btn" onClick={() => scrollThumbs('left', mobileThumbRef)}>
+                <ArrowLeft size={20} />
               </button>
-              
-              <div className="ash-thumbnails-horizontal" ref={mobileThumbnailScrollRef}>
-                {mobileScreenshots.map((screenshot, index) => (
+              <div className="wd-thumb-track" ref={mobileThumbRef}>
+                {mobileScreenshots.map((s, i) => (
                   <div
-                    key={screenshot.id}
-                    className={`ash-thumbnail-card ash-mobile-thumbnail ${activeMobileScreenshot === index ? 'ash-thumbnail-active' : ''}`}
-                    onClick={() => setActiveMobileScreenshot(index)}
+                    key={s.id}
+                    className={`wd-thumb-card wd-thumb-mobile ${activeMobileScreenshot === i ? 'wd-thumb-active' : ''}`}
+                    onClick={() => setActiveMobileScreenshot(i)}
                   >
-                    <div className="ash-thumbnail-wrapper ash-mobile-thumbnail-wrapper">
-                      <img src={screenshot.url} alt={screenshot.title} className="ash-thumbnail-image" />
-                      <div className="ash-thumbnail-overlay">
-                        <div className="ash-play-button">
-                          <Play size={20} />
-                        </div>
-                      </div>
+                    <div className="wd-thumb-img-wrap wd-thumb-img-wrap-mobile">
+                      <img src={s.url} alt={s.title} className="wd-thumb-img" />
+                      <div className="wd-thumb-overlay"><Play size={18} className="wd-thumb-play" /></div>
                     </div>
-                    <div className="ash-thumbnail-label">
-                      <span className="ash-thumbnail-number">{String(index + 1).padStart(2, '0')}</span>
-                      <span className="ash-thumbnail-name">{screenshot.title}</span>
+                    <div className="wd-thumb-label">
+                      <span className="wd-thumb-num">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="wd-thumb-name">{s.title}</span>
                     </div>
                   </div>
                 ))}
               </div>
-
-              <button className="ash-scroll-button ash-scroll-right" onClick={() => scrollThumbnails('right', mobileThumbnailScrollRef)}>
-                <ArrowLeft size={24} style={{ transform: 'rotate(180deg)' }} />
+              <button className="wd-thumb-scroll-btn" onClick={() => scrollThumbs('right', mobileThumbRef)}>
+                <ArrowLeft size={20} style={{ transform:'rotate(180deg)' }} />
               </button>
             </div>
           </div>
         </div>
 
+        {/* ════════════ CTA ════════════ */}
+        <section className="wd-cta">
+          <div className="wd-cta-inner">
+            <div className="wd-eyebrow" style={{ justifyContent:'center', marginBottom:20 }}>
+              <span className="wd-eyebrow-line" />
+              <Sparkles size={13} />
+              <span>Let's Connect</span>
+              <Sparkles size={13} />
+              <span className="wd-eyebrow-line" />
+            </div>
+            <h2 className="wd-cta-title">
+              Interested in <em className="wd-em">Learning More?</em>
+            </h2>
+            <p className="wd-cta-desc">
+              Get in touch to discuss this project in detail or explore collaboration opportunities.
+            </p>
+            <button className="wd-btn-primary" onClick={() => window.open('https://wedify.netlify.app/', '_blank')}>
+              <ExternalLink size={17} /><span>Visit Platform</span>
+            </button>
+          </div>
+        </section>
+
+        {/* ════════════ FOOTER STRIP ════════════ */}
+        <div className="wd-footer-strip">
+          {['Wedding Tech', 'MERN Stack', 'React', 'Node.js', 'Full Stack'].map((l, i, arr) => (
+            <React.Fragment key={i}>
+              <span className="wd-strip-item">{l}</span>
+              {i < arr.length - 1 && <span className="wd-strip-dot">·</span>}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
 
-      {/* CTA Section */}
-      <section className="wpd-cta-section">
-        <div className="wpd-cta-content">
-          <h2 className="wpd-cta-title">Ready to Explore More?</h2>
-          <p className="wpd-cta-description">
-            Discover how this platform is transforming wedding planning or discuss collaboration opportunities.
-          </p>
-          <div className="wpd-cta-buttons">
-            <button className="wpd-btn-primary" onClick={() => window.location.href = 'https://wedify.netlify.app/'}>
-              <ExternalLink size={20} />
-              <span>Visit Platform</span>
-            </button>
-            
-          </div>
-        </div>
-      </section>
-
+      {/* ═══════════════════════ STYLES ═══════════════════════ */}
       <style>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-        .wpd-container {
+        /* ── Root ── */
+        .wd-root {
+          position: relative;
           min-height: 100vh;
-         background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-          color: white;
+          background: #080c14;
+          overflow: hidden;
+          font-family: 'DM Sans', sans-serif;
+          color: #f0f4ff;
         }
 
-        /* Hero Section */
-        .wpd-hero {
+        /* ── Background ── */
+        .wd-grid-bg {
+          position: fixed; inset: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+          background-size: 72px 72px;
+          pointer-events: none; z-index: 0;
+        }
+        .wd-glow-1 {
+          position: fixed; top: -180px; right: -160px;
+          width: 680px; height: 680px;
+          background: radial-gradient(circle, rgba(124,140,248,0.10) 0%, transparent 70%);
+          pointer-events: none; z-index: 0;
+          animation: wd-drift1 20s ease-in-out infinite alternate;
+        }
+        .wd-glow-2 {
+          position: fixed; bottom: -120px; left: -80px;
+          width: 560px; height: 560px;
+          background: radial-gradient(circle, rgba(232,121,160,0.08) 0%, transparent 70%);
+          pointer-events: none; z-index: 0;
+          animation: wd-drift2 25s ease-in-out infinite alternate;
+        }
+        @keyframes wd-drift1 { from{transform:translate(0,0)} to{transform:translate(-60px,50px)} }
+        @keyframes wd-drift2 { from{transform:translate(0,0)} to{transform:translate(50px,-40px)} }
+
+        /* ── Inner ── */
+        .wd-inner {
+          position: relative; z-index: 1;
+          opacity: 0; transform: translateY(32px);
+          transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+        .wd-inner.wd-in { opacity: 1; transform: translateY(0); }
+
+        /* ════════ HERO ════════ */
+        .wd-hero {
           position: relative;
-          padding: 120px 60px 80px;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          padding: 120px 64px 80px;
           overflow: hidden;
         }
-
-        .wpd-hero-background {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          overflow: hidden;
-        }
-
-        .wpd-gradient-blur {
-          position: absolute;
-          border-radius: 50%;
-          filter: blur(100px);
-          opacity: 0.4;
-        }
-
-        .wpd-blur-1 {
-          width: 600px;
-          height: 600px;
-          background: radial-gradient(circle, rgba(102, 126, 234, 0.4), transparent);
-          top: -200px;
-          right: -100px;
-        }
-
-        .wpd-blur-2 {
-          width: 500px;
-          height: 500px;
-          background: radial-gradient(circle, rgba(118, 75, 162, 0.3), transparent);
-          bottom: -150px;
-          left: -100px;
-        }
-
-        .wpd-blur-3 {
-          width: 400px;
-          height: 400px;
-          background: radial-gradient(circle, rgba(168, 85, 247, 0.3), transparent);
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
-
-        .wpd-grid-pattern {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(102, 126, 234, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(102, 126, 234, 0.05) 1px, transparent 1px);
-  background-size: 50px 50px;
-  opacity: 0.3;
+        .wd-hero-bg-img { position: absolute; inset: 0; z-index: 0; }
+        .wd-hero-bg-photo {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 30%;
+  filter: blur(-4px) brightness(0.22) saturate(0.7);
+  transform: scale(1.06);
 }
-
-        .wpd-hero-content {
-          position: relative;
-          z-index: 2;
-          max-width: 1400px;
-          margin: 0 auto;
-        }
-
-        .wpd-back-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 12px 24px;
-          background: rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          border-radius: 50px;
-          color: white;
-          font-size: 14px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          backdrop-filter: blur(10px);
-          margin-bottom: 30px;
-        }
-
-        .wpd-back-btn:hover {
-          background: rgba(255, 255, 255, 0.15);
-          transform: translateX(-5px);
-        }
-
-        .wpd-hero-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 10px 20px;
-          background: rgba(72, 187, 120, 0.2);
-          border: 1px solid rgba(72, 187, 120, 0.3);
-          color: #86efac;
-          border-radius: 50px;
-          font-size: 14px;
-          font-weight: 600;
-          margin-bottom: 24px;
-        }
-
-        .wpd-hero-title {
-          font-size: 72px;
-          font-weight: 900;
-          line-height: 1.1;
-          margin-bottom: 24px;
-          letter-spacing: -2px;
-        }
-
-        .wpd-gradient-text {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .wpd-hero-subtitle {
-          font-size: 20px;
-          color: #cbd5e1;
-          line-height: 1.8;
-          max-width: 900px;
-          margin-bottom: 48px;
-        }
-
-        .wpd-hero-stats {
+        .wd-hero-bg-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(8,12,20,0.45) 0%, rgba(8,12,20,0.80) 120%, #080c14 10%),
+    linear-gradient(to right,  rgba(8,12,20,0.55) 0%, transparent 70%);
+}
+        .wd-hero-content {
+          position: relative; z-index: 2;
+          max-width: 1280px; margin: 0 auto; width: 100%;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 24px;
-          margin-bottom: 48px;
-        }
-
-        .wpd-stat-card {
-          display: flex;
+          grid-template-columns: 1.15fr 1fr;
+          gap: 80px;
           align-items: center;
-          gap: 16px;
-          padding: 24px;
-          background: rgba(17, 24, 39, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 16px;
-          backdrop-filter: blur(20px);
-          transition: all 0.3s ease;
         }
+        .wd-hero-left { display: flex; flex-direction: column; }
 
-        .wpd-stat-card:hover {
-          transform: translateY(-4px);
-          border-color: rgba(240, 147, 251, 0.3);
+        .wd-back-btn {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 10px 20px;
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 50px;
+          color: #94a3b8; font-size: 13px; font-weight: 600;
+          cursor: pointer; transition: all 0.3s ease;
+          align-self: flex-start; margin-bottom: 32px;
+          font-family: 'DM Sans', sans-serif;
         }
+        .wd-back-btn:hover { background: rgba(255,255,255,0.10); color: #f0f4ff; transform: translateX(-4px); }
 
-        .wpd-stat-icon {
-          width: 48px;
-          height: 48px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: rgba(102, 126, 234, 0.2);
-          border-radius: 12px;
-          color: #667eea;
+        .wd-eyebrow {
+          display: flex; align-items: center; gap: 12px;
+          font-size: 11px; font-weight: 600; letter-spacing: 3px;
+          text-transform: uppercase; color: #a4acbb;
+          margin-bottom: 24px;
         }
+        .wd-eyebrow-line { display: block; width: 32px; height: 1px; background: #4a5568; }
 
-        .wpd-stat-value {
-          font-size: 28px;
-          font-weight: 800;
-          background: linear-gradient(135deg, #667eea, #764ba2);
+        .wd-hero-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(46px, 5.5vw, 66px);
+          font-weight: 400; line-height: 1.05;
+          letter-spacing: -2px; color: #f0f4ff;
+          margin-bottom: 24px;
+        }
+        .wd-title-em, .wd-em {
+          font-style: italic;
+          background: linear-gradient(120deg, #7c8cf8, #e879a0);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
         }
-
-        .wpd-stat-label {
-          font-size: 14px;
-          color: #e9d5ff;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
+        .wd-hero-subtitle {
+          font-size: 17px; line-height: 1.75; color: #a4a7ac;
+          font-weight: 500; max-width: 520px; margin-bottom: 40px;
         }
 
-        .wpd-hero-actions {
-          display: flex;
-          gap: 16px;
-          flex-wrap: wrap;
+        /* stat cards */
+        .wd-hero-stats { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 36px; }
+        .wd-stat-card {
+          display: flex; align-items: center; gap: 14px;
+          padding: 16px 20px;
+          background: rgba(11,17,32,0.75);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 16px; backdrop-filter: blur(12px);
+          transition: border-color 0.3s ease, transform 0.3s ease;
+          flex: 1 1 160px;
         }
-
-        .wpd-btn-primary, .wpd-btn-secondary {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          padding: 16px 32px;
-          border-radius: 50px;
-          font-size: 16px;
-          font-weight: 700;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          border: none;
+        .wd-stat-card:hover { border-color: rgba(124,140,248,0.35); transform: translateY(-3px); }
+        .wd-stat-icon {
+          width: 42px; height: 42px; border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(124,140,248,0.12); color: #7c8cf8; flex-shrink: 0;
         }
-
-        .wpd-btn-primary {
-          background: linear-gradient(135deg, #667eea, #764ba2);
-          box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
-          color: white;
+        .wd-stat-value {
+          font-family: 'DM Serif Display', serif;
+          font-size: 22px; font-weight: 400; color: #f0f4ff;
+          background: linear-gradient(120deg, #7c8cf8, #e879a0);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+          line-height: 1; margin-bottom: 3px;
         }
+        .wd-stat-label { font-size: 11px; color: #4a5568; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
 
-        .wpd-btn-primary:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5);
+        /* buttons */
+        .wd-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .wd-btn-primary, .wd-btn-secondary {
+          position: relative; display: inline-flex; align-items: center; gap: 8px;
+          padding: 13px 26px; border: none; border-radius: 0; cursor: pointer;
+          clip-path: polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
+          font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+          font-family: 'DM Sans', sans-serif; overflow: hidden; isolation: isolate;
+          transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
         }
-
-        .wpd-btn-secondary {
-          background: rgba(255, 255, 255, 0.1);
-          border: 2px solid rgba(255, 255, 255, 0.2);
-          color: white;
-          backdrop-filter: blur(10px);
+        .wd-btn-primary {
+          background: #0d1424; color: #7dd3fc;
+          box-shadow: inset 0 0 0 1px rgba(125,211,252,0.35);
         }
-
-        .wpd-btn-secondary:hover {
-          background: rgba(255, 255, 255, 0.15);
-          transform: translateY(-2px);
+        .wd-btn-primary::before {
+          content:''; position:absolute; inset:0;
+          background: linear-gradient(100deg,#06b6d4,#7c3aed);
+          transform: translateX(-101%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); z-index: -1;
         }
-
-        /* Tabs Section */
-        .wpd-tabs-section {
-          position: sticky;
-          top: 0;
-          z-index: 100;
-          background: rgba(26, 10, 30, 0.95);
-          backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          padding: 0 60px;
+        .wd-btn-primary:hover { color: #fff; box-shadow: none; }
+        .wd-btn-primary:hover::before { transform: translateX(0); }
+        .wd-btn-secondary {
+          background: transparent; color: #c4b5fd;
+          box-shadow: inset 0 0 0 1px rgba(196,181,253,0.4);
         }
-
-        .wpd-tabs-container {
-          max-width: 1400px;
-          margin: 0 auto;
+        .wd-btn-secondary::before {
+          content:''; position:absolute; inset:0;
+          background: linear-gradient(100deg,#7c3aed,#ec4899);
+          transform: translateX(-101%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); z-index: -1;
         }
+        .wd-btn-secondary:hover { color: #fff; box-shadow: none; }
+        .wd-btn-secondary:hover::before { transform: translateX(0); }
 
-        .wpd-tabs {
-          display: flex;
-          gap: 8px;
+        /* hero right */
+        .wd-hero-right { position: relative; display: flex; align-items: center; justify-content: center; }
+        .wd-hero-img-wrap {
+          position: relative; width: 100%; max-width: 680px;
+          border-radius: 20px; overflow: hidden; background: transparent;
+        }
+        .wd-hero-img {
+          width: 100%; height: auto; display: block;
+          object-fit: cover; border-radius: 20px; position: relative; z-index: 2;
+          box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+          transition: transform 0.5s ease;
+        }
+        .wd-hero-img:hover { transform: translateY(-8px) scale(1.02); }
+        .wd-img-glow {
+          position: absolute; inset: -30px;
+          background: radial-gradient(circle, rgba(124,140,248,0.35) 0%, rgba(232,121,160,0.25) 50%, transparent 70%);
+          filter: blur(50px); z-index: 1; opacity: 0.7;
+          animation: wd-glow-pulse 4s ease-in-out infinite;
+        }
+        @keyframes wd-glow-pulse { 0%,100%{opacity:0.7;transform:scale(1)} 50%{opacity:1;transform:scale(1.05)} }
+        .wd-img-border {
+          position: absolute; inset: -2px; border-radius: 28px; z-index: 1;
+          background: linear-gradient(135deg,#7c8cf8,#e879a0,#38bdf8);
+          background-size: 300% 300%; opacity: 0.25;
+          animation: wd-border-spin 8s ease infinite;
+        }
+        @keyframes wd-border-spin { 0%{background-position:0 50%} 50%{background-position:100% 50%} 100%{background-position:0 50%} }
+
+        /* ════════ TABS ════════ */
+        .wd-tabs-bar {
+          position: sticky; top: 0; z-index: 100;
+          background: rgba(8,12,20,0.90);
+          backdrop-filter: blur(16px);
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+          display: flex; gap: 4px;
+          padding: 0 64px;
           overflow-x: auto;
         }
-
-        .wpd-tab {
-          padding: 20px 32px;
-          background: transparent;
-          border: none;
-          color: #e9d5ff;
-          font-size: 16px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          position: relative;
-          white-space: nowrap;
+        .wd-tab {
+          padding: 20px 28px; background: transparent; border: none;
+          color: #4a5568; font-size: 14px; font-weight: 600; letter-spacing: 0.5px;
+          cursor: pointer; transition: color 0.25s ease; white-space: nowrap;
+          position: relative; font-family: 'DM Sans', sans-serif;
+          text-transform: uppercase;
+        }
+        .wd-tab:hover { color: #94a3b8; }
+        .wd-tab-active { color: #f0f4ff; }
+        .wd-tab-active::after {
+          content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+          background: linear-gradient(90deg, #7c8cf8, #e879a0);
+          border-radius: 2px 2px 0 0;
         }
 
-        .wpd-tab:hover {
-          color: white;
-        }
+        /* ════════ CONTENT ════════ */
+        .wd-content { max-width: 1280px; margin: 0 auto; padding: 72px 64px 40px; }
+        .wd-section { margin-bottom: 80px; }
+        .wd-fade-in { animation: wd-fadein 0.55s ease-out; }
+        @keyframes wd-fadein { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 
-        .wpd-tab-active {
-          color: white;
-        }
-
-        .wpd-tab-active::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 3px;
-          background: linear-gradient(90deg, #667eea, #764ba2);
-          border-radius: 3px 3px 0 0;
-        }
-
-        /* Content Wrapper */
-        .wpd-content-wrapper {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 80px 60px;
-        }
-
-        .wpd-section {
-          margin-bottom: 80px;
-        }
-
-        .wpd-fade-in {
-          animation: wpd-fadeIn 0.6s ease-out;
-        }
-
-        @keyframes wpd-fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .wpd-section-title {
-          font-size: 42px;
-          font-weight: 800;
+        .wd-section-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(40px, 4.5vw, 52px);
+          font-weight: 400; line-height: 1.05;
+          letter-spacing: -1.5px; color: #f0f4ff;
           margin-bottom: 16px;
-          background: linear-gradient(135deg, #fff, #a5b4fc);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
         }
+        .wd-section-desc { font-size: 16px; color: #64748b; font-weight: 300; line-height: 1.75; margin-bottom: 48px; max-width: 640px; }
+        .wd-sub-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: #f0f4ff; margin: 28px 0 12px; }
+        .wd-text { font-size: 15px; color: #94a3b8; line-height: 1.8; margin-bottom: 20px; font-weight: 300; }
+        .wd-card-title { font-family: 'DM Serif Display', serif; font-size: 18px; color: #f0f4ff; margin-bottom: 20px; }
 
-        .wpd-section-description {
-          font-size: 18px;
-          color: #e9d5ff;
-          margin-bottom: 48px;
-          max-width: 800px;
+        /* bento cards */
+        .wd-bento-card {
+          background: #0b1120; border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 20px; padding: 32px;
+          transition: background 0.3s ease;
         }
+        .wd-bento-card:hover { background: #0f1929; }
+        .wd-bento-sm { padding: 24px; }
 
-        /* Overview Section */
-        .wpd-section-grid {
-          display: grid;
-          grid-template-columns: 2fr 1fr;
-          gap: 48px;
+        .wd-overview-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; overflow: hidden; }
+        .wd-sidebar { display: flex; flex-direction: column; gap: 2px; }
+
+        .wd-highlights { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+        .wd-highlight-item {
+          display: flex; align-items: flex-start; gap: 10px;
+          padding: 14px; background: rgba(124,140,248,0.06);
+          border-left: 2px solid rgba(124,140,248,0.4);
+          border-radius: 6px; color: #94a3b8; font-size: 14px; line-height: 1.6;
         }
+        .wd-highlight-item svg { color: #7c8cf8; flex-shrink: 0; margin-top: 2px; }
 
-        .wpd-overview-content {
-          background: rgba(17, 24, 39, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 24px;
-          padding: 40px;
-          backdrop-filter: blur(20px);
-        }
+        .wd-info-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .wd-info-row:last-child { border-bottom: none; }
+        .wd-info-label { font-size: 12px; color: #4a5568; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .wd-info-value { font-size: 13px; color: #f0f4ff; font-weight: 600; }
+        .wd-status-live { display: flex; align-items: center; gap: 7px; color: #86efac; }
+        .wd-status-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: wd-pulse 2s ease-in-out infinite; }
+        @keyframes wd-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
 
-        .wpd-text {
-          font-size: 16px;
-          color: #cbd5e1;
-          line-height: 1.8;
-          margin-bottom: 32px;
-        }
-
-        .wpd-subsection-title {
-          font-size: 24px;
-          font-weight: 700;
-          color: white;
-          margin-bottom: 16px;
-          margin-top: 32px;
-        }
-
-        .wpd-achievements-grid {
-          display: grid;
-          gap: 16px;
-          margin-top: 24px;
-        }
-
-        .wpd-achievement-item {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 16px;
-          background: rgba(245, 87, 108, 0.1);
-          border: 1px solid rgba(245, 87, 108, 0.2);
-          border-radius: 12px;
-          color: #fda4af;
-          font-size: 15px;
-          font-weight: 600;
-        }
-
-        .wpd-achievement-icon {
-          flex-shrink: 0;
-        }
-
-        .wpd-overview-sidebar {
-          display: flex;
-          flex-direction: column;
-          gap: 24px;
-        }
-
-        .wpd-info-card {
-          background: rgba(17, 24, 39, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 24px;
-          padding: 32px;
-          backdrop-filter: blur(20px);
-        }
-
-        .wpd-info-title {
-          font-size: 20px;
-          font-weight: 700;
-          margin-bottom: 24px;
-          color: white;
-        }
-
-        .wpd-info-list {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-
-        .wpd-info-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding-bottom: 20px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .wpd-info-item:last-child {
-          border-bottom: none;
-          padding-bottom: 0;
-        }
-
-        .wpd-info-label {
-          font-size: 14px;
-          color: #e9d5ff;
-          font-weight: 600;
-        }
-
-        .wpd-info-value {
-          font-size: 15px;
-          color: white;
-          font-weight: 700;
-        }
-
-        .wpd-status-live {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          color: #86efac;
-        }
-
-        .wpd-status-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: currentColor;
-          animation: wpd-pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes wpd-pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(1.2); }
-        }
-
-        .wpd-platform-icons {
-          display: flex;
-          gap: 20px;
-          justify-content: space-around;
-        }
-
-        .wpd-platform-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 8px;
-          padding: 16px;
-          background: rgba(240, 147, 251, 0.1);
-          border: 1px solid rgba(240, 147, 251, 0.2);
-          border-radius: 12px;
-          color: #f9a8d4;
-          font-size: 13px;
-          font-weight: 600;
-          flex: 1;
+        .wd-platform-row { display: flex; gap: 10px; margin-top: 4px; }
+        .wd-platform-item {
+          flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;
+          padding: 14px 10px;
+          background: rgba(124,140,248,0.08); border: 1px solid rgba(124,140,248,0.18);
+          border-radius: 12px; color: #a5b4fc; font-size: 12px; font-weight: 600;
           transition: all 0.3s ease;
         }
+        .wd-platform-item:hover { background: rgba(124,140,248,0.15); transform: translateY(-3px); }
 
-        .wpd-platform-item:hover {
-          background: rgba(240, 147, 251, 0.2);
-          transform: translateY(-4px);
+        .wd-achievement-item {
+          display: flex; align-items: center; gap: 10px;
+          padding: 12px; margin-bottom: 8px;
+          background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.15);
+          border-radius: 10px; color: #fcd34d; font-size: 13px; font-weight: 600;
         }
+        .wd-achievement-item:last-child { margin-bottom: 0; }
 
-        /* Features Section */
-        .wpd-features-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-          gap: 24px;
+        /* features grid */
+        .wd-features-grid {
+          display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+          gap: 2px; background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; overflow: hidden;
         }
-
-        .wpd-feature-card {
-          position: relative;
-          padding: 32px;
-          background: rgba(17, 24, 39, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 24px;
-          backdrop-filter: blur(20px);
-          transition: all 0.4s ease;
-          overflow: hidden;
+        .wd-feature-card {
+          position: relative; background: #0b1120; padding: 28px 26px; overflow: hidden;
+          transition: background 0.35s ease; border-bottom: 4px solid transparent;
         }
-
-        .wpd-feature-card:hover {
-          transform: translateY(-8px);
-          border-color: rgba(240, 147, 251, 0.3);
-          box-shadow: 0 20px 60px rgba(240, 147, 251, 0.3);
+        .wd-feature-card:hover { background: #0f1929; border-bottom-color: var(--fa); }
+        .wd-feature-icon {
+          width: 52px; height: 52px; border-radius: 14px;
+          display: flex; align-items: center; justify-content: center;
+          background: color-mix(in srgb, var(--fa) 12%, transparent);
+          border: 1px solid color-mix(in srgb, var(--fa) 22%, transparent);
+          color: var(--fa); margin-bottom: 18px; transition: transform 0.3s ease;
         }
-
-        .wpd-feature-icon {
-          width: 64px;
-          height: 64px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 16px;
-          margin-bottom: 20px;
-          transition: all 0.3s ease;
-        }
-
-        .wpd-feature-card:hover .wpd-feature-icon {
-          transform: scale(1.1) rotate(5deg);
-        }
-
-        .wpd-feature-title {
-          font-size: 22px;
-          font-weight: 700;
-          color: white;
-          margin-bottom: 12px;
-        }
-
-        .wpd-feature-description {
-          font-size: 15px;
-          color: #e9d5ff;
-          line-height: 1.7;
-        }
-
-        .wpd-feature-gradient {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 100%;
-          opacity: 0;
+        .wd-feature-card:hover .wd-feature-icon { transform: scale(1.08) rotate(4deg); }
+        .wd-feature-title { font-family: 'DM Serif Display', serif; font-size: 18px; color: #f0f4ff; margin-bottom: 10px; }
+        .wd-feature-desc  { font-size: 13px; color: #64748b; line-height: 1.7; font-weight: 300; }
+        .wd-feature-glow  {
+          position: absolute; inset: 0; pointer-events: none; opacity: 0;
+          background: radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--fa) 12%, transparent), transparent 60%);
           transition: opacity 0.4s ease;
+        }
+        .wd-feature-card:hover .wd-feature-glow { opacity: 1; }
+
+        /* tech grid */
+        .wd-tech-grid {
+          display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+          gap: 2px; background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; overflow: hidden;
+        }
+        .wd-tech-card {
+          display: flex; align-items: center; gap: 14px;
+          padding: 20px; background: #0b1120;
+          transition: background 0.3s ease; position: relative; overflow: hidden;
+        }
+        .wd-tech-card:hover { background: #0f1929; }
+        .wd-tech-indicator {
+          position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+          background: var(--tc); opacity: 0; transition: opacity 0.3s ease;
+        }
+        .wd-tech-card:hover .wd-tech-indicator { opacity: 1; }
+        .wd-tech-icon { font-size: 28px; flex-shrink: 0; }
+        .wd-tech-name { font-size: 15px; font-weight: 600; color: #f0f4ff; margin-bottom: 3px; }
+        .wd-tech-cat  { font-size: 11px; color: #4a5568; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* architecture */
+        .wd-arch-card {
+          background: #0b1120; border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 20px; padding: 36px;
+          display: flex; flex-direction: column; gap: 16px;
+        }
+        .wd-arch-layer {
+          padding: 22px 24px;
+          background: rgba(124,140,248,0.06);
+          border: 1px solid rgba(124,140,248,0.18);
+          border-radius: 14px; transition: all 0.3s ease;
+        }
+        .wd-arch-layer:hover { background: rgba(124,140,248,0.12); transform: translateX(6px); }
+        .wd-arch-layer-title { font-size: 15px; font-weight: 700; color: #a5b4fc; margin-bottom: 6px; }
+        .wd-arch-layer-content { font-size: 14px; color: #64748b; line-height: 1.6; }
+        .wd-arch-arrow { text-align: center; font-size: 22px; color: #7c8cf8; font-weight: 700; }
+
+        /* ════════ SCREENSHOTS ════════ */
+        .wd-ss-section { max-width: 1280px; margin: 0 auto; padding: 0 64px 80px; }
+
+        .wd-divider { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
+        .wd-divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+        .wd-divider-label { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: #2d3748; white-space: nowrap; }
+
+        .wd-ss-main {
+          background: #0b1120; border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 20px; padding: 28px; margin-bottom: 24px;
+        }
+        .wd-browser-frame { border-radius: 14px; overflow: hidden; background: #1e293b; margin-bottom: 24px; }
+        .wd-browser-bar {
+          display: flex; align-items: center;
+          padding: 14px 18px;
+          background: linear-gradient(180deg,#1e293b 0%,#0f172a 100%);
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+          position: relative;
+        }
+        .wd-browser-dots { display: flex; gap: 7px; }
+        .wd-dot { width: 11px; height: 11px; border-radius: 50%; }
+        .wd-dot-r { background: #ff5f57; } .wd-dot-y { background: #febc2e; } .wd-dot-g { background: #28c840; }
+        .wd-browser-url {
+          position: absolute; left: 50%; transform: translateX(-50%);
+          padding: 6px 18px; background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 6px; color: #64748b; font-size: 12px;
+          font-family: 'Monaco', monospace;
+        }
+        .wd-ss-img { width: 100%; display: block; object-fit: contain; max-height: 560px; min-height: 320px; background: #0a0e1a; }
+        .wd-ss-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: #f0f4ff; margin-bottom: 10px; }
+        .wd-ss-desc   { font-size: 14px; color: #64748b; line-height: 1.7; font-weight: 300; }
+
+        /* mobile featured */
+        .wd-ss-mobile-main { display: flex; flex-direction: column; align-items: center; }
+        .wd-mobile-frame-wrap { margin-bottom: 22px; }
+        .wd-mobile-frame {
+          position: relative;
+          width: 320px; height: 600px;
+          border-radius: 40px;
+          border: 8px solid #1e293b;
+          box-shadow: 0 25px 60px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(124,140,248,0.15);
+          overflow: hidden;
+          background: #0a0e1a;
+        }
+        .wd-mobile-notch {
+          position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+          width: 120px; height: 26px;
+          background: #1e293b; border-radius: 0 0 18px 18px; z-index: 10;
+        }
+        .wd-mobile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 32px; }
+
+        /* thumbnail row */
+        .wd-thumb-breakout {
+          position: relative; left: 50%; right: 50%;
+          margin-left: -50vw; margin-right: -50vw;
+          width: 100vw; padding: 0 24px; box-sizing: border-box;
+        }
+        .wd-thumb-row { display: flex; align-items: center; gap: 12px; }
+        .wd-thumb-scroll-btn {
+          flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(124,140,248,0.12); border: 1px solid rgba(124,140,248,0.25);
+          color: #f0f4ff; cursor: pointer; transition: all 0.3s ease;
+          font-family: 'DM Sans', sans-serif;
+        }
+        .wd-thumb-scroll-btn:hover { background: rgba(124,140,248,0.25); transform: scale(1.08); }
+        .wd-thumb-track {
+          display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth;
+          padding: 14px 6px; flex: 1;
+          scrollbar-width: thin; scrollbar-color: rgba(124,140,248,0.4) rgba(255,255,255,0.05);
+        }
+        .wd-thumb-track::-webkit-scrollbar { height: 5px; }
+        .wd-thumb-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 10px; }
+        .wd-thumb-track::-webkit-scrollbar-thumb { background: rgba(124,140,248,0.4); border-radius: 10px; }
+        .wd-thumb-card { flex: 0 0 220px; cursor: pointer; transition: transform 0.3s ease; }
+        .wd-thumb-mobile { flex: 0 0 140px; }
+        .wd-thumb-card:hover { transform: translateY(-4px); }
+        .wd-thumb-img-wrap {
+          position: relative; border-radius: 12px; overflow: hidden;
+          border: 2px solid rgba(255,255,255,0.06); aspect-ratio: 16/10;
+          transition: border-color 0.3s ease;
+        }
+        .wd-thumb-img-wrap-mobile { aspect-ratio: 9/16; }
+        .wd-thumb-active .wd-thumb-img-wrap { border-color: rgba(124,140,248,0.7); box-shadow: 0 0 0 3px rgba(124,140,248,0.18); }
+        .wd-thumb-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .wd-thumb-card:hover .wd-thumb-img { transform: scale(1.05); }
+        .wd-thumb-overlay {
+          position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+          background: linear-gradient(135deg, rgba(124,140,248,0.88), rgba(232,121,160,0.88));
+          opacity: 0; transition: opacity 0.3s ease;
+        }
+        .wd-thumb-card:hover .wd-thumb-overlay { opacity: 1; }
+        .wd-thumb-play { color: #fff; }
+        .wd-thumb-label { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+        .wd-thumb-num  { font-size: 12px; font-weight: 800; color: #7c8cf8; background: rgba(124,140,248,0.12); padding: 3px 8px; border-radius: 5px; font-family: 'Monaco', monospace; }
+        .wd-thumb-name { font-size: 12px; font-weight: 600; color: #64748b; }
+        .wd-thumb-active .wd-thumb-name { color: #a5b4fc; }
+
+        /* ════════ CTA ════════ */
+        .wd-cta {
+          background: #0b1120;
+          border-top: 1px solid rgba(255,255,255,0.05);
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+          padding: 100px 64px; text-align: center;
+          position: relative; overflow: hidden;
+        }
+        .wd-cta::before {
+          content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+          width: 500px; height: 400px;
+          background: radial-gradient(circle, rgba(124,140,248,0.10) 0%, transparent 70%);
           pointer-events: none;
         }
-
-        .wpd-feature-card:hover .wpd-feature-gradient {
-          opacity: 0.1;
+        .wd-cta-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+        .wd-cta-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(40px, 4vw, 54px);
+          font-weight: 400; letter-spacing: -1.5px; color: #f0f4ff;
+          margin-bottom: 18px; line-height: 1.05;
         }
+        .wd-cta-desc { font-size: 16px; color: #64748b; line-height: 1.75; font-weight: 300; margin-bottom: 36px; }
 
-        /* Technologies Section */
-        .wpd-tech-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-          gap: 20px;
-          margin-bottom: 60px;
+        /* ════════ FOOTER STRIP ════════ */
+        .wd-footer-strip {
+          display: flex; align-items: center; justify-content: center;
+          flex-wrap: wrap; gap: 16px; padding: 40px 64px;
         }
+        .wd-strip-item { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #2d3748; transition: color 0.3s ease; }
+        .wd-strip-item:hover { color: #4a5568; }
+        .wd-strip-dot { color: #1e293b; font-size: 16px; line-height: 1; }
 
-        .wpd-tech-card {
-          position: relative;
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 24px;
-          background: rgba(17, 24, 39, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 16px;
-          backdrop-filter: blur(20px);
-          transition: all 0.3s ease;
-          overflow: hidden;
+        /* ════════ RESPONSIVE ════════ */
+        @media (max-width: 1100px) {
+          .wd-hero { padding: 100px 40px 70px; }
+          .wd-content, .wd-ss-section { padding-left: 40px; padding-right: 40px; }
+          .wd-tabs-bar { padding: 0 40px; }
+          .wd-overview-grid { grid-template-columns: 1fr; }
+          .wd-hero-content { grid-template-columns: 1fr; gap: 48px; }
+          .wd-hero-right { order: -1; }
+          .wd-hero-img-wrap { max-width: 380px; margin: 0 auto; }
         }
-
-        .wpd-tech-card:hover {
-          transform: translateY(-4px);
-          border-color: rgba(240, 147, 251, 0.3);
-        }
-
-        .wpd-tech-icon {
-          font-size: 32px;
-          flex-shrink: 0;
-        }
-
-        .wpd-tech-content {
-          flex: 1;
-        }
-
-        .wpd-tech-name {
-          font-size: 18px;
-          font-weight: 700;
-          color: white;
-          margin-bottom: 4px;
-        }
-
-        .wpd-tech-category {
-          font-size: 13px;
-          color: #e9d5ff;
-          font-weight: 600;
-        }
-
-        .wpd-tech-indicator {
-          position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          width: 4px;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        .wpd-tech-card:hover .wpd-tech-indicator {
-          opacity: 1;
-        }
-
-        /* Architecture Section */
-        .wpd-architecture-section {
-          margin-top: 60px;
-        }
-
-        .wpd-architecture-card {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-          padding: 40px;
-          background: rgba(17, 24, 39, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 24px;
-          backdrop-filter: blur(20px);
-        }
-
-        .wpd-architecture-layer {
-          padding: 24px;
-          background: rgba(240, 147, 251, 0.1);
-          border: 2px solid rgba(240, 147, 251, 0.3);
-          border-radius: 16px;
-          transition: all 0.3s ease;
-        }
-
-        .wpd-architecture-layer:hover {
-          background: rgba(240, 147, 251, 0.15);
-          transform: translateX(8px);
-        }
-
-        .wpd-layer-title {
-          font-size: 18px;
-          font-weight: 700;
-          color: #f9a8d4;
-          margin-bottom: 8px;
-        }
-
-        .wpd-layer-content {
-          font-size: 15px;
-          color: #e9d5ff;
-          line-height: 1.6;
-        }
-
-        .wpd-architecture-arrow {
-          text-align: center;
-          font-size: 24px;
-          color: #f093fb;
-          font-weight: 700;
-        }
-
-
-        /* CTA Section */
-        .wpd-cta-section {
-          padding: 100px 60px;
-          background: rgba(17, 24, 39, 0.6);
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .wpd-cta-content {
-          max-width: 1400px;
-          margin: 0 auto;
-          text-align: center;
-        }
-
-        .wpd-cta-title {
-          font-size: 48px;
-          font-weight: 900;
-          margin-bottom: 20px;
-          background: linear-gradient(135deg, #fff, #f9a8d4);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .wpd-cta-description {
-          font-size: 20px;
-          color: #e9d5ff;
-          margin-bottom: 40px;
-          max-width: 700px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .wpd-cta-buttons {
-          display: flex;
-          gap: 20px;
-          justify-content: center;
-          flex-wrap: wrap;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-          .wpd-section-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .wpd-hero-title {
-            font-size: 56px;
-          }
-
-          .wpd-hero-stats {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-
         @media (max-width: 768px) {
-          .wpd-hero {
-            padding: 80px 20px 60px;
-          }
-
-          .wpd-content-wrapper {
-            padding: 60px 20px;
-          }
-
-          .wpd-tabs-section {
-            padding: 0 20px;
-          }
-
-          .wpd-hero-title {
-            font-size: 42px;
-          }
-
-          .wpd-section-title {
-            font-size: 32px;
-          }
-
-          .wpd-hero-stats {
-            grid-template-columns: 1fr;
-          }
-
-          .wpd-features-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .wpd-tech-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .wpd-main-screenshot {
-            height: 400px;
-          }
-
-          .wpd-screenshot-thumbnails {
-            grid-template-columns: repeat(2, 1fr);
-          }
-
-          .wpd-hero-actions {
-            flex-direction: column;
-          }
-
-          .wpd-btn-primary, .wpd-btn-secondary {
-            width: 100%;
-            justify-content: center;
-          }
-
-          .wpd-cta-section {
-            padding: 60px 20px;
-          }
-
-          .wpd-cta-title {
-            font-size: 36px;
-          }
-
-          .wpd-cta-buttons {
-            flex-direction: column;
-          }
-
-          .wpd-tabs {
-            overflow-x: scroll;
-          }
-
-          .wpd-architecture-card {
-            padding: 24px;
-          }
-
-          .wpd-overview-content {
-            padding: 24px;
-          }
-
-          .wpd-info-card {
-            padding: 24px;
-          }
+          .wd-hero { padding: 80px 24px 60px; min-height: auto; }
+          .wd-content, .wd-ss-section, .wd-cta, .wd-footer-strip { padding-left: 24px; padding-right: 24px; }
+          .wd-tabs-bar { padding: 0 24px; }
+          .wd-hero-stats { flex-direction: column; }
+          .wd-features-grid { grid-template-columns: 1fr; }
+          .wd-tech-grid { grid-template-columns: 1fr; }
+          .wd-browser-url { display: none; }
+          .wd-thumb-card { flex: 0 0 180px; }
+          .wd-thumb-mobile { flex: 0 0 120px; }
         }
-
         @media (max-width: 480px) {
-          .wpd-hero-title {
-            font-size: 32px;
-          }
-
-          .wpd-section-title {
-            font-size: 28px;
-          }
-
-          .wpd-hero-subtitle {
-            font-size: 16px;
-          }
-
-          .wpd-stat-card {
-            padding: 16px;
-          }
-
-          .wpd-stat-value {
-            font-size: 24px;
-          }
-
-          .wpd-tab {
-            padding: 16px 20px;
-            font-size: 14px;
-          }
-
-          .wpd-screenshot-thumbnails {
-            grid-template-columns: 1fr;
-          }
-
-          .wpd-feature-card {
-            padding: 24px;
-          }
-
-          .wpd-tech-card {
-            padding: 16px;
-          }
-
-          .wpd-architecture-layer {
-            padding: 20px;
-          }
-
-          .wpd-cta-title {
-            font-size: 28px;
-          }
-
-          .wpd-cta-description {
-            font-size: 16px;
-          }
+          .wd-hero-title { font-size: 38px; }
+          .wd-section-title { font-size: 34px; }
+          .wd-cta-title { font-size: 34px; }
+          .wd-hero-actions { flex-direction: column; }
+          .wd-btn-primary, .wd-btn-secondary { width: 100%; justify-content: center; }
         }
-
-        /* Screenshots Section */
-.ash-screenshots-section {
-  max-width: 1750px;
-  margin: 0 auto;
-  padding: 50px 0;
-  overflow: hidden;
-}
-
-.ash-screenshots-heading {
-  font-size: 48px;
-  font-weight: 900;
-  text-align: center;
-  margin-bottom: 16px;
-  background: linear-gradient(135deg, #fff 0%, #f9a8d4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -1px;
-}
-
-.ash-screenshots-subheading {
-  font-size: 18px;
-  color: #e9d5ff;
-  text-align: center;
-  margin-bottom: 60px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.ash-screenshots-wrapper {
-  display: grid;
-  gap: 40px;
-}
-
-/* Featured Screenshot */
-.ash-featured-screenshot {
-  position: relative;
-  background: rgba(17, 24, 39, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 32px;
-  padding: 32px;
-  backdrop-filter: blur(20px);
-  overflow: hidden;
-  max-width: 1300px;
-  justify-self: center;
-  width: 100%;
-}
-  .ash-featured-screenshot-web {
-  position: relative;
-  background: rgba(17, 24, 39, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 32px;
-  padding: 32px;
-  backdrop-filter: blur(20px);
-  overflow: hidden;
-  max-width: 1300px;
-  justify-self: center;
-  width: 600px;
-}
-
-.ash-screenshot-frame {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  background: #1e293b;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-  margin-bottom: 32px;
-}
-
-.ash-browser-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  background: linear-gradient(180deg, rgba(30, 41, 59, 1) 0%, rgba(15, 23, 42, 1) 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.ash-browser-dots {
-  display: flex;
-  gap: 8px;
-}
-
-.ash-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.ash-dot-red {
-  background: #ff5f57;
-  box-shadow: 0 0 10px rgba(255, 95, 87, 0.5);
-}
-
-.ash-dot-yellow {
-  background: #febc2e;
-  box-shadow: 0 0 10px rgba(254, 188, 46, 0.5);
-}
-
-.ash-dot-green {
-  background: #28c840;
-  box-shadow: 0 0 10px rgba(40, 200, 64, 0.5);
-}
-
-.ash-browser-url {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 8px 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  color: #e9d5ff;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: 'Monaco', monospace;
-}
-
-.ash-screenshot-image {
-  width: 100%;
-  height: 450px;
-  display: block;
-  object-fit: contain;
-  min-height: 600px;
-  background: linear-gradient(135deg, #163cb9ff 0%, #8224b8ff 100%);
-}
-
-.ash-screenshot-details {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.ash-screenshot-title {
-  font-size: 32px;
-  font-weight: 800;
-  color: white;
-  letter-spacing: -0.5px;
-}
-
-.ash-screenshot-description {
-  font-size: 16px;
-  color: #e9d5ff;
-  line-height: 1.7;
-  max-width: 700px;
-}
-
-/* Mobile Featured Screenshot */
-.ash-mobile-featured {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.ash-mobile-frame {
-  position: relative;
-  width: 400px;
-  height: 800px;
-  border-radius: 40px;
-  padding: 12px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-  margin-bottom: 32px;
-  border: 8px solid #0f172a;
-}
-
-.ash-mobile-notch {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150px;
-  height: 28px;
-  background: #0f172a;
-  border-radius: 0 0 20px 20px;
-  z-index: 10;
-}
-
-.ash-mobile-screenshot-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 62px;
-  background: black;
-}
-
-/* Thumbnails Container */
-.ash-thumbnails-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-.ash-scroll-button {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  background: rgba(240, 147, 251, 0.2);
-  border: 2px solid rgba(240, 147, 251, 0.3);
-  border-radius: 50%;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10;
-}
-
-.ash-scroll-button:hover {
-  background: rgba(240, 147, 251, 0.8);
-  border-color: rgba(240, 147, 251, 1);
-  transform: scale(1.1);
-}
-
-.ash-thumbnails-horizontal {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  padding: 20px 10px;
-  flex: 1;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(240, 147, 251, 0.5) rgba(255, 255, 255, 0.1);
-  max-width: 100%;
-}
-
-.ash-thumbnails-horizontal::-webkit-scrollbar {
-  height: 8px;
-}
-
-.ash-thumbnails-horizontal::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-
-.ash-thumbnails-horizontal::-webkit-scrollbar-thumb {
-  background: rgba(240, 147, 251, 0.5);
-  border-radius: 10px;
-}
-
-.ash-thumbnails-horizontal::-webkit-scrollbar-thumb:hover {
-  background: rgba(240, 147, 251, 0.8);
-}
-
-.ash-thumbnail-card {
-  flex: 0 0 280px;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ash-mobile-thumbnail {
-  flex: 0 0 180px;
-}
-
-.ash-thumbnail-wrapper {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  background: rgba(17, 24, 39, 0.6);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  aspect-ratio: 16/10;
-}
-
-.ash-mobile-thumbnail-wrapper {
-  aspect-ratio: 9/16;
-}
-
-.ash-thumbnail-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ash-thumbnail-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(240, 147, 251, 0.9), rgba(245, 87, 108, 0.9));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ash-play-button {
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
-  border-radius: 50%;
-  color: #f093fb;
-  transform: scale(0.8);
-  transition: all 0.3s ease;
-}
-
-.ash-thumbnail-card:hover .ash-thumbnail-overlay {
-  opacity: 1;
-}
-
-.ash-thumbnail-card:hover .ash-play-button {
-  transform: scale(1);
-}
-
-.ash-thumbnail-card:hover .ash-thumbnail-wrapper {
-  transform: translateY(-4px);
-  border-color: rgba(240, 147, 251, 0.5);
-  box-shadow: 0 20px 40px rgba(240, 147, 251, 0.3);
-}
-
-.ash-thumbnail-card:hover .ash-thumbnail-image {
-  transform: scale(1.05);
-}
-
-/* Active Thumbnail */
-.ash-thumbnail-active .ash-thumbnail-wrapper {
-  border-color: rgba(240, 147, 251, 0.8);
-  background: rgba(240, 147, 251, 0.1);
-  box-shadow: 0 0 0 4px rgba(240, 147, 251, 0.2);
-}
-
-.ash-thumbnail-active .ash-thumbnail-label {
-  color: #f9a8d4;
-}
-
-.ash-thumbnail-label {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 16px;
-  padding: 0 4px;
-  color: #e9d5ff;
-  transition: all 0.3s ease;
-}
-
-.ash-thumbnail-number {
-  font-size: 14px;
-  font-weight: 800;
-  color: #f093fb;
-  background: rgba(240, 147, 251, 0.15);
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-family: 'Monaco', monospace;
-}
-
-.ash-thumbnail-name {
-  font-size: 15px;
-  font-weight: 600;
-}
-
-/* Animation */
-@keyframes ash-slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.ash-fade-in {
-  animation: ash-slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Responsive Design for Screenshots */
-@media (max-width: 1024px) {
-  .ash-thumbnail-card {
-    flex: 0 0 240px;
-  }
-  
-  .ash-mobile-thumbnail {
-    flex: 0 0 160px;
-  }
-}
-
-@media (max-width: 768px) {
-  .ash-screenshots-section {
-    padding: 60px 20px;
-  }
-
-  .ash-screenshots-heading {
-    font-size: 36px;
-  }
-
-  .ash-screenshots-subheading {
-    font-size: 16px;
-    margin-bottom: 40px;
-  }
-
-  .ash-featured-screenshot {
-    padding: 20px;
-  }
-
-  .ash-screenshot-frame {
-    margin-bottom: 24px;
-  }
-
-  .ash-screenshot-image {
-    min-height: 300px;
-  }
-
-  .ash-screenshot-title {
-    font-size: 24px;
-  }
-
-  .ash-browser-url {
-    display: none;
-  }
-
-  .ash-thumbnail-card {
-    flex: 0 0 200px;
-  }
-  
-  .ash-mobile-thumbnail {
-    flex: 0 0 140px;
-  }
-  
-  .ash-scroll-button {
-    width: 40px;
-    height: 40px;
-  }
-
-  .ash-mobile-frame {
-    width: 320px;
-    height: 660px;
-    border-radius: 32px;
-    padding: 10px;
-    border: 6px solid #0f172a;
-  }
-
-  .ash-mobile-notch {
-    width: 120px;
-    height: 24px;
-  }
-}
-
-@media (max-width: 480px) {
-  .ash-screenshots-heading {
-    font-size: 28px;
-  }
-
-  .ash-screenshot-title {
-    font-size: 20px;
-  }
-
-  .ash-screenshot-description {
-    font-size: 14px;
-  }
-
-  .ash-browser-bar {
-    padding: 12px 16px;
-  }
-
-  .ash-dot {
-    width: 10px;
-    height: 10px;
-  }
-
-  .ash-mobile-frame {
-    width: 280px;
-    height: 580px;
-  }
-}
       `}</style>
     </div>
   );
 };
 
-export default WeddingProjectDetail
+export default WeddingProjectDetail;
