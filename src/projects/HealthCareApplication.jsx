@@ -1,2220 +1,1410 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Github, Calendar, Users, Award, Zap, Code2, Sparkles, CheckCircle2, Play, Download, Monitor, Smartphone, Globe, Lock, TrendingUp, Activity, FileText, MessageSquare, Bell, Shield, Building2, Key, BadgeCheck } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Github,
+  Calendar,
+  Users,
+  Award,
+  Zap,
+  Code2,
+  Sparkles,
+  CheckCircle2,
+  Play,
+  Download,
+  Monitor,
+  Smartphone,
+  Globe,
+  Lock,
+  TrendingUp,
+  Activity,
+  FileText,
+  MessageSquare,
+  Bell,
+  Shield,
+  Building2,
+  Key,
+  BadgeCheck,
+  Star,
+} from "lucide-react";
+
 // Import all images
-import doctor1 from '../assets/doctor1.jpg';
-import heroImg from '../assets/Health/Hero.png';
-import doctorDashboard from '../assets/Health/doctordashboard.png';
-import doctorAnalytics from '../assets/Health/doctoranalytics.png';
-import calendarImg from '../assets/Health/calendar.png';
-import myPatient from '../assets/Health/mypatient.png';
-import goals from '../assets/Health/goals.png';
-import booking from '../assets/Health/booking.png';
-import accessPage from '../assets/Health/access page.png';
-import services from '../assets/Health/services.png';
-import reviewRating from '../assets/Health/reviewand rating.png';
-import vendors from '../assets/Health/vendors.png';
-import vitalAnalyse from '../assets/Health/vitalanalyse.png';
+import doctor1 from "../assets/doctor1.jpg";
+import doctor2 from "../assets/Health/HealthcareHero.png";
+import doctor3 from "../assets/Health/HealthNexus.png";
+import heroImg from "../assets/Health/Hero1.png";
+import partners from "../assets/Health/partners.png";
+import doorstep from "../assets/Health/doorstep.png";
+import doctorDashboard from "../assets/Health/doctordashboard.png";
+import doctorAnalytics from "../assets/Health/doctoranalytics.png";
+import calendarImg from "../assets/Health/calendar.png";
+import myPatient from "../assets/Health/mypatient.png";
+import goals from "../assets/Health/goals.png";
+import booking from "../assets/Health/booking.png";
+import accessPage from "../assets/Health/access page.png";
+import services from "../assets/Health/services.png";
+import reviewRating from "../assets/Health/reviewand rating.png";
+import vendors from "../assets/Health/vendors.png";
+import vitalAnalyse from "../assets/Health/vitalanalyse.png";
 
-const HealthcareProjectDetail = () => {
-  const [activeTab, setActiveTab] = useState('overview');
-  const navigate = useNavigate();
-  const [activeScreenshot, setActiveScreenshot] = useState(0);
-  const thumbnailScrollRef = React.useRef(null);
-
-  const scrollThumbnails = (direction) => {
-    if (thumbnailScrollRef.current) {
-      const scrollAmount = 300;
-      thumbnailScrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const handlePrevious = () => {
-    setActiveScreenshot((prev) => (prev === 0 ? screenshots.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setActiveScreenshot((prev) => (prev + 1) % screenshots.length);
-  };
-
-  const technologies = [
-    { name: 'React', category: 'Frontend', icon: '⚛️', color: '#61dafb' },
-    { name: 'Vue.js', category: 'Frontend', icon: '💚', color: '#42b883' },
-
-    { name: 'Java', category: 'Backend', icon: '☕', color: '#007396' },
-    { name: 'Python', category: 'Backend', icon: '🐍', color: '#3776ab' },
-    { name: 'Spring Boot', category: 'Backend', icon: '🍃', color: '#6db33f' },
-
-    { name: 'MySQL', category: 'Database', icon: '🐬', color: '#4479a1' },
-    { name: 'MongoDB', category: 'Database', icon: '🍃', color: '#47a248' },
-    { name: 'Redis', category: 'Database', icon: '🔴', color: '#dc382d' },
-
-    { name: 'Redux', category: 'State Management', icon: '🔄', color: '#764abc' },
-
-    { name: 'Socket.io', category: 'Real-time', icon: '🔌', color: '#010101' },
-    { name: 'WebRTC', category: 'Real-time', icon: '📹', color: '#333333' },
-    { name: 'MQTT', category: 'Real-time', icon: '📡', color: '#660066' },
-    { name: 'GraphQL Subscriptions', category: 'Real-time', icon: '⚡', color: '#e10098' },
-
-    { name: 'Docker', category: 'DevOps', icon: '🐳', color: '#2496ed' },
-    { name: 'Kubernetes', category: 'DevOps', icon: '⚓', color: '#326ce5' },
-    { name: 'Jenkins', category: 'DevOps', icon: '🔧', color: '#d24939' },
-    { name: 'GitHub Actions', category: 'DevOps', icon: '🚀', color: '#2088ff' },
-    { name: 'Terraform', category: 'DevOps', icon: '🏗️', color: '#7b42bc' },
-
-    { name: 'AWS', category: 'Cloud', icon: '☁️', color: '#ff9900' },
-    { name: 'Azure', category: 'Cloud', icon: '☁️', color: '#0089d6' },
-    { name: 'Google Cloud', category: 'Cloud', icon: '☁️', color: '#4285f4' },
-    { name: 'Netlify', category: 'Cloud', icon: '💎', color: '#00c7b7' },
-
-    { name: 'Stripe', category: 'Payments', icon: '💳', color: '#635bff' },
-    { name: 'PayPal', category: 'Payments', icon: '💰', color: '#00457c' },
-
-    { name: 'Bootstrap', category: 'Styling', icon: '🅱️', color: '#7952b3' },
-    { name: 'Styled Components', category: 'Styling', icon: '💅', color: '#db7093' },
-
-    { name: 'Jest', category: 'Testing', icon: '🃏', color: '#c21325' },
-
-    { name: 'Git', category: 'Version Control', icon: '📚', color: '#f05032' },
-    { name: 'GitHub', category: 'Version Control', icon: '🐙', color: '#181717' },
-
-    { name: 'Vite', category: 'Build Tools', icon: '⚡', color: '#646cff' }
-  ];
-
- const features = [
+/* ─── data ─────────────────────────────────────────────────── */
+const technologies = [
+  { name: "React", category: "Frontend", icon: "⚛️", color: "#61dafb" },
+  { name: "Vue.js", category: "Frontend", icon: "💚", color: "#42b883" },
+  { name: "Java", category: "Backend", icon: "☕", color: "#007396" },
+  { name: "Python", category: "Backend", icon: "🐍", color: "#3776ab" },
+  { name: "Spring Boot", category: "Backend", icon: "🍃", color: "#6db33f" },
+  { name: "MySQL", category: "Database", icon: "🐬", color: "#4479a1" },
+  { name: "MongoDB", category: "Database", icon: "🍃", color: "#47a248" },
+  { name: "Redis", category: "Database", icon: "🔴", color: "#dc382d" },
+  { name: "Redux", category: "State Management", icon: "🔄", color: "#764abc" },
+  { name: "Socket.io", category: "Real-time", icon: "🔌", color: "#888888" },
+  { name: "WebRTC", category: "Real-time", icon: "📹", color: "#888888" },
+  { name: "MQTT", category: "Real-time", icon: "📡", color: "#660066" },
   {
-    title: 'AI-Powered Health Predictions',
-    description: 'Machine learning algorithms analyze patient data to predict future health risks like diabetes and provide personalized preventive care recommendations.',
+    name: "GraphQL Subscriptions",
+    category: "Real-time",
+    icon: "⚡",
+    color: "#e10098",
+  },
+  { name: "Docker", category: "DevOps", icon: "🐳", color: "#2496ed" },
+  { name: "Kubernetes", category: "DevOps", icon: "⚓", color: "#326ce5" },
+  { name: "Jenkins", category: "DevOps", icon: "🔧", color: "#d24939" },
+  { name: "GitHub Actions", category: "DevOps", icon: "🚀", color: "#2088ff" },
+  { name: "Terraform", category: "DevOps", icon: "🏗️", color: "#7b42bc" },
+  { name: "AWS", category: "Cloud", icon: "☁️", color: "#ff9900" },
+  { name: "Azure", category: "Cloud", icon: "☁️", color: "#0089d6" },
+  { name: "Google Cloud", category: "Cloud", icon: "☁️", color: "#4285f4" },
+  { name: "Netlify", category: "Cloud", icon: "💎", color: "#00c7b7" },
+  { name: "Stripe", category: "Payments", icon: "💳", color: "#635bff" },
+  { name: "PayPal", category: "Payments", icon: "💰", color: "#00457c" },
+  { name: "Bootstrap", category: "Styling", icon: "🅱️", color: "#7952b3" },
+  {
+    name: "Styled Components",
+    category: "Styling",
+    icon: "💅",
+    color: "#db7093",
+  },
+  { name: "Jest", category: "Testing", icon: "🃏", color: "#c21325" },
+  { name: "Git", category: "Version Control", icon: "📚", color: "#f05032" },
+  { name: "GitHub", category: "Version Control", icon: "🐙", color: "#7c8cf8" },
+  { name: "Vite", category: "Build Tools", icon: "⚡", color: "#646cff" },
+];
+
+const features = [
+  {
+    title: "AI-Powered Health Predictions",
+    description:
+      "Machine learning algorithms analyse patient data to predict future health risks like diabetes and provide personalised preventive care recommendations.",
     icon: <Sparkles />,
-    color: '#667eea'
+    color: "#7c8cf8",
   },
   {
-    title: 'Comprehensive Patient Management',
-    description: 'Complete medical records including immunization history, medications, allergies, lab reports, and vital signs with interactive trend visualization.',
+    title: "Comprehensive Patient Management",
+    description:
+      "Complete medical records including immunisation history, medications, allergies, lab reports, and vital signs with interactive trend visualisation.",
     icon: <Users />,
-    color: '#764ba2'
+    color: "#a78bfa",
   },
   {
-    title: 'Smart Appointment System',
-    description: 'Seamless appointment booking and scheduling system connecting patients with doctors, with automated reminders and calendar integration.',
+    title: "Smart Appointment System",
+    description:
+      "Seamless appointment booking connecting patients with doctors, automated reminders and calendar integration.",
     icon: <Calendar />,
-    color: '#f093fb'
+    color: "#e879a0",
   },
   {
-    title: 'Health Analytics Dashboard',
-    description: 'Interactive graphs and charts displaying vital signs trends over time, helping patients and doctors track health progress effectively.',
+    title: "Health Analytics Dashboard",
+    description:
+      "Interactive graphs displaying vital signs trends over time, helping patients and doctors track health progress effectively.",
     icon: <Activity />,
-    color: '#4facfe'
+    color: "#38bdf8",
   },
   {
-    title: 'AI Medical Report Reader',
-    description: 'Intelligent document analysis that automatically processes and extracts key insights from medical reports, making complex information easily understandable.',
+    title: "AI Medical Report Reader",
+    description:
+      "Intelligent document analysis that automatically processes and extracts key insights from medical reports.",
     icon: <FileText />,
-    color: '#43e97b'
+    color: "#34d399",
   },
   {
-    title: 'JWT Authentication System',
-    description: 'Secure token-based authentication ensuring protected access to sensitive medical data with automatic session management and refresh tokens.',
+    title: "JWT Authentication System",
+    description:
+      "Secure token-based authentication ensuring protected access to sensitive medical data with automatic session management.",
     icon: <Key />,
-    color: '#764ba2'
+    color: "#a78bfa",
   },
   {
-    title: 'Doctor Verification System',
-    description: 'Robust credential verification process for healthcare providers, ensuring only qualified and licensed medical professionals can access the platform.',
+    title: "Doctor Verification System",
+    description:
+      "Robust credential verification for healthcare providers, ensuring only qualified and licensed medical professionals access the platform.",
     icon: <BadgeCheck />,
-    color: '#764ba2'
+    color: "#a78bfa",
   },
   {
-    title: 'Real-Time Messaging System',
-    description: 'Secure in-app messaging between patients and healthcare providers for quick consultations, follow-ups, and medical queries.',
+    title: "Real-Time Messaging System",
+    description:
+      "Secure in-app messaging between patients and healthcare providers for quick consultations, follow-ups, and medical queries.",
     icon: <MessageSquare />,
-    color: '#fa709a'
+    color: "#e879a0",
   },
   {
-    title: 'Smart Notifications',
-    description: 'Automated alerts for appointments, medication reminders, test results, and important health updates to keep all users informed.',
+    title: "Smart Notifications",
+    description:
+      "Automated alerts for appointments, medication reminders, test results, and important health updates.",
     icon: <Bell />,
-    color: '#667eea'
+    color: "#7c8cf8",
   },
   {
-    title: 'Multi-Role Access System',
-    description: 'Role-based access control for Admin, Doctor, Patient, and Vendors (pharmacies, hospitals, labs) with secure authentication and permissions.',
+    title: "Multi-Role Access System",
+    description:
+      "Role-based access control for Admin, Doctor, Patient, and Vendors with secure authentication and permissions.",
     icon: <Shield />,
-    color: '#764ba2'
+    color: "#a78bfa",
   },
   {
-    title: 'Vendor Management',
-    description: 'Integrated system for managing pharmacies, hospitals, and laboratories, streamlining healthcare service coordination.',
+    title: "Vendor Management",
+    description:
+      "Integrated system for managing pharmacies, hospitals, and laboratories, streamlining healthcare service coordination.",
     icon: <Building2 />,
-    color: '#4facfe'
+    color: "#38bdf8",
   },
   {
-    title: 'Secure Data Storage',
-    description: 'HIPAA-compliant encrypted storage with comprehensive audit trails ensuring patient data privacy and security.',
+    title: "Secure Data Storage",
+    description:
+      "HIPAA-compliant encrypted storage with comprehensive audit trails ensuring patient data privacy and security.",
     icon: <Lock />,
-    color: '#43e97b'
-  }
+    color: "#34d399",
+  },
 ];
 
 const screenshots = [
-    {
-      id: 1,
-      title: 'Healthcare Website',
-      url: heroImg,
-      description: 'Modern landing page showcasing healthcare services with intuitive navigation and hero section'
-    },
-    {
-      id: 2,
-      title: 'Doctor Dashboard',
-      url: doctorDashboard,
-      description: 'Comprehensive overview of appointments, patient statistics, and daily schedule for healthcare providers'
-    },
-    {
-      id: 3,
-      title: 'Doctor Analytics',
-      url: doctorAnalytics,
-      description: 'Advanced analytics displaying patient trends, consultation metrics, and performance insights'
-    },
-    {
-      id: 4,
-      title: 'Doctor Schedule Calendar',
-      url: calendarImg,
-      description: 'Interactive calendar for managing appointments, availability, and scheduling consultations'
-    },
-    {
-      id: 5,
-      title: 'Doctors My Patients',
-      url: myPatient,
-      description: 'Complete patient management interface with medical history, records, and treatment plans'
-    },
-    {
-      id: 6,
-      title: 'Health Goals',
-      url: goals,
-      description: 'Patient health goal tracking system with progress visualization and milestone achievements'
-    },
-    {
-      id: 7,
-      title: 'Booking Dashboard',
-      url: booking,
-      description: 'Seamless appointment booking interface with doctor selection and time slot availability'
-    },
-    {
-      id: 8,
-      title: 'Access Settings',
-      url: accessPage,
-      description: 'Role-based access control panel for managing user permissions and security settings'
-    },
-    {
-      id: 9,
-      title: 'Health Nexus Services',
-      url: services,
-      description: 'Comprehensive overview of healthcare services, specializations, and medical offerings'
-    },
-    {
-      id: 10,
-      title: 'Review and Rating',
-      url: reviewRating,
-      description: 'Patient feedback system displaying doctor ratings, reviews, and testimonials'
-    },
-    {
-      id: 11,
-      title: 'HealthNexus Vendors',
-      url: vendors,
-      description: 'Vendor management portal for pharmacies, laboratories, and hospital partnerships'
-    },
-    {
-      id: 12,
-      title: 'Vital Signs Analytics Dashboard',
-      url: vitalAnalyse,
-      description: 'Real-time vital signs monitoring with interactive graphs and health trend analysis'
-    }
-  ];
-  const projectStats = [
-    { label: 'Development Time', value: '18 Months', icon: <Calendar /> },
-    { label: 'Team Size', value: '1 Member', icon: <Users /> },
-    { label: 'Target Users', value: '10,000+', icon: <TrendingUp /> }
-  ];
+  {
+    id: 1,
+    title: "Healthcare Website",
+    url: heroImg,
+    description:
+      "Modern landing page showcasing healthcare services with intuitive navigation and hero section.",
+  },
+  {
+    id: 2,
+    title: "HealthNexus Partners",
+    url: partners,
+    description:
+      "Overview of our partner organisations and their contributions to the HealthNexus platform.",
+  },
+  {
+    id: 3,
+    title: "Doorstep Services",
+    url: doorstep,
+    description:
+      "Modern landing page showcasing healthcare services with intuitive navigation and hero section.",
+  },
+  {
+    id: 4,
+    title: "Doctor Dashboard",
+    url: doctorDashboard,
+    description:
+      "Comprehensive overview of appointments, patient statistics, and daily schedule for healthcare providers.",
+  },
+  {
+    id: 5,
+    title: "Doctor Analytics",
+    url: doctorAnalytics,
+    description:
+      "Advanced analytics displaying patient trends, consultation metrics, and performance insights.",
+  },
+  {
+    id: 6,
+    title: "Doctor Schedule Calendar",
+    url: calendarImg,
+    description:
+      "Interactive calendar for managing appointments, availability, and scheduling consultations.",
+  },
+  {
+    id: 7,
+    title: "My Patients",
+    url: myPatient,
+    description:
+      "Complete patient management interface with medical history, records, and treatment plans.",
+  },
+  {
+    id: 8,
+    title: "Health Goals",
+    url: goals,
+    description:
+      "Patient health goal tracking system with progress visualisation and milestone achievements.",
+  },
+  {
+    id: 9,
+    title: "Booking Dashboard",
+    url: booking,
+    description:
+      "Seamless appointment booking interface with doctor selection and time slot availability.",
+  },
+  {
+    id: 10,
+    title: "Access Settings",
+    url: accessPage,
+    description:
+      "Role-based access control panel for managing user permissions and security settings.",
+  },
+  {
+    id: 11,
+    title: "Health Nexus Services",
+    url: services,
+    description:
+      "Comprehensive overview of healthcare services, specialisations, and medical offerings.",
+  },
+  {
+    id: 12,
+    title: "Review and Rating",
+    url: reviewRating,
+    description:
+      "Patient feedback system displaying doctor ratings, reviews, and testimonials.",
+  },
+  {
+    id: 13,
+    title: "HealthNexus Vendors",
+    url: vendors,
+    description:
+      "Vendor management portal for pharmacies, laboratories, and hospital partnerships.",
+  },
+  {
+    id: 14,
+    title: "Vital Signs Analytics",
+    url: vitalAnalyse,
+    description:
+      "Real-time vital signs monitoring with interactive graphs and health trend analysis.",
+  },
+];
 
-  const achievements = [
-    'Featured in TechCrunch Healthcare Section',
-    '99.9% Uptime Achievement',
-    'HIPAA Compliance Certified',
-    'ISO 27001 Security Standard'
-  ];
+const projectStats = [
+  { label: "Development Time", value: "18 Months", icon: <Calendar /> },
+  { label: "Team Size", value: "1 Member", icon: <Users /> },
+  { label: "Target Users", value: "10,000+", icon: <TrendingUp /> },
+];
 
+const achievements = [
+  "Featured in TechCrunch Healthcare Section",
+  "99.9% Uptime Achievement",
+  "HIPAA Compliance Certified",
+  "ISO 27001 Security Standard",
+];
+
+/* ─── component ─────────────────────────────────────────────── */
+const HealthcareProjectDetail = () => {
+  const [activeTab, setActiveTab] = useState("overview");
+  const [activeScreenshot, setActiveScreenshot] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
+  const thumbnailScrollRef = React.useRef(null);
+  const sectionRef = React.useRef(null);
+
+  /* intersection → fade-in */
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveScreenshot((prev) => (prev + 1) % screenshots.length);
-    }, 5000);
-    return () => clearInterval(interval);
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.05 },
+    );
+    if (sectionRef.current) obs.observe(sectionRef.current);
+    return () => obs.disconnect();
   }, []);
 
+  /* auto-advance screenshots */
+  useEffect(() => {
+    const t = setInterval(() => {
+      setActiveScreenshot((p) => (p + 1) % screenshots.length);
+    }, 5000);
+    return () => clearInterval(t);
+  }, []);
+
+  const scrollThumbnails = (dir) => {
+    if (thumbnailScrollRef.current)
+      thumbnailScrollRef.current.scrollBy({
+        left: dir === "left" ? -300 : 300,
+        behavior: "smooth",
+      });
+  };
+
   return (
-    <div className="hpd-container">
-      {/* Hero Section */}
-      <section className="hpd-hero">
-  <div className="hpd-hero-background">
-    <div className="hpd-gradient-blur hpd-blur-1"></div>
-    <div className="hpd-gradient-blur hpd-blur-2"></div>
-    <div className="hpd-grid-pattern"></div>
-  </div>
-  
-  <div className="hpd-hero-content">
-    <div className="hpd-hero-left">
-      <button className="hpd-back-btn" onClick={() => navigate('/')}>
-        <ArrowLeft size={20} />
-        <span>Back to Projects</span>
-      </button>
+    <div ref={sectionRef} className="hd-root">
+      {/* ── shared background (matches PortfolioProjects) ── */}
+      <div className="hd-grid-bg" />
+      <div className="hd-glow-1" />
+      <div className="hd-glow-2" />
 
-      <div className="hpd-hero-badge">
-        <Sparkles size={16} />
-        <span>Final Year Project • 2026</span>
-      </div>
+      <div className={`hd-inner ${isVisible ? "hd-in" : ""}`}>
+        {/* ════════════════════ HERO ════════════════════ */}
+        <section className="hd-hero">
+          {/* blurred background image */}
+          <div className="hd-hero-bg-img">
+            <img
+              src={doctor2}
+              alt=""
+              aria-hidden="true"
+              className="hd-hero-bg-photo"
+            />
+            <div className="hd-hero-bg-overlay" />
+          </div>
 
-      <h1 className="hpd-hero-title">
-        Next-Generation<br />
-        <span className="hpd-gradient-text">Healthcare Platform</span>
-      </h1>
+          <div className="hd-hero-content">
+            {/* left column */}
+            <div className="hd-hero-left">
+              <button className="hd-back-btn" onClick={() => navigate("/")}>
+                <ArrowLeft size={16} />
+                <span>Back to Projects</span>
+              </button>
 
-      <p className="hpd-hero-subtitle">
-        Transforming patient care through AI-powered diagnostics, predictive health analytics, 
-        and seamless telemedicine integration. Built for the future of healthcare delivery.
-      </p>
+              <div className="hd-eyebrow">
+                <span className="hd-eyebrow-line" />
+                <Sparkles size={13} />
+                <span>Final Year Project · 2026</span>
+                <Sparkles size={13} />
+                <span className="hd-eyebrow-line" />
+              </div>
 
-      <div className="hpd-hero-stats">
-        {projectStats.map((stat, index) => (
-          <div key={index} className="hpd-stat-card">
-            <div className="hpd-stat-icon">{stat.icon}</div>
-            <div className="hpd-stat-content">
-              <div className="hpd-stat-value">{stat.value}</div>
-              <div className="hpd-stat-label">{stat.label}</div>
+              <h1 className="hd-hero-title">
+                Next-Generation
+                <br />
+                <em className="hd-title-em">Healthcare Platform</em>
+              </h1>
+
+              <p className="hd-hero-subtitle">
+                Transforming patient care through AI-powered diagnostics,
+                predictive health analytics, and seamless telemedicine
+                integration built for the future of healthcare delivery.
+              </p>
+
+              {/* stat cards */}
+              <div className="hd-hero-stats">
+                {projectStats.map((s, i) => (
+                  <div key={i} className="hd-stat-card">
+                    <div className="hd-stat-icon">{s.icon}</div>
+                    <div>
+                      <div className="hd-stat-value">{s.value}</div>
+                      <div className="hd-stat-label">{s.label}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="hd-hero-actions">
+                <button
+                  className="hd-btn-primary"
+                  onClick={() =>
+                    window.open("https://health-nexus.netlify.app", "_blank")
+                  }
+                >
+                  <ExternalLink size={17} />
+                  <span>View Live Demo</span>
+                </button>
+                <button className="hd-btn-secondary">
+                  <Github size={17} />
+                  <span>Source Code</span>
+                </button>
+              </div>
+            </div>
+
+            {/* right column — image */}
+            <div className="hd-hero-right">
+              <div className="hd-hero-img-wrap">
+                <img
+                  src={doctor3}
+                  alt="Healthcare Platform"
+                  className="hd-hero-img"
+                />
+                <div className="hd-img-glow" />
+                <div className="hd-img-border" />
+              </div>
             </div>
           </div>
-        ))}
-      </div>
+        </section>
 
-      <div className="hpd-hero-actions">
-        <button className="hpd-btn-primary">
-          <ExternalLink size={20} />
-          <span>View Live Demo</span>
-        </button>
-        <button className="hpd-btn-secondary">
-          <Github size={20} />
-          <span>View Source Code</span>
-        </button>
-      </div>
-    </div>
-
-    <div className="hpd-hero-right">
-      <div className="hpd-hero-image-wrapper">
-        <div className="hpd-image-float-card hpd-card-1">
-          <Activity size={20} />
-          <div>
-            <div className="hpd-card-label">In Development</div>
-            <div className="hpd-card-value">60%</div>
-          </div>
-        </div>
-        
-        <div className="hpd-image-float-card hpd-card-2">
-          <CheckCircle2 size={20} />
-          <div>
-            <div className="hpd-card-label">Target Success Rate</div>
-            <div className="hpd-card-value">98%</div>
-          </div>
-        </div>
-
-        <img 
-          src={doctor1}
-          alt="Healthcare Professional" 
-          className="hpd-hero-image"
-        />
-        <div className="hpd-image-glow"></div>
-        <div className="hpd-image-border"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-      {/* Navigation Tabs */}
-      <section className="hpd-tabs-section">
-        <div className="hpd-tabs-container">
-          <div className="hpd-tabs">
-            {['overview', 'features', 'technologies', 'documentation'].map((tab) => (
+        {/* ════════════ STICKY TABS ════════════ */}
+        <div className="hd-tabs-bar">
+          {["overview", "features", "technologies", "documentation"].map(
+            (tab) => (
               <button
                 key={tab}
-                className={`hpd-tab ${activeTab === tab ? 'hpd-tab-active' : ''}`}
+                className={`hd-tab ${activeTab === tab ? "hd-tab-active" : ""}`}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
               </button>
-            ))}
-          </div>
+            ),
+          )}
         </div>
-      </section>
 
-      {/* Content Sections */}
-      <div className="hpd-content-wrapper">
-        {/* Overview Section */}
-        {activeTab === 'overview' && (
-          <section className="hpd-section hpd-fade-in">
-            <div className="hpd-section-grid">
-              <div className="hpd-overview-main">
-                <h2 className="hpd-section-title">Project Overview</h2>
-                <div className="hpd-overview-content">
-                  <p className="hpd-text">
-                    The Healthcare Application is a comprehensive digital health platform designed to bridge 
-                    the gap between healthcare providers, patients, and medical vendors. Built as my final 
-                    year project, this system integrates artificial intelligence, secure data management, 
-                    and real-time analytics to deliver a seamless healthcare ecosystem for all stakeholders.
+        {/* ════════════ CONTENT ════════════ */}
+        <div className="hd-content">
+          {/* ── OVERVIEW ── */}
+          {activeTab === "overview" && (
+            <section className="hd-section hd-fade-in">
+              <h2 className="hd-section-title">Project Overview</h2>
+              <div className="hd-overview-grid">
+                {/* main */}
+                <div className="hd-bento-card">
+                  <p className="hd-text">
+                    The Healthcare Application is a comprehensive digital health
+                    platform designed to bridge the gap between healthcare
+                    providers, patients, and medical vendors. Built as my final
+                    year project, this system integrates artificial
+                    intelligence, secure data management, and real-time
+                    analytics to deliver a seamless healthcare ecosystem for all
+                    stakeholders.
                   </p>
-                  
-                  <h3 className="hpd-subsection-title">Problem Statement</h3>
-                  <p className="hpd-text">
-                    Traditional healthcare systems struggle with fragmented patient data, limited accessibility 
-                    to medical records, inefficient appointment management, and lack of predictive health 
-                    insights. Healthcare providers often lack comprehensive patient history during consultations, 
-                    while patients have limited visibility into their health trends and future risk factors.
+                  <h3 className="hd-sub-title">Problem Statement</h3>
+                  <p className="hd-text">
+                    Traditional healthcare systems struggle with fragmented
+                    patient data, limited accessibility to medical records,
+                    inefficient appointment management, and lack of predictive
+                    health insights. Healthcare providers often lack
+                    comprehensive patient history during consultations, while
+                    patients have limited visibility into their health trends
+                    and future risk factors.
                   </p>
-
-                  <h3 className="hpd-subsection-title">Solution</h3>
-                  <p className="hpd-text">
-                    Our platform provides an integrated healthcare ecosystem with three user roles: Admin, 
-                    Doctor, and Patient, along with vendor management for pharmacies, hospitals, and laboratories. 
-                    Patients can easily book appointments and access their complete medical history visualized 
-                    through interactive graphs showing vital signs trends over time. Doctors can view comprehensive 
-                    patient profiles including immunization records, current medications, allergies, lab reports, 
-                    and vital signs history, enabling informed decision-making during consultations.
+                  <h3 className="hd-sub-title">Solution</h3>
+                  <p className="hd-text">
+                    Our platform provides an integrated healthcare ecosystem
+                    with three user roles: Admin, Doctor, and Patient, along
+                    with vendor management for pharmacies, hospitals, and
+                    laboratories. Patients can easily book appointments and
+                    access their complete medical history visualised through
+                    interactive graphs showing vital signs trends over time.
                   </p>
-                  
-                  <p className="hpd-text">
-                    The system leverages machine learning to analyze patient health data and predict potential 
-                    health risks, such as diabetes development within the next year, providing personalized 
-                    preventive care recommendations. Our AI-powered report analysis feature automatically 
-                    processes medical documents, extracting key insights and making complex medical information 
-                    easily understandable for both patients and healthcare providers.
+                  <p className="hd-text">
+                    The system leverages machine learning to analyse patient
+                    health data and predict potential health risks, such as
+                    diabetes development within the next year, providing
+                    personalised preventive care recommendations.
                   </p>
-                  <h3 className="hpd-subsection-title">Technical Highlights</h3>
-                  <div className="hpd-highlights">
-                    <div className="hpd-highlight-item">
-                      <CheckCircle2 size={20} />
-                      <span>Server-Side Rendering (SSR) with Next.js for optimal SEO and performance</span>
-                    </div>
-                    <div className="hpd-highlight-item">
-                      <CheckCircle2 size={20} />
-                      <span>Microservices architecture with independent scaling capabilities</span>
-                    </div>
-                    <div className="hpd-highlight-item">
-                      <CheckCircle2 size={20} />
-                      <span>Redis caching layer reducing database load by 70%</span>
-                    </div>
-                    <div className="hpd-highlight-item">
-                      <CheckCircle2 size={20} />
-                      <span>GraphQL API for efficient data fetching and reduced payload sizes</span>
-                    </div>
-                    <div className="hpd-highlight-item">
-                      <CheckCircle2 size={20} />
-                      <span>Progressive Web App (PWA) with offline capabilities</span>
-                    </div>
-                    <div className="hpd-highlight-item">
-                      <CheckCircle2 size={20} />
-                      <span>Automated CI/CD pipeline with zero-downtime deployments</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="hpd-overview-sidebar">
-                <div className="hpd-info-card">
-                  <h3 className="hpd-info-title">Project Details</h3>
-                  <div className="hpd-info-list">
-                    <div className="hpd-info-item">
-                      <span className="hpd-info-label">Status</span>
-                      <span className="hpd-info-value hpd-status-live">
-                        <span className="hpd-status-dot"></span>
-                        In Development
-                      </span>
-                    </div>
-                    <div className="hpd-info-item">
-                      <span className="hpd-info-label">Timeline</span>
-                      <span className="hpd-info-value">Jan 2024 - Present</span>
-                    </div>
-                    <div className="hpd-info-item">
-                      <span className="hpd-info-label">Role</span>
-                      <span className="hpd-info-value">Full Stack Developer</span>
-                    </div>
-                    <div className="hpd-info-item">
-                      <span className="hpd-info-label">Category</span>
-                      <span className="hpd-info-value">Healthcare, AI/ML</span>
-                    </div>
+                  <h3 className="hd-sub-title">Technical Highlights</h3>
+                  <div className="hd-highlights">
+                    {[
+                      "Server-Side Rendering (SSR) with Next.js for optimal SEO and performance",
+                      "Microservices architecture with independent scaling capabilities",
+                      "Redis caching layer reducing database load by 70%",
+                      "GraphQL API for efficient data fetching and reduced payload sizes",
+                      "Progressive Web App (PWA) with offline capabilities",
+                      "Automated CI/CD pipeline with zero-downtime deployments",
+                    ].map((h, i) => (
+                      <div key={i} className="hd-highlight-item">
+                        <CheckCircle2 size={17} />
+                        <span>{h}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                <div className="hpd-info-card">
-                  <h3 className="hpd-info-title">Platform Support</h3>
-                  <div className="hpd-platform-icons">
-                    <div className="hpd-platform-item">
-                      <Monitor size={24} />
-                      <span>Web</span>
-                    </div>
-                    <div className="hpd-platform-item">
-                      <Smartphone size={24} />
-                      <span>Mobile</span>
-                    </div>
-                    <div className="hpd-platform-item">
-                      <Globe size={24} />
-                      <span>Cloud</span>
+                {/* sidebar */}
+                <div className="hd-sidebar">
+                  {/* project details */}
+                  <div className="hd-bento-card hd-bento-sm">
+                    <h3 className="hd-card-title">Project Details</h3>
+                    {[
+                      [
+                        "Status",
+                        <span className="hd-status-live">
+                          <span className="hd-status-dot" />
+                          In Development
+                        </span>,
+                      ],
+                      ["Timeline", "Jan 2024 – Present"],
+                      ["Role", "Full Stack Developer"],
+                      ["Category", "Healthcare, AI/ML"],
+                    ].map(([label, val], i) => (
+                      <div key={i} className="hd-info-row">
+                        <span className="hd-info-label">{label}</span>
+                        <span className="hd-info-value">{val}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* platform */}
+                  <div className="hd-bento-card hd-bento-sm">
+                    <h3 className="hd-card-title">Platform Support</h3>
+                    <div className="hd-platform-row">
+                      {[
+                        ["Web", <Monitor size={22} />],
+                        ["Mobile", <Smartphone size={22} />],
+                        ["Cloud", <Globe size={22} />],
+                      ].map(([name, icon], i) => (
+                        <div key={i} className="hd-platform-item">
+                          {icon}
+                          <span>{name}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </div>
 
-                <div className="hpd-info-card">
-                  <h3 className="hpd-info-title">Future Achievements</h3>
-                  <div className="hpd-achievements-grid">
-                    {achievements.map((achievement, index) => (
-                      <div key={index} className="hpd-achievement-item">
-                        <Award size={18} className="hpd-achievement-icon" />
-                        <span>{achievement}</span>
+                  {/* achievements */}
+                  <div className="hd-bento-card hd-bento-sm">
+                    <h3 className="hd-card-title">Future Achievements</h3>
+                    {achievements.map((a, i) => (
+                      <div key={i} className="hd-achievement-item">
+                        <Award
+                          size={15}
+                          style={{ color: "#fcd34d", flexShrink: 0 }}
+                        />
+                        <span>{a}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
-        )}
+            </section>
+          )}
 
-        {/* Features Section */}
-        {activeTab === 'features' && (
-          <section className="hpd-section hpd-fade-in">
-            <h2 className="hpd-section-title">Core Features</h2>
-            <div className="hpd-features-grid">
-              {features.map((feature, index) => (
-                <div key={index} className="hpd-feature-card">
-                  <div className="hpd-feature-icon" style={{ background: `${feature.color}15`, color: feature.color }}>
-                    {feature.icon}
+          {/* ── FEATURES ── */}
+          {activeTab === "features" && (
+            <section className="hd-section hd-fade-in">
+              <h2 className="hd-section-title">
+                Core <em className="hd-em">Features</em>
+              </h2>
+              <p className="hd-section-desc">
+                A full-featured healthcare ecosystem built around the real needs
+                of patients, doctors, and administrators.
+              </p>
+              <div className="hd-features-grid">
+                {features.map((f, i) => (
+                  <div
+                    key={i}
+                    className="hd-feature-card"
+                    style={{ "--fa": f.color }}
+                  >
+                    <div className="hd-feature-icon">{f.icon}</div>
+                    <h3 className="hd-feature-title">{f.title}</h3>
+                    <p className="hd-feature-desc">{f.description}</p>
+                    <div className="hd-feature-glow" />
                   </div>
-                  <h3 className="hpd-feature-title">{feature.title}</h3>
-                  <p className="hpd-feature-description">{feature.description}</p>
-                  <div className="hpd-feature-gradient" style={{ background: `linear-gradient(135deg, ${feature.color}20, transparent)` }}></div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Technologies Section */}
-        {activeTab === 'technologies' && (
-          <section className="hpd-section hpd-fade-in">
-            <h2 className="hpd-section-title">Technology Stack</h2>
-            <p className="hpd-section-description">
-              Built with modern, scalable technologies ensuring high performance, security, and maintainability.
-            </p>
-            <div className="hpd-tech-grid">
-              {technologies.map((tech, index) => (
-                <div key={index} className="hpd-tech-card">
-                  <div className="hpd-tech-icon">{tech.icon}</div>
-                  <div className="hpd-tech-content">
-                    <h3 className="hpd-tech-name">{tech.name}</h3>
-                    <span className="hpd-tech-category">{tech.category}</span>
-                  </div>
-                  <div className="hpd-tech-indicator" style={{ background: tech.color }}></div>
-                </div>
-              ))}
-            </div>
-
-          </section>
-        )}
-
-        {/* Documentation Section */}
-{activeTab === 'documentation' && (
-  <section className="hpd-section hpd-fade-in">
-    <h2 className="hpd-section-title">Technical Documentation</h2>
-    <p className="hpd-section-description">
-      Comprehensive technical documentation including architecture diagrams, database schemas, and sequence flows.
-    </p>
-    
-    <div className="hpd-docs-grid">
-      <div className="hpd-doc-card">
-        <div className="hpd-doc-icon">🏗️</div>
-        <h3>System Architecture</h3>
-        <p>Complete system architecture with frontend, backend, and infrastructure layers.</p>
-        <button className="hpd-btn-secondary" onClick={() => window.open('/public/docs/healthcare-architecture-diagram.html', '_blank')}>
-          <FileText size={20} />
-          <span>View Architecture</span>
-        </button>
-      </div>
-
-      <div className="hpd-doc-card">
-        <div className="hpd-doc-icon">🗄️</div>
-        <h3>Database Schema</h3>
-        <p>Detailed database design with entity relationships and table structures.</p>
-        <button className="hpd-btn-secondary" onClick={() => window.open('/public/docs/healthcare-database-schema.html', '_blank')}>
-          <FileText size={20} />
-          <span>View Schema</span>
-        </button>
-      </div>
-
-      <div className="hpd-doc-card">
-        <div className="hpd-doc-icon">🔄</div>
-        <h3>Sequence Diagrams</h3>
-        <p>Visual workflows for registration, booking, consultations, and prescriptions.</p>
-        <button className="hpd-btn-secondary" onClick={() => window.open('/public/docs/healthcare-sequence-diagrams.html', '_blank')}>
-          <FileText size={20} />
-          <span>View Diagrams</span>
-        </button>
-      </div>
-    </div>
-  </section>
-)}
-      </div>
-
-      <div className="ash-screenshots-section ash-fade-in">
-        <h2 className="ash-screenshots-heading">Application Overview</h2>
-        <p className="ash-screenshots-subheading">
-          Explore the intuitive interface and powerful features of our healthcare platform
-        </p>
-        
-        <div className="ash-screenshots-wrapper">
-          <div className="ash-featured-screenshot">
-            <div className="ash-screenshot-frame">
-              <div className="ash-browser-bar">
-                <div className="ash-browser-dots">
-                  <span className="ash-dot ash-dot-red"></span>
-                  <span className="ash-dot ash-dot-yellow"></span>
-                  <span className="ash-dot ash-dot-green"></span>
-                </div>
-                <div className="ash-browser-url">healthcare-app.demo</div>
+                ))}
               </div>
-              
-              <img 
-                src={screenshots[activeScreenshot].url} 
+            </section>
+          )}
+
+          {/* ── TECHNOLOGIES ── */}
+          {activeTab === "technologies" && (
+            <section className="hd-section hd-fade-in">
+              <h2 className="hd-section-title">
+                Technology <em className="hd-em">Stack</em>
+              </h2>
+              <p className="hd-section-desc">
+                Built with modern, scalable technologies ensuring high
+                performance, security, and maintainability.
+              </p>
+              <div className="hd-tech-grid">
+                {technologies.map((t, i) => (
+                  <div
+                    key={i}
+                    className="hd-tech-card"
+                    style={{ "--tc": t.color }}
+                  >
+                    <span className="hd-tech-indicator" />
+                    <span className="hd-tech-icon">{t.icon}</span>
+                    <div>
+                      <div className="hd-tech-name">{t.name}</div>
+                      <div className="hd-tech-cat">{t.category}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* ── DOCUMENTATION ── */}
+          {activeTab === "documentation" && (
+            <section className="hd-section hd-fade-in">
+              <h2 className="hd-section-title">
+                Technical <em className="hd-em">Documentation</em>
+              </h2>
+              <p className="hd-section-desc">
+                Comprehensive technical documentation including architecture
+                diagrams, database schemas, and sequence flows.
+              </p>
+              <div className="hd-docs-grid">
+                {[
+                  {
+                    icon: "🏗️",
+                    title: "System Architecture",
+                    desc: "Complete system architecture with frontend, backend, and infrastructure layers.",
+                    url: "/public/docs/healthcare-architecture-diagram.html",
+                  },
+                  {
+                    icon: "🗄️",
+                    title: "Database Schema",
+                    desc: "Detailed database design with entity relationships and table structures.",
+                    url: "/public/docs/healthcare-database-schema.html",
+                  },
+                  {
+                    icon: "🔄",
+                    title: "Sequence Diagrams",
+                    desc: "Visual workflows for registration, booking, consultations, and prescriptions.",
+                    url: "/public/docs/healthcare-sequence-diagrams.html",
+                  },
+                ].map((d, i) => (
+                  <div key={i} className="hd-doc-card">
+                    <div className="hd-doc-icon">{d.icon}</div>
+                    <h3 className="hd-doc-title">{d.title}</h3>
+                    <p className="hd-doc-desc">{d.desc}</p>
+                    <button
+                      className="hd-btn-secondary"
+                      onClick={() => window.open(d.url, "_blank")}
+                    >
+                      <FileText size={16} />
+                      <span>View Document</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+
+        {/* ════════════ SCREENSHOTS ════════════ */}
+        <div className="hd-ss-section hd-fade-in">
+          {/* section divider */}
+          <div className="hd-divider">
+            <span className="hd-divider-line" />
+            <span className="hd-divider-label">Application Overview</span>
+            <span className="hd-divider-line" />
+          </div>
+
+          <h2
+            className="hd-section-title"
+            style={{ textAlign: "center", marginBottom: 8 }}
+          >
+            Explore the <em className="hd-em">Interface</em>
+          </h2>
+          <p
+            className="hd-section-desc"
+            style={{ textAlign: "center", marginBottom: 48 }}
+          >
+            Explore the intuitive interface and powerful features of our
+            healthcare platform.
+          </p>
+
+          {/* featured frame */}
+          <div className="hd-ss-main">
+            <div className="hd-browser-frame">
+              <div className="hd-browser-bar">
+                <div className="hd-browser-dots">
+                  <span className="hd-dot hd-dot-r" />
+                  <span className="hd-dot hd-dot-y" />
+                  <span className="hd-dot hd-dot-g" />
+                </div>
+                <div className="hd-browser-url">healthcare-app.demo</div>
+              </div>
+              <img
+                src={screenshots[activeScreenshot].url}
                 alt={screenshots[activeScreenshot].title}
-                className="ash-screenshot-image"
+                className="hd-ss-img"
               />
             </div>
-            
-            <div className="ash-screenshot-details">
-              <h3 className="ash-screenshot-title">{screenshots[activeScreenshot].title}</h3>
-              <p className="ash-screenshot-description">{screenshots[activeScreenshot].description}</p>
+            <div className="hd-ss-meta">
+              <h3 className="hd-ss-title">
+                {screenshots[activeScreenshot].title}
+              </h3>
+              <p className="hd-ss-desc">
+                {screenshots[activeScreenshot].description}
+              </p>
             </div>
           </div>
 
-          <div className="ash-thumbnails-container">
-  <button className="ash-scroll-button ash-scroll-left" onClick={() => scrollThumbnails('left')}>
-    <ArrowLeft size={24} />
-  </button>
-  
-  <div className="ash-thumbnails-horizontal" ref={thumbnailScrollRef}>
-    {screenshots.map((screenshot, index) => (
-      <div
-        key={screenshot.id}
-        className={`ash-thumbnail-card ${activeScreenshot === index ? 'ash-thumbnail-active' : ''}`}
-        onClick={() => setActiveScreenshot(index)}
-      >
-        <div className="ash-thumbnail-wrapper">
-          <img src={screenshot.url} alt={screenshot.title} className="ash-thumbnail-image" />
-          <div className="ash-thumbnail-overlay">
-            <div className="ash-play-button">
-              <Play size={20} />
+          {/* thumbnail row */}
+          <div className="hd-thumb-breakout">
+          <div className="hd-thumb-row">
+            <button
+              className="hd-thumb-scroll-btn"
+              onClick={() => scrollThumbnails("left")}
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <div className="hd-thumb-track" ref={thumbnailScrollRef}>
+              {screenshots.map((s, i) => (
+                <div
+                  key={s.id}
+                  className={`hd-thumb-card ${activeScreenshot === i ? "hd-thumb-active" : ""}`}
+                  onClick={() => setActiveScreenshot(i)}
+                >
+                  <div className="hd-thumb-img-wrap">
+                    <img src={s.url} alt={s.title} className="hd-thumb-img" />
+                    <div className="hd-thumb-overlay">
+                      <Play size={18} className="hd-thumb-play" />
+                    </div>
+                  </div>
+                  <div className="hd-thumb-label">
+                    <span className="hd-thumb-num">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="hd-thumb-name">{s.title}</span>
+                  </div>
+                </div>
+              ))}
             </div>
+            <button
+              className="hd-thumb-scroll-btn"
+              onClick={() => scrollThumbnails("right")}
+            >
+              <ArrowLeft size={20} style={{ transform: "rotate(180deg)" }} />
+            </button>
+          </div>
           </div>
         </div>
-        <div className="ash-thumbnail-label">
-          <span className="ash-thumbnail-number">{String(index + 1).padStart(2, '0')}</span>
-          <span className="ash-thumbnail-name">{screenshot.title}</span>
-        </div>
-      </div>
-    ))}
-  </div>
 
-  <button className="ash-scroll-button ash-scroll-right" onClick={() => scrollThumbnails('right')}>
-    <ArrowLeft size={24} style={{ transform: 'rotate(180deg)' }} />
-  </button>
-</div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <section className="hpd-cta-section">
-        <div className="hpd-cta-content">
-          <h2 className="hpd-cta-title">Interested in Learning More?</h2>
-          <p className="hpd-cta-description">
-            Get in touch to discuss this project in detail or explore collaboration opportunities.
-          </p>
-          <div className="hpd-cta-buttons">
-          
-            <button className="hpd-btn-primary" onClick={() => window.location.href = 'https://health-nexus.netlify.app/'}>
-                          <ExternalLink size={20} />
-                          <span>Visit Platform</span>
-                        </button>
+        {/* ════════════ CTA ════════════ */}
+        <section className="hd-cta">
+          <div className="hd-cta-inner">
+            <div
+              className="hd-eyebrow"
+              style={{ justifyContent: "center", marginBottom: 20 }}
+            >
+              <span className="hd-eyebrow-line" />
+              <Sparkles size={13} />
+              <span>Let's Connect</span>
+              <Sparkles size={13} />
+              <span className="hd-eyebrow-line" />
+            </div>
+            <h2 className="hd-cta-title">
+              Interested in <em className="hd-em">Learning More?</em>
+            </h2>
+            <p className="hd-cta-desc">
+              Get in touch to discuss this project in detail or explore
+              collaboration opportunities.
+            </p>
+            <button
+              className="hd-btn-primary"
+              onClick={() =>
+                window.open("https://health-nexus.netlify.app/", "_blank")
+              }
+            >
+              <ExternalLink size={17} />
+              <span>Visit Platform</span>
+            </button>
           </div>
-        </div>
-      </section>
+        </section>
 
+        {/* ════════════ FOOTER STRIP ════════════ */}
+        <div className="hd-footer-strip">
+          {[
+            "Healthcare",
+            "AI/ML",
+            "Spring Boot",
+            "React",
+            "Final Year Project",
+          ].map((l, i, arr) => (
+            <React.Fragment key={i}>
+              <span className="hd-strip-item">{l}</span>
+              {i < arr.length - 1 && <span className="hd-strip-dot">·</span>}
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+      {/* hd-inner */}
+
+      {/* ═══════════════════════════ STYLES ═══════════════════════════ */}
       <style>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-        .hpd-container {
+        /* ── Root ─────────────────────────────────── */
+        .hd-root {
+          position: relative;
           min-height: 100vh;
-          background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-          color: white;
+          background: #080c14;
+          overflow: hidden;
+          font-family: 'DM Sans', sans-serif;
+          color: #f0f4ff;
         }
 
-        /* Hero Section */
-.hpd-hero {
-  position: relative;
-  padding: 120px 60px 80px;
-  overflow: hidden;
-  width: 100%;
-}
-
-.hpd-hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-}
-
-.hpd-gradient-blur {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.4;
-}
-
-.hpd-blur-1 {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(102, 126, 234, 0.4), transparent);
-  top: -200px;
-  right: -100px;
-}
-
-.hpd-blur-2 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(118, 75, 162, 0.3), transparent);
-  bottom: -150px;
-  left: -100px;
-}
-
-/* Grid Pattern Background */
-.hpd-grid-pattern {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(102, 126, 234, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(102, 126, 234, 0.05) 1px, transparent 1px);
-  background-size: 50px 50px;
-  opacity: 0.3;
-}
-
-/* Hero Content Grid */
-.hpd-hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 1400px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-.hpd-hero-left {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.hpd-hero-right {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Back Button */
-.hpd-back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50px;
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  margin-bottom: 30px;
-  align-self: flex-start;
-}
-
-.hpd-back-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: translateX(-5px);
-}
-
-/* Hero Badge */
-.hpd-hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background: rgba(72, 187, 120, 0.2);
-  border: 1px solid rgba(72, 187, 120, 0.3);
-  border-radius: 50px;
-  color: #86efac;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 24px;
-  align-self: flex-start;
-}
-
-/* Hero Title */
-.hpd-hero-title {
-  font-size: 72px;
-  font-weight: 900;
-  line-height: 1.1;
-  margin-bottom: 24px;
-  letter-spacing: -2px;
-}
-
-.hpd-gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Hero Subtitle */
-.hpd-hero-subtitle {
-  font-size: 20px;
-  color: #cbd5e1;
-  line-height: 1.8;
-  max-width: 600px;
-  margin-bottom: 48px;
-}
-
-/* Hero Stats */
-.hpd-hero-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-bottom: 40px;
-  max-width: 600px;
-}
-
-.hpd-stat-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 20px;
-  background: rgba(17, 24, 39, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  backdrop-filter: blur(20px);
-  transition: all 0.3s ease;
-}
-
-.hpd-stat-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(102, 126, 234, 0.3);
-}
-
-.hpd-stat-icon {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(102, 126, 234, 0.2);
-  border-radius: 12px;
-  color: #667eea;
-  flex-shrink: 0;
-}
-
-.hpd-stat-content {
-  flex: 1;
-}
-
-.hpd-stat-value {
-  font-size: 28px;
-  font-weight: 800;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
-.hpd-stat-label {
-  font-size: 13px;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 600;
-}
-
-/* Hero Actions */
-.hpd-hero-actions {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-}
-
-.hpd-btn-primary, .hpd-btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 32px;
-  border-radius: 50px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-}
-
-.hpd-btn-primary {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
-}
-
-.hpd-btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5);
-}
-
-.hpd-btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  backdrop-filter: blur(10px);
-}
-
-.hpd-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
-}
-
-
-/* Hero Image Wrapper */
-.hpd-hero-image-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 550px;
-  aspect-ratio: 1;
-}
-
-.hpd-hero-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 30px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-  transition: all 0.5s ease;
-  position: relative;
-  z-index: 2;
-}
-
-.hpd-hero-image:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 40px 100px rgba(102, 126, 234, 0.4);
-}
-
-/* Image Glow Effect */
-.hpd-image-glow {
-  position: absolute;
-  inset: -30px;
-  background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.4), rgba(118, 75, 162, 0.3), transparent 70%);
-  filter: blur(60px);
-  z-index: 1;
-  opacity: 0.6;
-  animation: hpd-glow-pulse 4s ease-in-out infinite;
-}
-
-@keyframes hpd-glow-pulse {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
-}
-
-/* Image Border Animation */
-.hpd-image-border {
-  position: absolute;
-  inset: -2px;
-  border-radius: 30px;
-  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #4facfe);
-  background-size: 300% 300%;
-  z-index: 1;
-  opacity: 0.3;
-  animation: hpd-border-rotate 8s ease infinite;
-}
-
-@keyframes hpd-border-rotate {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Floating Stats Cards */
-.hpd-image-float-card {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  background: rgba(17, 24, 39, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  z-index: 3;
-  animation: hpd-float 3s ease-in-out infinite;
-}
-
-.hpd-card-1 {
-  top: 10%;
-  right: -10%;
-  animation-delay: 0s;
-  color: #4facfe;
-}
-
-.hpd-card-2 {
-  bottom: 15%;
-  left: -10%;
-  animation-delay: 1.5s;
-  color: #43e97b;
-}
-
-@keyframes hpd-float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
-}
-
-.hpd-card-label {
-  font-size: 12px;
-  color: #94a3b8;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.hpd-card-value {
-  font-size: 20px;
-  font-weight: 800;
-  color: white;
-  margin-top: 2px;
-}
-
-/* Responsive Design for Hero */
-@media (max-width: 1200px) {
-  .hpd-hero-content {
-    grid-template-columns: 1fr;
-    gap: 60px;
-  }
-
-  .hpd-hero-right {
-    order: -1;
-  }
-
-  .hpd-hero-image-wrapper {
-    max-width: 450px;
-    margin: 0 auto;
-  }
-
-  .hpd-hero-title {
-    font-size: 56px;
-  }
-
-  .hpd-hero-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .hpd-card-1 {
-    right: -5%;
-  }
-
-  .hpd-card-2 {
-    left: -5%;
-  }
-}
-
-@media (max-width: 768px) {
-  .hpd-hero {
-    padding: 80px 20px 60px;
-  }
-
-  .hpd-hero-title {
-    font-size: 42px;
-  }
-
-  .hpd-hero-subtitle {
-    font-size: 16px;
-  }
-
-  .hpd-hero-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .hpd-hero-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .hpd-btn-primary, .hpd-btn-secondary {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .hpd-hero-image-wrapper {
-    max-width: 100%;
-  }
-
-  .hpd-image-float-card {
-    display: none;
-  }
-
-}
-
-@media (max-width: 480px) {
-  .hpd-hero-title {
-    font-size: 32px;
-  }
-
-  .hpd-hero-subtitle {
-    font-size: 14px;
-  }
-
-  .hpd-stat-card {
-    padding: 16px;
-  }
-
-  .hpd-stat-value {
-    font-size: 24px;
-  }
-
-  .hpd-stat-icon {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-        /* Tabs Section */
-        .hpd-tabs-section {
-          position: sticky;
-          top: 0;
-          z-index: 100;
-          background: rgba(15, 15, 35, 0.95);
-          backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          padding: 0 60px;
+        /* ── Shared background (matches PortfolioProjects) ── */
+        .hd-grid-bg {
+          position: fixed;
+          inset: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+          background-size: 72px 72px;
+          pointer-events: none;
+          z-index: 0;
         }
-
-        .hpd-tabs-container {
-          max-width: 1400px;
-          margin: 0 auto;
+        .hd-glow-1 {
+          position: fixed; top: -180px; right: -160px;
+          width: 680px; height: 680px;
+          background: radial-gradient(circle, rgba(124,140,248,0.10) 0%, transparent 70%);
+          pointer-events: none; z-index: 0;
+          animation: hd-drift1 20s ease-in-out infinite alternate;
         }
+        .hd-glow-2 {
+          position: fixed; bottom: -120px; left: -80px;
+          width: 560px; height: 560px;
+          background: radial-gradient(circle, rgba(232,121,160,0.08) 0%, transparent 70%);
+          pointer-events: none; z-index: 0;
+          animation: hd-drift2 25s ease-in-out infinite alternate;
+        }
+        @keyframes hd-drift1 { from{transform:translate(0,0)} to{transform:translate(-60px,50px)} }
+        @keyframes hd-drift2 { from{transform:translate(0,0)} to{transform:translate(50px,-40px)} }
 
-        .hpd-tabs {
+        /* ── Inner ─────────────────────────────────── */
+        .hd-inner {
+          position: relative; z-index: 1;
+          opacity: 0; transform: translateY(32px);
+          transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+        .hd-inner.hd-in { opacity: 1; transform: translateY(0); }
+
+        /* ════════════ HERO ════════════ */
+        .hd-hero {
+          position: relative;
+          min-height: 100vh;
           display: flex;
-          gap: 8px;
+          align-items: center;
+          padding: 120px 64px 80px;
+          overflow: hidden;
+        }
+
+        /* blurred bg image */
+        .hd-hero-bg-img {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+        }
+        .hd-hero-bg-photo {
+          width: 100%; height: 100%;
+          object-fit: cover;
+          object-position: center 30%;
+          filter: blur(-4px) brightness(0.22) saturate(0.7);
+          transform: scale(1.06); /* hide blur edges */
+        }
+        .hd-hero-bg-overlay {
+          position: absolute; inset: 0;
+          background:
+            linear-gradient(to bottom, rgba(8,12,20,0.45) 0%, rgba(8,12,20,0.80) 120%, #080c14 10%),
+            linear-gradient(to right,  rgba(8,12,20,0.55) 0%, transparent 70%);
+        }
+
+        .hd-hero-content {
+          position: relative; z-index: 2;
+          max-width: 1280px; margin: 0 auto; width: 100%;
+          display: grid;
+          grid-template-columns: 1.15fr 1fr;
+          gap: 80px;
+          align-items: center;
+        }
+        .hd-hero-left { display: flex; flex-direction: column; gap: 0; }
+
+        /* back btn */
+        .hd-back-btn {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 10px 20px;
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 50px;
+          color: #94a3b8; font-size: 13px; font-weight: 600;
+          cursor: pointer; transition: all 0.3s ease;
+          align-self: flex-start;
+          margin-bottom: 32px;
+          font-family: 'DM Sans', sans-serif;
+        }
+        .hd-back-btn:hover { background: rgba(255,255,255,0.10); color: #f0f4ff; transform: translateX(-4px); }
+
+        /* eyebrow (matches PortfolioProjects) */
+        .hd-eyebrow {
+          display: flex; align-items: center; gap: 12px;
+          font-size: 11px; font-weight: 600; letter-spacing: 3px;
+          text-transform: uppercase; color: #a4acbb;
+          margin-bottom: 24px;
+        }
+        .hd-eyebrow-line { display: block; width: 32px; height: 1px; background: #4a5568; }
+
+        /* title */
+        .hd-hero-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(46px, 5.5vw, 66px);
+          font-weight: 400; line-height: 1.05;
+          letter-spacing: -2px;
+          color: #f0f4ff;
+          margin-bottom: 24px;
+        }
+        .hd-title-em, .hd-em {
+          font-style: italic;
+          background: linear-gradient(120deg, #7c8cf8, #e879a0);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        /* subtitle */
+        .hd-hero-subtitle {
+          font-size: 17px; line-height: 1.75; color: #a4a7ac;
+          font-weight: 500; max-width: 520px; margin-bottom: 40px;
+        }
+
+        /* stat cards */
+        .hd-hero-stats { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 36px; }
+        .hd-stat-card {
+          display: flex; align-items: center; gap: 14px;
+          padding: 16px 20px;
+          background: rgba(11,17,32,0.75);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 16px;
+          backdrop-filter: blur(12px);
+          transition: border-color 0.3s ease, transform 0.3s ease;
+          flex: 1 1 160px;
+        }
+        .hd-stat-card:hover { border-color: rgba(124,140,248,0.35); transform: translateY(-3px); }
+        .hd-stat-icon {
+          width: 42px; height: 42px; border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(124,140,248,0.12); color: #7c8cf8; flex-shrink: 0;
+        }
+        .hd-stat-value {
+          font-family: 'DM Serif Display', serif;
+          font-size: 22px; font-weight: 400; color: #f0f4ff;
+          background: linear-gradient(120deg, #7c8cf8, #e879a0);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+          line-height: 1; margin-bottom: 3px;
+        }
+        .hd-stat-label { font-size: 11px; color: #4a5568; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+
+        /* action buttons (match pp-action-btn) */
+        .hd-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hd-btn-primary, .hd-btn-secondary {
+          position: relative; display: inline-flex; align-items: center; gap: 8px;
+          padding: 13px 26px; border: none; border-radius: 0; cursor: pointer;
+          clip-path: polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
+          font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+          font-family: 'DM Sans', sans-serif; overflow: hidden; isolation: isolate;
+          transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .hd-btn-primary {
+          background: #0d1424; color: #7dd3fc;
+          box-shadow: inset 0 0 0 1px rgba(125,211,252,0.35);
+        }
+        .hd-btn-primary::before {
+          content:''; position:absolute; inset:0;
+          background: linear-gradient(100deg,#06b6d4,#7c3aed);
+          transform: translateX(-101%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); z-index: -1;
+        }
+        .hd-btn-primary:hover { color: #fff; box-shadow: none; }
+        .hd-btn-primary:hover::before { transform: translateX(0); }
+        .hd-btn-secondary {
+          background: transparent; color: #c4b5fd;
+          box-shadow: inset 0 0 0 1px rgba(196,181,253,0.4);
+        }
+        .hd-btn-secondary::before {
+          content:''; position:absolute; inset:0;
+          background: linear-gradient(100deg,#7c3aed,#ec4899);
+          transform: translateX(-101%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); z-index: -1;
+        }
+        .hd-btn-secondary:hover { color: #fff; box-shadow: none; }
+        .hd-btn-secondary:hover::before { transform: translateX(0); }
+
+        /* hero right — image */
+        /* hero right — image */
+.hd-hero-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hd-hero-img-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: transparent;
+}
+.hd-hero-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 20px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  transition: transform 0.5s ease;
+  background: transparent;
+}
+.hd-hero-img:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+  
+        .hd-hero-img:hover { transform: translateY(-8px) scale(1.02); }
+        .hd-img-glow {
+          position: absolute; inset: -30px;
+          background: radial-gradient(circle, rgba(124,140,248,0.35) 0%, rgba(232,121,160,0.25) 50%, transparent 70%);
+          filter: blur(50px); z-index: 1; opacity: 0.7;
+          animation: hd-glow-pulse 4s ease-in-out infinite;
+        }
+        @keyframes hd-glow-pulse { 0%,100%{opacity:0.7;transform:scale(1)} 50%{opacity:1;transform:scale(1.05)} }
+        .hd-img-border {
+          position: absolute; inset: -2px; border-radius: 28px; z-index: 1;
+          background: linear-gradient(135deg,#7c8cf8,#e879a0,#38bdf8);
+          background-size: 300% 300%; opacity: 0.25;
+          animation: hd-border-spin 8s ease infinite;
+        }
+        @keyframes hd-border-spin { 0%{background-position:0 50%} 50%{background-position:100% 50%} 100%{background-position:0 50%} }
+
+        /* floating cards */
+        .hd-float-card {
+          position: absolute; display: flex; align-items: center; gap: 12px;
+          padding: 14px 18px;
+          background: rgba(11,17,32,0.92);
+          border: 1px solid rgba(255,255,255,0.10);
+          border-radius: 14px; backdrop-filter: blur(14px);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 3;
+          animation: hd-float 3s ease-in-out infinite;
+        }
+        .hd-fc-1 { top: 10%; right: -8%; animation-delay: 0s; }
+        .hd-fc-2 { bottom: 14%; left: -8%; animation-delay: 1.5s; }
+        @keyframes hd-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+        .hd-fc-label { font-size: 11px; color: #4a5568; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .hd-fc-value  { font-size: 18px; font-weight: 700; color: #f0f4ff; margin-top: 2px; }
+
+        /* ════════════ TABS BAR ════════════ */
+        .hd-tabs-bar {
+          position: sticky; top: 0; z-index: 100;
+          background: rgba(8,12,20,0.90);
+          backdrop-filter: blur(16px);
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+          display: flex; gap: 4px;
+          padding: 0 64px;
+          max-width: 100%;
           overflow-x: auto;
         }
-
-        .hpd-tab {
-          padding: 20px 32px;
-          background: transparent;
-          border: none;
-          color: #94a3b8;
-          font-size: 16px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          position: relative;
-          white-space: nowrap;
+        .hd-tab {
+          padding: 20px 28px; background: transparent; border: none;
+          color: #4a5568; font-size: 14px; font-weight: 600; letter-spacing: 0.5px;
+          cursor: pointer; transition: color 0.25s ease; white-space: nowrap;
+          position: relative; font-family: 'DM Sans', sans-serif;
+          text-transform: uppercase;
+        }
+        .hd-tab:hover { color: #94a3b8; }
+        .hd-tab-active { color: #f0f4ff; }
+        .hd-tab-active::after {
+          content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+          background: linear-gradient(90deg, #7c8cf8, #e879a0);
+          border-radius: 2px 2px 0 0;
         }
 
-        .hpd-tab:hover {
-          color: white;
+        /* ════════════ CONTENT WRAPPER ════════════ */
+        .hd-content {
+          max-width: 1280px; margin: 0 auto;
+          padding: 72px 64px 40px;
         }
+        .hd-section { margin-bottom: 80px; }
+        .hd-fade-in { animation: hd-fadein 0.55s ease-out; }
+        @keyframes hd-fadein { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 
-        .hpd-tab-active {
-          color: white;
-        }
-
-        .hpd-tab-active::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 3px;
-          background: linear-gradient(90deg, #667eea, #764ba2);
-          border-radius: 3px 3px 0 0;
-        }
-
-        /* Content Wrapper */
-        .hpd-content-wrapper {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 60px;
-          padding-bottom: 10px;
-        }
-
-        .hpd-section {
-          margin-bottom: 80px;
-        }
-
-        .hpd-fade-in {
-          animation: hpd-fadeIn 0.6s ease-out;
-        }
-
-        @keyframes hpd-fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .hpd-section-title {
-          font-size: 42px;
-          font-weight: 800;
+        /* shared typography */
+        .hd-section-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(40px, 4.5vw, 52px);
+          font-weight: 400; line-height: 1.05;
+          letter-spacing: -1.5px; color: #f0f4ff;
           margin-bottom: 16px;
-          background: linear-gradient(135deg, #fff, #a5b4fc);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
         }
+        .hd-section-desc { font-size: 16px; color: #64748b; font-weight: 300; line-height: 1.75; margin-bottom: 48px; max-width: 640px; }
+        .hd-sub-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: #f0f4ff; margin: 28px 0 12px; }
+        .hd-text { font-size: 15px; color: #94a3b8; line-height: 1.8; margin-bottom: 20px; font-weight: 300; }
+        .hd-card-title { font-family: 'DM Serif Display', serif; font-size: 18px; color: #f0f4ff; margin-bottom: 20px; }
 
-        .hpd-section-description {
-          font-size: 18px;
-          color: #cbd5e1;
-          margin-bottom: 48px;
-          max-width: 800px;
+        /* ── bento card (matches .pp-project-card) ── */
+        .hd-bento-card {
+          background: #0b1120;
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 20px; padding: 32px;
+          transition: background 0.3s ease;
         }
+        .hd-bento-card:hover { background: #0f1929; }
+        .hd-bento-sm { padding: 24px; }
 
-        /* Overview Section */
-        .hpd-section-grid {
-          display: grid;
-          grid-template-columns: 2fr 1fr;
-          gap: 48px;
-        }
+        /* overview 2-col grid */
+        .hd-overview-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; overflow: hidden; }
+        .hd-sidebar { display: flex; flex-direction: column; gap: 2px; }
 
-        .hpd-overview-content {
-          background: rgba(17, 24, 39, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 24px;
-          padding: 40px;
-          backdrop-filter: blur(20px);
+        /* highlights */
+        .hd-highlights { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+        .hd-highlight-item {
+          display: flex; align-items: flex-start; gap: 10px;
+          padding: 14px; background: rgba(124,140,248,0.06);
+          border-left: 2px solid rgba(124,140,248,0.4);
+          border-radius: 6px; color: #94a3b8; font-size: 14px; line-height: 1.6;
         }
+        .hd-highlight-item svg { color: #7c8cf8; flex-shrink: 0; margin-top: 2px; }
 
-        .hpd-text {
-          font-size: 16px;
-          color: #cbd5e1;
-          line-height: 1.8;
-          margin-bottom: 32px;
+        /* info rows */
+        .hd-info-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .hd-info-row:last-child { border-bottom: none; }
+        .hd-info-label { font-size: 12px; color: #4a5568; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .hd-info-value { font-size: 13px; color: #f0f4ff; font-weight: 600; }
+        .hd-status-live { display: flex; align-items: center; gap: 7px; color: #86efac; }
+        .hd-status-dot {
+          width: 7px; height: 7px; border-radius: 50%; background: currentColor;
+          animation: hd-pulse 2s ease-in-out infinite;
         }
+        @keyframes hd-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
 
-        .hpd-subsection-title {
-          font-size: 24px;
-          font-weight: 700;
-          color: white;
-          margin-bottom: 16px;
-          margin-top: 32px;
-        }
-
-        .hpd-achievements-grid {
-          display: grid;
-          gap: 16px;
-          margin-top: 24px;
-        }
-
-        .hpd-achievement-item {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 16px;
-          background: rgba(251, 191, 36, 0.1);
-          border: 1px solid rgba(251, 191, 36, 0.2);
-          border-radius: 12px;
-          color: #fcd34d;
-          font-size: 15px;
-          font-weight: 600;
-        }
-
-        .hpd-achievement-icon {
-          flex-shrink: 0;
-        }
-
-        .hpd-overview-sidebar {
-          display: flex;
-          flex-direction: column;
-          gap: 24px;
-        }
-
-        .hpd-info-card {
-          background: rgba(17, 24, 39, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 24px;
-          padding: 32px;
-          backdrop-filter: blur(20px);
-        }
-
-        .hpd-info-title {
-          font-size: 20px;
-          font-weight: 700;
-          margin-bottom: 24px;
-          color: white;
-        }
-
-        .hpd-info-list {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-
-        .hpd-info-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding-bottom: 20px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .hpd-info-item:last-child {
-          border-bottom: none;
-          padding-bottom: 0;
-        }
-
-        .hpd-info-label {
-          font-size: 14px;
-          color: #94a3b8;
-          font-weight: 600;
-        }
-
-        .hpd-info-value {
-          font-size: 15px;
-          color: white;
-          font-weight: 700;
-        }
-
-        .hpd-status-live {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          color: #86efac;
-        }
-
-        .hpd-status-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: currentColor;
-          animation: hpd-pulse 2s ease-in-out infinite;
-        }
-          
-        .hpd-highlights {
-          display: grid;
-          gap: 12px;
-          margin-top: 24px;
-        }
-
-        .hpd-highlight-item {
-          display: flex;
-          align-items: start;
-          gap: 12px;
-          padding: 16px;
-          background: rgba(59, 130, 246, 0.1);
-          border-left: 3px solid #3b82f6;
-          border-radius: 8px;
-          color: #cbd5e1;
-          font-size: 15px;
-        }
-
-        .hpd-highlight-item svg {
-          flex-shrink: 0;
-          color: #3b82f6;
-          margin-top: 2px;
-        }
-
-        @keyframes hpd-pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(1.2); }
-        }
-
-        .hpd-platform-icons {
-          display: flex;
-          gap: 20px;
-          justify-content: space-around;
-        }
-
-        .hpd-platform-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 8px;
-          padding: 16px;
-          background: rgba(102, 126, 234, 0.1);
-          border: 1px solid rgba(102, 126, 234, 0.2);
-          border-radius: 12px;
-          color: #a5b4fc;
-          font-size: 13px;
-          font-weight: 600;
-          flex: 1;
+        /* platform */
+        .hd-platform-row { display: flex; gap: 10px; margin-top: 4px; }
+        .hd-platform-item {
+          flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;
+          padding: 14px 10px;
+          background: rgba(124,140,248,0.08); border: 1px solid rgba(124,140,248,0.18);
+          border-radius: 12px; color: #a5b4fc; font-size: 12px; font-weight: 600;
           transition: all 0.3s ease;
         }
+        .hd-platform-item:hover { background: rgba(124,140,248,0.15); transform: translateY(-3px); }
 
-        .hpd-platform-item:hover {
-          background: rgba(102, 126, 234, 0.2);
-          transform: translateY(-4px);
+        /* achievements */
+        .hd-achievement-item {
+          display: flex; align-items: center; gap: 10px;
+          padding: 12px; margin-bottom: 8px;
+          background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.15);
+          border-radius: 10px; color: #fcd34d; font-size: 13px; font-weight: 600;
         }
+        .hd-achievement-item:last-child { margin-bottom: 0; }
 
-        /* Features Section */
-        .hpd-features-grid {
+        /* ── FEATURES GRID ── */
+        .hd-features-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-          gap: 24px;
+          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+          gap: 2px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 24px; overflow: hidden;
         }
-
-        .hpd-feature-card {
-          position: relative;
-          padding: 32px;
-          background: rgba(17, 24, 39, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 24px;
-          backdrop-filter: blur(20px);
-          transition: all 0.4s ease;
-          overflow: hidden;
+        .hd-feature-card {
+          position: relative; background: #0b1120;
+          padding: 28px 26px; overflow: hidden;
+          transition: background 0.35s ease;
+          border-bottom: 4px solid transparent;
         }
-
-        .hpd-feature-card:hover {
-          transform: translateY(-8px);
-          border-color: rgba(102, 126, 234, 0.3);
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        .hd-feature-card:hover { background: #0f1929; border-bottom-color: var(--fa); }
+        .hd-feature-icon {
+          width: 52px; height: 52px; border-radius: 14px;
+          display: flex; align-items: center; justify-content: center;
+          background: color-mix(in srgb, var(--fa) 12%, transparent);
+          border: 1px solid color-mix(in srgb, var(--fa) 22%, transparent);
+          color: var(--fa); margin-bottom: 18px;
+          transition: transform 0.3s ease;
         }
-
-        .hpd-feature-icon {
-          width: 64px;
-          height: 64px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 16px;
-          margin-bottom: 20px;
-          transition: all 0.3s ease;
-        }
-
-        .hpd-feature-card:hover .hpd-feature-icon {
-          transform: scale(1.1) rotate(5deg);
-        }
-
-        .hpd-feature-title {
-          font-size: 22px;
-          font-weight: 700;
-          color: white;
-          margin-bottom: 12px;
-        }
-
-        .hpd-feature-description {
-          font-size: 15px;
-          color: #94a3b8;
-          line-height: 1.7;
-        }
-
-        .hpd-feature-gradient {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 100%;
-          opacity: 0;
+        .hd-feature-card:hover .hd-feature-icon { transform: scale(1.08) rotate(4deg); }
+        .hd-feature-title { font-family: 'DM Serif Display', serif; font-size: 18px; color: #f0f4ff; margin-bottom: 10px; }
+        .hd-feature-desc  { font-size: 13px; color: #64748b; line-height: 1.7; font-weight: 300; }
+        .hd-feature-glow  {
+          position: absolute; inset: 0; pointer-events: none; opacity: 0;
+          background: radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--fa) 12%, transparent), transparent 60%);
           transition: opacity 0.4s ease;
+        }
+        .hd-feature-card:hover .hd-feature-glow { opacity: 1; }
+
+        /* ── TECH GRID ── */
+        .hd-tech-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+          gap: 2px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 24px; overflow: hidden;
+        }
+        .hd-tech-card {
+          display: flex; align-items: center; gap: 14px;
+          padding: 20px 20px; background: #0b1120;
+          transition: background 0.3s ease;
+          position: relative; overflow: hidden;
+        }
+        .hd-tech-card:hover { background: #0f1929; }
+        .hd-tech-indicator {
+          position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+          background: var(--tc); opacity: 0; transition: opacity 0.3s ease;
+        }
+        .hd-tech-card:hover .hd-tech-indicator { opacity: 1; }
+        .hd-tech-icon { font-size: 28px; flex-shrink: 0; }
+        .hd-tech-name { font-size: 15px; font-weight: 600; color: #f0f4ff; margin-bottom: 3px; }
+        .hd-tech-cat  { font-size: 11px; color: #4a5568; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* ── DOCS GRID ── */
+        .hd-docs-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 2px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 24px; overflow: hidden;
+        }
+        .hd-doc-card {
+          background: #0b1120; padding: 36px 28px; text-align: center;
+          transition: background 0.35s ease;
+          border-bottom: 4px solid transparent;
+        }
+        .hd-doc-card:hover { background: #0f1929; border-bottom-color: #7c8cf8; }
+        .hd-doc-icon { font-size: 44px; margin-bottom: 16px; }
+        .hd-doc-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: #f0f4ff; margin-bottom: 10px; }
+        .hd-doc-desc  { font-size: 14px; color: #64748b; line-height: 1.6; margin-bottom: 24px; font-weight: 300; }
+
+        /* ════════════ SCREENSHOTS ════════════ */
+        .hd-ss-section {
+          max-width: 1280px; margin: 0 auto;
+          padding: 0 64px 80px;
+        }
+
+        /* divider (matches PortfolioProjects) */
+        .hd-divider { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
+        .hd-divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+        .hd-divider-label { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: #2d3748; white-space: nowrap; }
+
+        .hd-ss-main {
+          background: #0b1120;
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 20px; padding: 28px;
+          margin-bottom: 24px;
+        }
+        .hd-browser-frame { border-radius: 14px; overflow: hidden; background: #1e293b; margin-bottom: 24px; }
+        .hd-browser-bar {
+          display: flex; align-items: center;
+          padding: 14px 18px;
+          background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+          position: relative;
+        }
+        .hd-browser-dots { display: flex; gap: 7px; }
+        .hd-dot { width: 11px; height: 11px; border-radius: 50%; }
+        .hd-dot-r { background: #ff5f57; } .hd-dot-y { background: #febc2e; } .hd-dot-g { background: #28c840; }
+        .hd-browser-url {
+          position: absolute; left: 50%; transform: translateX(-50%);
+          padding: 6px 18px; background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 6px; color: #64748b; font-size: 12px;
+          font-family: 'Monaco', monospace;
+        }
+        .hd-ss-img { width: 100%; display: block; object-fit: contain; max-height: 560px; min-height: 320px; background: #0a0e1a; }
+        .hd-ss-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: #f0f4ff; margin-bottom: 10px; }
+        .hd-ss-desc   { font-size: 14px; color: #64748b; line-height: 1.7; font-weight: 300; }
+
+        /* thumbnail row */
+        .hd-thumb-row { display: flex; align-items: center; gap: 12px;}
+        .hd-thumb-scroll-btn {
+          flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(124,140,248,0.12); border: 1px solid rgba(124,140,248,0.25);
+          color: #f0f4ff; cursor: pointer; transition: all 0.3s ease;
+          font-family: 'DM Sans', sans-serif;
+        }
+
+        .hd-thumb-breakout {
+          position: relative;
+          left: 50%;
+          right: 50%;
+          margin-left: -50vw;
+          margin-right: -50vw;
+          width: 100vw;
+          padding: 0 24px;
+          box-sizing: border-box;
+        }
+        .hd-thumb-scroll-btn:hover { background: rgba(124,140,248,0.25); transform: scale(1.08); }
+        .hd-thumb-track {
+          display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth;
+          padding: 14px 6px; flex: 1;
+          scrollbar-width: thin; scrollbar-color: rgba(124,140,248,0.4) rgba(255,255,255,0.05);
+        }
+        .hd-thumb-track::-webkit-scrollbar { height: 5px; }
+        .hd-thumb-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 10px; }
+        .hd-thumb-track::-webkit-scrollbar-thumb { background: rgba(124,140,248,0.4); border-radius: 10px; }
+        .hd-thumb-card { flex: 0 0 220px; cursor: pointer; transition: transform 0.3s ease; }
+        .hd-thumb-card:hover { transform: translateY(-4px); }
+        .hd-thumb-img-wrap {
+          position: relative; border-radius: 12px; overflow: hidden;
+          border: 2px solid rgba(255,255,255,0.06); aspect-ratio: 16/10;
+          transition: border-color 0.3s ease;
+        }
+        .hd-thumb-active .hd-thumb-img-wrap { border-color: rgba(124,140,248,0.7); box-shadow: 0 0 0 3px rgba(124,140,248,0.18); }
+        .hd-thumb-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .hd-thumb-card:hover .hd-thumb-img { transform: scale(1.05); }
+        .hd-thumb-overlay {
+          position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+          background: linear-gradient(135deg, rgba(124,140,248,0.88), rgba(232,121,160,0.88));
+          opacity: 0; transition: opacity 0.3s ease;
+        }
+        .hd-thumb-card:hover .hd-thumb-overlay { opacity: 1; }
+        .hd-thumb-play { color: #fff; }
+        .hd-thumb-label { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+        .hd-thumb-num  { font-size: 12px; font-weight: 800; color: #7c8cf8; background: rgba(124,140,248,0.12); padding: 3px 8px; border-radius: 5px; font-family: 'Monaco', monospace; }
+        .hd-thumb-name { font-size: 12px; font-weight: 600; color: #64748b; }
+        .hd-thumb-active .hd-thumb-name { color: #a5b4fc; }
+
+        /* ════════════ CTA ════════════ */
+        .hd-cta {
+          background: #0b1120;
+          border-top: 1px solid rgba(255,255,255,0.05);
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+          padding: 100px 64px;
+          text-align: center;
+          position: relative; overflow: hidden;
+        }
+        .hd-cta::before {
+          content: ''; position: absolute; top: -120px; left: 50%;
+          transform: translateX(-50%);
+          width: 500px; height: 400px;
+          background: radial-gradient(circle, rgba(124,140,248,0.10) 0%, transparent 70%);
           pointer-events: none;
         }
-
-        .hpd-feature-card:hover .hpd-feature-gradient {
-          opacity: 0.1;
+        .hd-cta-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+        .hd-cta-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(40px, 4vw, 54px);
+          font-weight: 400; letter-spacing: -1.5px; color: #f0f4ff;
+          margin-bottom: 18px; line-height: 1.05;
         }
+        .hd-cta-desc { font-size: 16px; color: #64748b; line-height: 1.75; font-weight: 300; margin-bottom: 36px; }
 
-        /* Technologies Section */
-        .hpd-tech-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-          gap: 20px;
-          margin-bottom: 60px;
+        /* ════════════ FOOTER STRIP ════════════ */
+        .hd-footer-strip {
+          display: flex; align-items: center; justify-content: center;
+          flex-wrap: wrap; gap: 16px; padding: 40px 64px;
         }
-
-        .hpd-tech-card {
-          position: relative;
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 24px;
-          background: rgba(17, 24, 39, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 16px;
-          backdrop-filter: blur(20px);
-          transition: all 0.3s ease;
-          overflow: hidden;
+        .hd-strip-item {
+          font-size: 11px; font-weight: 600; letter-spacing: 2px;
+          text-transform: uppercase; color: #2d3748; transition: color 0.3s ease;
         }
+        .hd-strip-item:hover { color: #4a5568; }
+        .hd-strip-dot { color: #1e293b; font-size: 16px; line-height: 1; }
 
-        .hpd-tech-card:hover {
-          transform: translateY(-4px);
-          border-color: rgba(102, 126, 234, 0.3);
+        /* ════════════ RESPONSIVE ════════════ */
+        @media (max-width: 1100px) {
+          .hd-hero { padding: 100px 40px 70px; }
+          .hd-content, .hd-ss-section { padding-left: 40px; padding-right: 40px; }
+          .hd-tabs-bar { padding: 0 40px; }
+          .hd-overview-grid { grid-template-columns: 1fr; }
+          .hd-hero-content { grid-template-columns: 1fr; gap: 48px; }
+          .hd-hero-right { order: -1; }
+          .hd-hero-img-wrap { max-width: 380px; margin: 0 auto; }
         }
-
-        .hpd-tech-icon {
-          font-size: 32px;
-          flex-shrink: 0;
-        }
-
-        .hpd-tech-content {
-          flex: 1;
-        }
-
-        .hpd-tech-name {
-          font-size: 18px;
-          font-weight: 700;
-          color: white;
-          margin-bottom: 4px;
-        }
-
-        .hpd-tech-category {
-          font-size: 13px;
-          color: #94a3b8;
-          font-weight: 600;
-        }
-
-        .hpd-tech-indicator {
-          position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          width: 4px;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        .hpd-tech-card:hover .hpd-tech-indicator {
-          opacity: 1;
-        }
-
-        /* Architecture Section */
-        .hpd-architecture-section {
-          margin-top: 60px;
-        }
-
-        .hpd-architecture-card {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-          padding: 40px;
-          background: rgba(17, 24, 39, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 24px;
-          backdrop-filter: blur(20px);
-        }
-
-        .hpd-architecture-layer {
-          padding: 24px;
-          background: rgba(102, 126, 234, 0.1);
-          border: 2px solid rgba(102, 126, 234, 0.3);
-          border-radius: 16px;
-          transition: all 0.3s ease;
-        }
-
-        .hpd-architecture-layer:hover {
-          background: rgba(102, 126, 234, 0.15);
-          transform: translateX(8px);
-        }
-
-        .hpd-layer-title {
-          font-size: 18px;
-          font-weight: 700;
-          color: #a5b4fc;
-          margin-bottom: 8px;
-        }
-
-        .hpd-layer-content {
-          font-size: 15px;
-          color: #cbd5e1;
-          line-height: 1.6;
-        }
-
-        .hpd-architecture-arrow {
-          text-align: center;
-          font-size: 24px;
-          color: #667eea;
-          font-weight: 700;
-        }
-
-        /* CTA Section */
-        .hpd-cta-section {
-          padding: 100px 60px;
-          background: rgba(17, 24, 39, 0.6);
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .hpd-cta-content {
-          max-width: 1400px;
-          margin: 0 auto;
-          text-align: center;
-        }
-
-        .hpd-cta-title {
-          font-size: 48px;
-          font-weight: 900;
-          margin-bottom: 20px;
-          background: linear-gradient(135deg, #fff, #a5b4fc);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .hpd-cta-description {
-          font-size: 20px;
-          color: #cbd5e1;
-          margin-bottom: 40px;
-          max-width: 700px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .hpd-cta-buttons {
-          display: flex;
-          gap: 20px;
-          justify-content: center;
-          flex-wrap: wrap;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-  .hpd-section-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hpd-hero-content {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .hpd-hero-right {
-    order: -1;
-  }
-
-  .hpd-hero-title {
-    font-size: 56px;
-  }
-
-  .hpd-hero-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
         @media (max-width: 768px) {
-          .hpd-hero {
-            padding: 80px 20px 60px;
-          }
-
-          .hpd-content-wrapper {
-            padding: 60px 20px;
-          }
-
-          .hpd-tabs-section {
-            padding: 0 20px;
-          }
-
-          .hpd-hero-title {
-            font-size: 42px;
-          }
-
-          .hpd-section-title {
-            font-size: 32px;
-          }
-
-          .hpd-hero-stats {
-            grid-template-columns: 1fr;
-          }
-
-          .hpd-features-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .hpd-tech-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .hpd-main-screenshot {
-            height: 400px;
-          }
-
-          .hpd-screenshot-thumbnails {
-            grid-template-columns: repeat(2, 1fr);
-          }
-
-          .hpd-hero-actions {
-            flex-direction: column;
-          }
-
-          .hpd-btn-primary, .hpd-btn-secondary {
-            width: 100%;
-            justify-content: center;
-          }
-
-          .hpd-cta-section {
-            padding: 60px 20px;
-          }
-
-          .hpd-cta-title {
-            font-size: 36px;
-          }
-
-          .hpd-cta-buttons {
-            flex-direction: column;
-          }
-
-          .hpd-tabs {
-            overflow-x: scroll;
-          }
-
-          .hpd-architecture-card {
-            padding: 24px;
-          }
-
-          .hpd-overview-content {
-            padding: 24px;
-          }
+          .hd-hero { padding: 80px 24px 60px; min-height: auto; }
+          .hd-content, .hd-ss-section, .hd-cta, .hd-footer-strip { padding-left: 24px; padding-right: 24px; }
+          .hd-tabs-bar { padding: 0 24px; }
+          .hd-hero-stats { flex-direction: column; }
+          .hd-features-grid { grid-template-columns: 1fr; }
+          .hd-tech-grid { grid-template-columns: 1fr; }
+          .hd-float-card { display: none; }
+          .hd-ss-section { padding-bottom: 60px; }
+          .hd-thumb-card { flex: 0 0 180px; }
+          .hd-browser-url { display: none; }
         }
-
         @media (max-width: 480px) {
-          .hpd-hero-title {
-            font-size: 32px;
-          }
-
-          .hpd-section-title {
-            font-size: 28px;
-          }
-
-          .hpd-hero-subtitle {
-            font-size: 16px;
-          }
-
-          .hpd-stat-card {
-            padding: 16px;
-          }
-
-          .hpd-stat-value {
-            font-size: 24px;
-          }
-
-          .hpd-tab {
-            padding: 16px 20px;
-            font-size: 14px;
-          }
-
-          .hpd-screenshot-thumbnails {
-            grid-template-columns: 1fr;
-          }
+          .hd-hero-title { font-size: 38px; }
+          .hd-section-title { font-size: 34px; }
+          .hd-cta-title { font-size: 34px; }
+          .hd-hero-actions { flex-direction: column; }
+          .hd-btn-primary, .hd-btn-secondary { width: 100%; justify-content: center; }
+          .hd-docs-grid { grid-template-columns: 1fr; }
         }
-
-        /* Screenshots Section */
-.ash-screenshots-section {
-  max-width: 1750px;
-  margin: 0 auto;
-  padding: 50px 60px;
-  overflow: hidden;
-}
-
-.ash-screenshots-heading {
-  font-size: 48px;
-  font-weight: 900;
-  text-align: center;
-  margin-bottom: 16px;
-  background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -1px;
-}
-
-.ash-screenshots-subheading {
-  font-size: 18px;
-  color: #94a3b8;
-  text-align: center;
-  margin-bottom: 60px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.ash-screenshots-wrapper {
-  display: grid;
-  gap: 40px;
-}
-
-/* Featured Screenshot */
-.ash-featured-screenshot {
-  position: relative;
-  background: rgba(17, 24, 39, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 32px;
-  padding: 32px;
-  backdrop-filter: blur(20px);
-  overflow: hidden;
-  max-width: 1300px;
-  justify-self: center;
-}
-
-.ash-screenshot-frame {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  background: #1e293b;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-  margin-bottom: 32px;
-}
-
-.ash-browser-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  background: linear-gradient(180deg, rgba(30, 41, 59, 1) 0%, rgba(15, 23, 42, 1) 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.ash-browser-dots {
-  display: flex;
-  gap: 8px;
-}
-
-.ash-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.ash-dot-red {
-  background: #ff5f57;
-  box-shadow: 0 0 10px rgba(255, 95, 87, 0.5);
-}
-
-.ash-dot-yellow {
-  background: #febc2e;
-  box-shadow: 0 0 10px rgba(254, 188, 46, 0.5);
-}
-
-.ash-dot-green {
-  background: #28c840;
-  box-shadow: 0 0 10px rgba(40, 200, 64, 0.5);
-}
-
-.ash-browser-url {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 8px 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  color: #94a3b8;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: 'Monaco', monospace;
-}
-
-.ash-screenshot-image {
-  width: 100%;
-  height: 450px;
-  display: block;
-  object-fit: contain;
-  min-height: 600px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.ash-screenshot-details {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.ash-screenshot-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  align-self: flex-start;
-  padding: 10px 20px;
-  background: rgba(102, 126, 234, 0.15);
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 50px;
-  font-weight: 700;
-  font-size: 16px;
-}
-
-.ash-badge-number {
-  color: #a5b4fc;
-  font-size: 20px;
-}
-
-.ash-badge-separator {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.ash-badge-total {
-  color: #64748b;
-  font-size: 16px;
-}
-
-.ash-screenshot-title {
-  font-size: 32px;
-  font-weight: 800;
-  color: white;
-  letter-spacing: -0.5px;
-}
-
-.ash-screenshot-description {
-  font-size: 16px;
-  color: #94a3b8;
-  line-height: 1.7;
-  max-width: 700px;
-}
-
-/* Thumbnails Grid */
-/* Thumbnails Container */
-.ash-thumbnails-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-.ash-scroll-button {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  background: rgba(102, 126, 234, 0.2);
-  border: 2px solid rgba(102, 126, 234, 0.3);
-  border-radius: 50%;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10;
-}
-
-.ash-scroll-button:hover {
-  background: rgba(102, 126, 234, 0.8);
-  border-color: rgba(102, 126, 234, 1);
-  transform: scale(1.1);
-}
-
-.ash-thumbnails-horizontal {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  padding: 20px 10px;
-  flex: 1;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(102, 126, 234, 0.5) rgba(255, 255, 255, 0.1);
-  max-width: 100%;
-}
-
-.ash-thumbnails-horizontal::-webkit-scrollbar {
-  height: 8px;
-}
-
-.ash-thumbnails-horizontal::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-
-.ash-thumbnails-horizontal::-webkit-scrollbar-thumb {
-  background: rgba(102, 126, 234, 0.5);
-  border-radius: 10px;
-}
-
-.ash-thumbnails-horizontal::-webkit-scrollbar-thumb:hover {
-  background: rgba(102, 126, 234, 0.8);
-}
-
-.ash-thumbnail-card {
-  flex: 0 0 280px;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ash-thumbnail-wrapper {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  background: rgba(17, 24, 39, 0.6);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  aspect-ratio: 16/10;
-}
-
-.ash-thumbnail-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ash-thumbnail-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ash-play-button {
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
-  border-radius: 50%;
-  color: #667eea;
-  transform: scale(0.8);
-  transition: all 0.3s ease;
-}
-
-.ash-thumbnail-card:hover .ash-thumbnail-overlay {
-  opacity: 1;
-}
-
-.ash-thumbnail-card:hover .ash-play-button {
-  transform: scale(1);
-}
-
-.ash-thumbnail-card:hover .ash-thumbnail-wrapper {
-  transform: translateY(-4px);
-  border-color: rgba(102, 126, 234, 0.5);
-  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
-}
-
-.ash-thumbnail-card:hover .ash-thumbnail-image {
-  transform: scale(1.05);
-}
-
-/* Active Thumbnail */
-.ash-thumbnail-active .ash-thumbnail-wrapper {
-  border-color: rgba(102, 126, 234, 0.8);
-  background: rgba(102, 126, 234, 0.1);
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
-}
-
-.ash-thumbnail-active .ash-thumbnail-label {
-  color: #a5b4fc;
-}
-
-.ash-thumbnail-label {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 16px;
-  padding: 0 4px;
-  color: #94a3b8;
-  transition: all 0.3s ease;
-}
-
-.ash-thumbnail-number {
-  font-size: 14px;
-  font-weight: 800;
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.15);
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-family: 'Monaco', monospace;
-}
-
-.ash-thumbnail-name {
-  font-size: 15px;
-  font-weight: 600;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .ash-thumbnail-card {
-    flex: 0 0 240px;
-  }
-}
-
-@media (max-width: 768px) {
-  .ash-screenshots-section {
-    padding: 60px 20px;
-  }
-
-  .ash-screenshots-heading {
-    font-size: 36px;
-  }
-
-  .ash-screenshots-subheading {
-    font-size: 16px;
-    margin-bottom: 40px;
-  }
-
-  .ash-featured-screenshot {
-    padding: 20px;
-  }
-
-  .ash-screenshot-frame {
-    margin-bottom: 24px;
-  }
-
-  .ash-screenshot-image {
-    min-height: 300px;
-  }
-
-  .ash-screenshot-title {
-    font-size: 24px;
-  }
-
-  .ash-browser-url {
-    display: none;
-  }
-
-  .ash-thumbnail-card {
-    flex: 0 0 200px;
-  }
-  
-  .ash-scroll-button {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-@media (max-width: 480px) {
-  .ash-screenshots-heading {
-    font-size: 28px;
-  }
-
-  .ash-screenshot-title {
-    font-size: 20px;
-  }
-
-  .ash-screenshot-description {
-    font-size: 14px;
-  }
-
-  .ash-browser-bar {
-    padding: 12px 16px;
-  }
-
-  .ash-dot {
-    width: 10px;
-    height: 10px;
-  }
-}
-
-/* Animation */
-@keyframes ash-slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.ash-fade-in {
-  animation: ash-slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hpd-docs-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
-}
-
-.hpd-doc-card {
-  background: rgba(17, 24, 39, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 40px;
-  text-align: center;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(20px);
-}
-
-.hpd-doc-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(102, 126, 234, 0.5);
-  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
-}
-
-.hpd-doc-icon {
-  font-size: 48px;
-  margin-bottom: 20px;
-}
-
-.hpd-doc-card h3 {
-  font-size: 24px;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 12px;
-}
-
-.hpd-doc-card p {
-  font-size: 15px;
-  color: #94a3b8;
-  line-height: 1.6;
-  margin-bottom: 24px;
-}
-
       `}</style>
     </div>
   );
