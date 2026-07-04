@@ -22,6 +22,10 @@ import {
   Wifi,
   BarChart2,
   BookOpen,
+  Terminal,
+  GitBranch,
+  FileJson,
+  Layers,
 } from "lucide-react";
 
 import homeImg       from "../assets/Ticket/home.png";
@@ -35,63 +39,63 @@ import controlImg       from "../assets/Ticket/controlpanel.png";
 import heroImg       from "../assets/Cinematicketbooking.jpg";
 
 const technologies = [
-  { name: "React", icon: "⚛️", color: "#61dafb" },
-  { name: "Node.js", icon: "🟢", color: "#3c873a" },
-  { name: "Spring Boot", icon: "🚂", color: "#ffffff" },
-  { name: "MySQL", icon: "🍃", color: "#47a248" },
-  { name: "JWT", icon: "🔑", color: "#d63aff" },
-  { name: "Bootstrap", icon: "💨", color: "#38bdf8" },
+  { name: "Java", icon: "☕", color: "#f89820" },
+  { name: "React", icon: "🖥️", color: "#61dafb" },
+  { name: "JavaFX", icon: "🖥️", color: "#61dafb" },
+  { name: "Multi-threading", icon: "🧵", color: "#e879a0" },
+  { name: "Collections", icon: "🗃️", color: "#38bdf8" },
+  { name: "Logging", icon: "📝", color: "#a78bfa" },
 ];
 
 const screenshots = [
   {
     id: 1,
-    title: "Home Page",
+    title: "CLI Configuration",
     url: homeImg,
-    description: "Landing page with featured events and quick-search bar.",
+    description: "Console prompts for total tickets, release rate, retrieval rate, and max capacity, with input validation.",
   },
   {
     id: 2,
-    title: "Event Listing",
+    title: "JavaFX Control Panel",
     url: eventImg,
-    description: "Filterable event grid with category tags and date sorting.",
+    description: "Start/Stop controls and configuration fields driving the live vendor/customer simulation.",
   },
   {
     id: 3,
-    title: "Seat Selection",
+    title: "Vendor Threads",
     url: venuesImg,
-    description: "Interactive seating map with real-time availability updates.",
+    description: "Multiple vendor threads releasing tickets into the shared, thread-safe TicketPool.",
   },
   {
     id: 4,
-    title: "Checkout",
+    title: "Customer Threads",
     url: vendorsImg,
-    description: "Stripe payment form with order summary and countdown timer.",
+    description: "Customer threads concurrently retrieving tickets from the pool until it's empty.",
   },
   {
     id: 5,
-    title: "Booking Confirmed",
+    title: "Live Ticket Pool Status",
     url: customersImg,
-    description: "Confirmation screen with QR-code ticket and email receipt.",
+    description: "Real-time pool count updated on the JavaFX UI via Platform.runLater().",
   },
   {
     id: 6,
-    title: "Booking Confirmed",
+    title: "System Status",
     url: loginImg,
-    description: "Confirmation screen with QR-code ticket and email receipt.",
+    description: "Status label reflecting Running / Stopped state as threads are started or interrupted.",
   },
   {
     id: 7,
-    title: "Booking Confirmed",
+    title: "Activity Logs",
     url: controlImg,
-    description: "Confirmation screen with QR-code ticket and email receipt.",
+    description: "Timestamped log table of every ticket addition and removal, mirrored to a log file.",
   },
 ];
 
 const projectStats = [
-  { label: "Development Time", value: "3 Months", icon: <Calendar /> },
-  { label: "Project Type", value: "2nd Year Project", icon: <BookOpen /> },
   { label: "Module", value: "OOP Concepts", icon: <BookOpen /> },
+  { label: "Coursework Weight", value: "50%", icon: <BookOpen /> },
+  { label: "Qualifying Mark", value: "30%", icon: <CheckCircle2 /> },
   { label: "Team Size", value: "1 Member", icon: <Users /> },
 ];
 
@@ -155,7 +159,7 @@ const TicketBookingDetail = () => {
               <div className="tb-eyebrow">
                 <span className="tb-eyebrow-line" />
                 <Sparkles size={13} />
-                <span>Full Stack Project · 2024</span>
+                <span>Object-Oriented Programming Coursework · 5COSC019C</span>
                 <Sparkles size={13} />
                 <span className="tb-eyebrow-line" />
               </div>
@@ -163,13 +167,15 @@ const TicketBookingDetail = () => {
               <h1 className="tb-hero-title">
                 Real-Time Ticket
                 <br />
-                <em className="tb-title-em">Booking System</em>
+                <em className="tb-title-em">Management System</em>
               </h1>
 
               <p className="tb-hero-subtitle">
-                A live event ticketing platform where seat availability updates
-                instantly across all users — no refresh needed. Built with
-                React, Node.js, and Socket.io.
+                A multi-threaded ticket vending simulation built with a CLI
+                and a JavaFX GUI. Vendor and customer threads produce and
+                consume tickets concurrently from a synchronized shared pool
+                — a real-world implementation of the classic
+                Producer-Consumer pattern.
               </p>
 
               {/* stat cards */}
@@ -186,7 +192,7 @@ const TicketBookingDetail = () => {
               </div>
 
               <div className="tb-hero-pills">
-                {["React", "Node.js", "Spring Boot", "MySQL"].map((t) => (
+                {["Java", "JavaFX", "Multi-threading", "Gson / JSON"].map((t) => (
                   <span key={t} className="tb-pill">{t}</span>
                 ))}
               </div>
@@ -215,24 +221,46 @@ const TicketBookingDetail = () => {
               <p className="tb-eyebrow-sm">About the Project</p>
               <h2 className="tb-section-heading">What is it?</h2>
               <p className="tb-text">
-                This is a real-time ticket booking application that lets users
-                browse events, pick seats from a live seating map, and complete
-                checkout — all while seeing exactly which seats other users
-                are viewing or holding at that moment.
+                Built for the <strong>5COSC019C Object-Oriented Programming</strong>{" "}
+                coursework, this system simulates ticket distribution and
+                purchasing in a synchronized, multi-threaded environment. It
+                ships with both a Command-Line Interface for system
+                configuration and a JavaFX GUI for live visualization and
+                control — letting the same underlying engine be driven two
+                different ways.
               </p>
               <p className="tb-text">
-                The core challenge was preventing double-booking: when a user
-                selects a seat, Socket.io broadcasts a lock to every connected
-                client immediately. A 10-minute countdown timer holds the
-                reservation; if checkout is abandoned the seat is released
-                back to the pool automatically.
+                On the CLI side, users configure four parameters — total
+                tickets, ticket release rate, customer retrieval rate, and
+                max ticket capacity — all validated as positive integers
+                before being wrapped in a <code className="pl-code-inline">Configuration</code>{" "}
+                object that can be serialized to and loaded from JSON via
+                Gson, or saved as a plain text file.
+              </p>
+              <p className="pl-text tb-text">
+                The core simulation centers on a thread-safe{" "}
+                <code className="pl-code-inline">TicketPool</code>, backed by
+                a synchronized <code className="pl-code-inline">LinkedList</code>,
+                exposed through an <code className="pl-code-inline">addTickets()</code>{" "}
+                / <code className="pl-code-inline">removeTicket()</code> interface.{" "}
+                <code className="pl-code-inline">Vendor</code> threads
+                (Producers) push tickets into the pool at a configurable
+                release rate, while <code className="pl-code-inline">Customer</code>{" "}
+                threads (Consumers) pull from it concurrently until it's
+                empty — both implemented via <code className="pl-code-inline">Runnable</code>{" "}
+                and synchronized methods to prevent race conditions.
               </p>
               <p className="tb-text">
-                The backend is a REST + WebSocket hybrid — HTTP endpoints
-                handle CRUD operations for events and bookings, while a
-                persistent Socket.io namespace streams seat-state changes
-                in real time. JWT secures authenticated routes and Stripe
-                handles payment processing with webhook confirmation.
+                The JavaFX GUI mirrors the CLI's configuration fields, adds
+                Start/Stop controls, a live status label, and a log table —
+                all updated thread-safely from background threads using
+                <code className="pl-code-inline"> Platform.runLater()</code>.
+                A dedicated <code className="pl-code-inline">Logger</code>{" "}
+                class timestamps every ticket addition and removal to both
+                the console and a persistent log file, and a custom{" "}
+                <code className="pl-code-inline">InvalidConfigurationException</code>{" "}
+                handles bad input gracefully with try/catch and descriptive
+                error messages.
               </p>
             </div>
 
@@ -241,11 +269,13 @@ const TicketBookingDetail = () => {
               <p className="tb-eyebrow-sm">Project Details</p>
 
               {[
-                ["Type",     "Web Application"],
+                ["Type",     "CLI + Desktop GUI App"],
                 ["Status",   <span className="tb-status-done"><span className="tb-status-dot"/>Completed</span>],
-                ["Timeline", "3 Months · 2024"],
-                ["Role",     "Full Stack Developer"],
-                ["Category", "Course Work / Academic Project"],
+                ["Module",   "5COSC019C · OOP"],
+                ["Weighting", "50% of module mark"],
+                ["Qualifying Mark", "30%"],
+                ["Role",     "Solo Developer"],
+                ["Category", "University Coursework"],
               ].map(([label, val], i) => (
                 <div key={i} className="tb-info-row">
                   <span className="tb-info-label">{label}</span>
@@ -255,9 +285,19 @@ const TicketBookingDetail = () => {
 
               <div className="tb-divider-thin" />
 
+              <p className="tb-eyebrow-sm" style={{ marginTop: 20 }}>Learning Outcomes</p>
+              <div className="tb-lo-list">
+                <div className="tb-lo-item">OOP principles in new environments</div>
+                <div className="tb-lo-item">Design from functional requirements</div>
+                <div className="tb-lo-item">Graphical interface design (JavaFX)</div>
+                <div className="tb-lo-item">Evaluation, testing &amp; tuning</div>
+              </div>
+
+              <div className="tb-divider-thin" />
+
               <p className="tb-eyebrow-sm" style={{ marginTop: 20 }}>Platform</p>
               <div className="tb-platform-row">
-                {[["Web", <Monitor size={20}/>], ["Cloud", <Globe size={20}/>]].map(([n, icon], i) => (
+                {[["Desktop", <Monitor size={20}/>], ["CLI", <Terminal size={20}/>]].map(([n, icon], i) => (
                   <div key={i} className="tb-platform-item">
                     {icon}<span>{n}</span>
                   </div>
@@ -283,6 +323,46 @@ const TicketBookingDetail = () => {
             </div>
           </div>
 
+          {/* ── ARCHITECTURE ── */}
+          <div className="tb-card tb-card-full">
+            <div className="tb-section-header">
+              <p className="tb-eyebrow-sm">System Design</p>
+              <h2 className="tb-section-heading">Architecture &amp; Key Classes</h2>
+            </div>
+            <div className="tb-arch-grid">
+              <div className="tb-arch-card">
+                <div className="tb-arch-icon"><FileJson size={20}/></div>
+                <h3 className="tb-arch-title">Configuration</h3>
+                <p className="tb-arch-desc">Encapsulates the four system parameters; loads/saves itself as JSON via Gson.</p>
+              </div>
+              <div className="tb-arch-card">
+                <div className="tb-arch-icon"><Layers size={20}/></div>
+                <h3 className="tb-arch-title">AbstractTicketHandler</h3>
+                <p className="tb-arch-desc">Abstract base class shared by Vendor and Customer, holding a reference to the TicketPool.</p>
+              </div>
+              <div className="tb-arch-card">
+                <div className="tb-arch-icon"><GitBranch size={20}/></div>
+                <h3 className="tb-arch-title">TicketOperation</h3>
+                <p className="tb-arch-desc">Interface defining addTickets() / removeTicket(), implemented polymorphically by TicketPool.</p>
+              </div>
+              <div className="tb-arch-card">
+                <div className="tb-arch-icon"><Shield size={20}/></div>
+                <h3 className="tb-arch-title">TicketPool</h3>
+                <p className="tb-arch-desc">Thread-safe synchronized LinkedList shared across all Vendor and Customer threads.</p>
+              </div>
+              <div className="tb-arch-card">
+                <div className="tb-arch-icon"><Zap size={20}/></div>
+                <h3 className="tb-arch-title">Vendor &amp; Customer</h3>
+                <p className="tb-arch-desc">Runnable producer/consumer threads simulating concurrent ticket release and retrieval.</p>
+              </div>
+              <div className="tb-arch-card">
+                <div className="tb-arch-icon"><BarChart2 size={20}/></div>
+                <h3 className="tb-arch-title">Logger</h3>
+                <p className="tb-arch-desc">Timestamps and writes every ticket operation to console and a persistent log file.</p>
+              </div>
+            </div>
+          </div>
+
         </div>
         {/* /tb-body */}
 
@@ -298,7 +378,7 @@ const TicketBookingDetail = () => {
             Explore the <em className="tb-em">Interface</em>
           </h2>
           <p className="tb-ss-sub">
-            A walkthrough of every key screen in the booking flow.
+            A walkthrough of the CLI configuration flow and the JavaFX control panel.
           </p>
 
           {/* featured frame */}
@@ -310,7 +390,7 @@ const TicketBookingDetail = () => {
                   <span className="tb-dot tb-dot-y" />
                   <span className="tb-dot tb-dot-g" />
                 </div>
-                <div className="tb-browser-url">ticketbooking.demo</div>
+                <div className="tb-browser-url">TicketManagementSystem</div>
               </div>
               {screenshots[activeScreenshot].url ? (
                 <img
@@ -565,7 +645,7 @@ const TicketBookingDetail = () => {
         .tb-body {
           max-width: 1280px; margin: 0 auto;
           padding: 72px 64px 40px;
-          display: flex; flex-direction: column; gap: 2px;
+          display: flex; flex-direction: column; gap: 24px;
         }
 
         /* cards */
@@ -585,7 +665,6 @@ const TicketBookingDetail = () => {
           background: rgba(255,255,255,0.04);
           border: 1px solid rgba(255,255,255,0.06);
           border-radius: 20px; overflow: hidden;
-          margin-bottom: 2px;
         }
         .tb-card-desc  { border-radius: 0; border: none; }
         .tb-card-details { border-radius: 0; border: none; border-left: 1px solid rgba(255,255,255,0.05); }
@@ -600,15 +679,21 @@ const TicketBookingDetail = () => {
         }
         .tb-text { font-size: 15px; color: #94a3b8; line-height: 1.8; margin-bottom: 16px; font-weight: 300; }
         .tb-text:last-child { margin-bottom: 0; }
+        .pl-code-inline {
+          font-family: 'Monaco', monospace; font-size: 13px;
+          background: rgba(124,140,248,0.10); color: #a5b4fc;
+          padding: 2px 6px; border-radius: 5px;
+        }
 
         /* info rows */
         .tb-info-row {
           display: flex; justify-content: space-between; align-items: center;
           padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+          gap: 12px;
         }
         .tb-info-row:last-of-type { border-bottom: none; }
-        .tb-info-label { font-size: 11px; color: #4a5568; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .tb-info-value { font-size: 13px; color: #f0f4ff; font-weight: 600; }
+        .tb-info-label { font-size: 11px; color: #4a5568; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+        .tb-info-value { font-size: 13px; color: #f0f4ff; font-weight: 600; text-align: right; }
         .tb-status-done { display: flex; align-items: center; gap: 7px; color: #86efac; }
         .tb-status-dot {
           width: 7px; height: 7px; border-radius: 50%; background: currentColor;
@@ -616,6 +701,18 @@ const TicketBookingDetail = () => {
         }
         @keyframes tb-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
         .tb-divider-thin { height: 1px; background: rgba(255,255,255,0.05); margin: 4px 0; }
+
+        /* learning outcomes */
+        .tb-lo-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+        .tb-lo-item {
+          position: relative; padding-left: 16px;
+          font-size: 12.5px; color: #94a3b8; line-height: 1.5; font-weight: 400;
+        }
+        .tb-lo-item::before {
+          content: ''; position: absolute; left: 0; top: 7px;
+          width: 5px; height: 5px; border-radius: 50%;
+          background: #7c8cf8;
+        }
 
         /* platform */
         .tb-platform-row { display: flex; gap: 10px; margin-top: 8px; }
@@ -649,6 +746,28 @@ const TicketBookingDetail = () => {
         .tb-tech-card:hover .tb-tech-indicator { opacity: 1; }
         .tb-tech-icon { font-size: 24px; flex-shrink: 0; }
         .tb-tech-name { font-size: 14px; font-weight: 600; color: #f0f4ff; }
+
+        /* architecture grid */
+        .tb-arch-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+          gap: 16px;
+        }
+        .tb-arch-card {
+          padding: 22px;
+          background: #0d1525;
+          border: 1px solid rgba(255,255,255,0.05);
+          border-radius: 14px;
+          transition: all 0.3s ease;
+        }
+        .tb-arch-card:hover { background: #111d35; border-color: rgba(124,140,248,0.25); transform: translateY(-3px); }
+        .tb-arch-icon {
+          width: 40px; height: 40px; border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(124,140,248,0.12); color: #7c8cf8; margin-bottom: 14px;
+        }
+        .tb-arch-title { font-size: 15px; font-weight: 700; color: #f0f4ff; margin-bottom: 8px; font-family: 'Monaco', monospace; }
+        .tb-arch-desc { font-size: 13px; color: #64748b; line-height: 1.65; font-weight: 300; }
 
         /* ══════════ SCREENSHOTS ══════════ */
         .tb-ss-section {
@@ -750,6 +869,7 @@ const TicketBookingDetail = () => {
           .tb-hero { padding: 80px 24px 60px; min-height: auto; }
           .tb-body, .tb-ss-section { padding-left: 24px; padding-right: 24px; }
           .tb-tech-grid { grid-template-columns: repeat(2, 1fr); }
+          .tb-arch-grid { grid-template-columns: 1fr; }
           .tb-browser-url { display: none; }
           .tb-thumb-card { flex: 0 0 170px; }
         }
