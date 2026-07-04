@@ -11,7 +11,7 @@ import ecommerce from '../assets/e-commerce.avif';
 import wedding from '../assets/wedding.jpg';
 import planeTicket from '../assets/TicketBooking.jpg';
 import CinemaTicket from '../assets/Cinematicketbooking.jpg';
-import hotel from '../assets/hotelmanagement.webp';
+import algorithm from '../assets/algorithm.jpg';
 import product from '../assets/productorder.jpg';
 
 /* ─── 3 MAIN projects (row 1 — large, hero-style cards) ─── */
@@ -61,6 +61,41 @@ const MAIN_PROJECTS = [
 const SUB_PROJECTS = [
   {
     id: 4,
+    title: 'Algorithm Visualizer',
+    status: 'Completed',
+    description: 'A Java implementation of the Ford-Fulkerson method with the Edmonds-Karp optimization for finding the maximum flow in a flow network, complete with a visual representation of augmenting paths and residual networks.',
+    image: algorithm,
+    tags: ['Java', 'Edmonds-Karp', 'Ford-Fulkerson'],
+    metrics: { users: '20K+', rating: '4.6', performance: '94%' },
+    links: { live: '#', github: '#' },
+    color: 'pp-gradient-indigo-purple',
+    detailPage: '/projects/algorithm',
+  },{
+    id: 5,
+    title: 'Plane Ticket Booking System',
+    status: 'Live',
+    description: 'Real-time business intelligence platform with customisable widgets, data visualisation, and automated reporting.',
+    image: planeTicket,
+    tags: ['Java', 'First Year Project'],
+    metrics: { users: '12K+', rating: '4.8', performance: '96%' },
+    links: { live: '#', github: '#' },
+    color: 'pp-gradient-yellow-orange',
+    detailPage: '/projects/plane-ticket-booking',
+  },
+  {
+    id: 6,
+    title: 'Real Time ticket Booking System',
+    status: 'Live',
+    description: 'Real-time ticket booking system with automated availability checks, payment processing, and confirmation emails.',
+    image: CinemaTicket,
+    tags: ['Spring Boot', 'React', 'MySQL'],
+    metrics: { users: '15K+', rating: '4.7', performance: '92%' },
+    links: { live: '#', github: '#' },
+    color: 'pp-gradient-green-emerald',
+    detailPage: '/projects/ticket-booking',
+  },
+  ,{
+    id: 7,
     title: 'University Management System',
     status: 'Live',
     description: 'Comprehensive university management platform covering enrollment, attendance, grades, and parent communication portals.',
@@ -72,19 +107,7 @@ const SUB_PROJECTS = [
     detailPage: '/projects/student-management',
   },
   {
-    id: 5,
-    title: 'Real Time ticket Booking System',
-    status: 'Live',
-    description: 'Real-time ticket booking system with automated availability checks, payment processing, and confirmation emails.',
-    image: CinemaTicket,
-    tags: ['Spring Boot', 'React', 'MySQL'],
-    metrics: { users: '15K+', rating: '4.7', performance: '92%' },
-    links: { live: '#', github: '#' },
-    color: 'pp-gradient-green-emerald',
-    detailPage: '/projects/ticket-booking',
-  },
-  {
-    id: 6,
+    id: 8,
     title: 'Product Order System',
     status: 'Live',
     description: 'Dynamic content management system for creative professionals with drag-and-drop builder and SEO optimisation.',
@@ -95,32 +118,10 @@ const SUB_PROJECTS = [
     color: 'pp-gradient-orange-red',
     detailPage: null,
   },
-  {
-    id: 7,
-    title: 'Hotel Management System',
-    status: 'Live',
-    description: 'Cross-platform productivity app with team collaboration, time tracking, and intelligent task prioritisation.',
-    image: hotel,
-    tags: ['Spring Boot', 'React', 'MySQL'],
-    metrics: { users: '20K+', rating: '4.6', performance: '94%' },
-    links: { live: '#', github: '#' },
-    color: 'pp-gradient-indigo-purple',
-    detailPage: '/projects/task-management',
-  },
-  {
-    id: 8,
-    title: 'Plane Ticket Booking System',
-    status: 'Live',
-    description: 'Real-time business intelligence platform with customisable widgets, data visualisation, and automated reporting.',
-    image: planeTicket,
-    tags: ['Java', 'Second Year Project'],
-    metrics: { users: '12K+', rating: '4.8', performance: '96%' },
-    links: { live: '#', github: '#' },
-    color: 'pp-gradient-yellow-orange',
-    detailPage: null,
-  },
+  
 ];
 
+/*
 const COMPACT_PROJECTS = [
   {
     id: 9,
@@ -202,7 +203,18 @@ const COMPACT_PROJECTS = [
     accent: '#a78bfa',
     detailPage: null,
   },
+  {
+    id: 17,
+    title: 'Hotel Management System',
+    status: 'Completed',
+    statusColor: '#34d399',
+    description: 'Real-time business intelligence platform with customisable widgets, data visualisation, and automated reporting.',
+    tags: ['Spring Boot','MySQL', 'Practice project'],
+    accent: '#a78bfa',
+    detailPage: null,
+  },
 ];
+*/
 
 /* ══════════════════════════════════════════════════════ */
 const PortfolioProjects = () => {
@@ -404,24 +416,23 @@ const PortfolioProjects = () => {
           ))}
         </div>
 
-        {/* ── Section divider ── */}
+        {/*
+          More Projects section commented out.
+
         <div className="pj-section-divider">
           <span className="pj-sd-line" />
           <span className="pj-sd-label">More Projects</span>
           <span className="pj-sd-line" />
         </div>
 
-        {/* ── Auto-scroll infinite marquee ── */}
         <div
           className="pj-marquee-wrap"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Fade edges */}
           <div className="pj-fade-left" />
           <div className="pj-fade-right" />
 
-          {/* Marquee track — cards duplicated for seamless loop */}
           <div className={`pj-marquee-track ${isPaused ? 'pj-paused' : ''}`}>
             {[...COMPACT_PROJECTS, ...COMPACT_PROJECTS].map((project, i) => {
               const idx = String(project.id).padStart(2, '0');
@@ -456,7 +467,6 @@ const PortfolioProjects = () => {
           </div>
         </div>
 
-        {/* ── Footer strip ── */}
         <div className="pj-footer-strip">
           {['16 Projects', 'Clean Architecture', 'Responsive Design', 'Open Source', 'Always Iterating'].map((label, i, arr) => (
             <React.Fragment key={i}>
@@ -465,6 +475,7 @@ const PortfolioProjects = () => {
             </React.Fragment>
           ))}
         </div>
+        */}
 
       </div>
 
@@ -988,7 +999,7 @@ const PortfolioProjects = () => {
         .pj-sd-line {
           flex: 1;
           height: 1px;
-          background: rgba(255,255,255,0.06);
+          background: #5e636d;
         }
 
         .pj-sd-label {
@@ -996,7 +1007,7 @@ const PortfolioProjects = () => {
           font-weight: 600;
           letter-spacing: 2.5px;
           text-transform: uppercase;
-          color: #2d3748;
+          color: #9fa7b6;
           white-space: nowrap;
         }
 
@@ -1210,7 +1221,7 @@ const PortfolioProjects = () => {
           font-weight: 500;
           letter-spacing: 1.5px;
           text-transform: uppercase;
-          color: #2d3748;
+          color: #54838f;
           transition: color 0.3s ease;
         }
 

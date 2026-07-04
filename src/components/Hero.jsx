@@ -136,34 +136,25 @@ const PortfolioHero = ({ isDarkMode }) => {
         <div className="ph-hero-grid">
           {/* Left Content */}
           <div className="ph-hero-left">
-            {/* Status Badge */}
-            {/* <div className="ph-badge-group">
-              <span className="ph-status-badge">
-                <Sparkles size={16} className="ph-badge-icon" />
-                Available for Opportunities
-              </span>
-              <span className="ph-verified-badge">
-                <Zap size={16} />
-                Developer
-              </span>
-              <span className="ph-freelancer-badge">
-                <Briefcase size={16} />
-                Freelancer
-              </span>
-            </div> */}
-
             {/* Main Content */}
             <div className="ph-hero-main-content">
-              <p className="ph-hero-greeting">Hello, I'm</p>
+              <div className="ph-eyebrow">
+                <span className="ph-eyebrow-line" />
+                <Sparkles size={14} style={{ color: '#4a5568' }} />
+                <span>Hello, I'm</span>
+                <Sparkles size={14} style={{ color: '#4a5568' }} />
+                <span className="ph-eyebrow-line" />
+              </div>
               <h1 className="ph-hero-name">
-                <span className="ph-name-text">
-                  A.Yasiru Nadeesha Aththanayaka
-                </span>
+                A. Yasiru Nadeesha Aththanayaka
                 <span className="ph-cursor-blink">|</span>
+                <br />
+                <em className="ph-name-em">Full Stack Developer</em>
+                {/* <span className="ph-cursor-blink">|</span> */}
               </h1>
-              <h2 className="ph-hero-title">
+              {/* <h2 className="ph-hero-title">
                 <span className="ph-gradient-text">Full Stack Developer</span>
-              </h2>
+              </h2> */}
 
               <p className="ph-hero-description">
                 Crafting exceptional digital experiences through elegant code
@@ -178,12 +169,17 @@ const PortfolioHero = ({ isDarkMode }) => {
                   <span className="ph-about-title">About Me</span>
                 </div>
                 <p className="ph-about-text">
-                  I'm a results-driven Full Stack Developer based in Sri Lanka,
-                  passionate about engineering robust, scalable software
-                  solutions. With hands-on experience across the full
-                  development lifecycle, I bridge the gap between thoughtful
-                  architecture and intuitive user experiences — turning complex
-                  problems into clean, maintainable code.
+                  I'm a results-driven Full Stack Developer based 
+                  in Sri Lanka, passionate about engineering robust, 
+                  scalable software solutions. With hands-on experience 
+                  across the full development lifecycle, 
+                  I bridge the gap between thoughtful architecture and 
+                  intuitive user experiences — turning complex problems 
+                  into clean, maintainable code. Beyond development, my 
+                  sights are set on becoming a DevOps Engineer, 
+                  where I can combine my software foundation with cloud 
+                  infrastructure, CI/CD pipelines, and automation to help 
+                  teams ship faster and more reliably.
                 </p>
                 <div className="ph-about-tags">
                   <span className="ph-about-tag">
@@ -195,33 +191,38 @@ const PortfolioHero = ({ isDarkMode }) => {
                   <span className="ph-about-tag">
                     <Zap size={13} /> Problem Solver
                   </span>
+                  <span className="ph-about-tag">
+                    <GraduationCap size={13} /> University of Westminster, UK
+                  </span>
                 </div>
               </div>
 
-              {/* CTA Buttons */}
+              {/* ── CTA Buttons — clip-path style matching Projects section ── */}
               <div className="ph-hero-cta">
+                {/* Primary: View My Work */}
                 <button className="ph-btn-primary">
+                  <ArrowRight size={18} />
                   <span>View My Work</span>
-                  <ArrowRight size={20} className="ph-btn-icon" />
-                  <div className="ph-btn-shine"></div>
                 </button>
+
+                {/* Secondary: View CV */}
                 <a
                   href="/yasiru.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="ph-btn-secondary"
-                  style={{ textDecoration: "none" }}
                 >
-                  <ExternalLink size={20} />
+                  <ExternalLink size={18} />
                   <span>View CV</span>
                 </a>
+
+                {/* Ghost: Download CV */}
                 <a
                   href="/yasiru.pdf"
                   download="Yasiru_Nadeesha_CV.pdf"
-                  className="ph-btn-secondary"
-                  style={{ textDecoration: "none" }}
+                  className="ph-btn-ghost"
                 >
-                  <Download size={20} />
+                  <Download size={18} />
                   <span>Download CV</span>
                 </a>
               </div>
@@ -324,7 +325,6 @@ const PortfolioHero = ({ isDarkMode }) => {
 
               {/* Floating Cards */}
               <div className="ph-floating-cards">
-                {/* Currently Working Card */}
                 <div className="ph-float-card ph-current-working-card">
                   <Sparkles size={20} className="ph-card-icon" />
                   <div className="ph-card-content">
@@ -336,7 +336,6 @@ const PortfolioHero = ({ isDarkMode }) => {
                   </div>
                 </div>
 
-                {/* Tech Stack Card */}
                 <div className="ph-float-card ph-tech-card">
                   <Code2 size={20} className="ph-card-icon" />
                   <div className="ph-card-content">
@@ -349,7 +348,6 @@ const PortfolioHero = ({ isDarkMode }) => {
                   </div>
                 </div>
 
-                {/* Current Project Card */}
                 <div className="ph-float-card ph-project-card">
                   <Terminal size={20} className="ph-card-icon" />
                   <div className="ph-card-content">
@@ -361,12 +359,9 @@ const PortfolioHero = ({ isDarkMode }) => {
                   </div>
                 </div>
 
-                {/* Achievement Card */}
                 <div className="ph-float-card ph-achievement-card">
                   <Sparkles size={20} className="ph-card-icon" />
                   <div className="ph-card-content">
-                    {/* <h4>Latest Achievement</h4>
-                    <p>🏆 Best Project Award</p> */}
                     <span className="ph-status-badge">
                       <Sparkles size={16} className="ph-badge-icon" />
                       Available for Opportunities
@@ -383,7 +378,6 @@ const PortfolioHero = ({ isDarkMode }) => {
                 </div>
               </div>
 
-              {/* Animated Rings */}
               <div className="ph-animated-ring ph-ring-1"></div>
               <div className="ph-animated-ring ph-ring-2"></div>
             </div>
@@ -398,6 +392,7 @@ const PortfolioHero = ({ isDarkMode }) => {
         </div>
         <span className="ph-scroll-text">Scroll to explore</span>
       </div>
+
       {/* Ticker */}
       <div className="ph-ticker-wrap">
         <span className="ph-ticker-label">↑ Live</span>
@@ -413,6 +408,8 @@ const PortfolioHero = ({ isDarkMode }) => {
       </div>
 
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
         * {
           margin: 0;
           padding: 0;
@@ -460,24 +457,11 @@ const PortfolioHero = ({ isDarkMode }) => {
         }
 
         @keyframes ph-fadeInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
+          from { opacity: 0; transform: translateX(-50px); }
+          to   { opacity: 1; transform: translateX(0); }
         }
 
-        .ph-badge-group {
-          display: flex;
-          gap: 15px;
-          margin-bottom: 10px;
-          flex-wrap: wrap;
-        }
-
-        .ph-status-badge, .ph-verified-badge , .ph-freelancer-badge {
+        .ph-status-badge, .ph-verified-badge, .ph-freelancer-badge {
           display: flex;
           align-items: center;
           gap: 8px;
@@ -491,20 +475,20 @@ const PortfolioHero = ({ isDarkMode }) => {
         }
 
         .ph-status-badge {
-          background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
-          border: 1px solid rgba(102, 126, 234, 0.3);
+          background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));
+          border: 1px solid rgba(102,126,234,0.3);
           color: #a5b4fc;
         }
 
         .ph-verified-badge {
-          background: rgba(72, 187, 120, 0.2);
-          border: 1px solid rgba(72, 187, 120, 0.3);
+          background: rgba(72,187,120,0.2);
+          border: 1px solid rgba(72,187,120,0.3);
           color: #86efac;
         }
 
         .ph-freelancer-badge {
-          background: rgba(161, 90, 49, 0.2);
-          border: 1px solid rgba(136, 12, 12, 0.3);
+          background: rgba(161,90,49,0.2);
+          border: 1px solid rgba(136,12,12,0.3);
           color: #b77cceff;
         }
 
@@ -527,36 +511,53 @@ const PortfolioHero = ({ isDarkMode }) => {
           margin-top: 60px;
         }
 
-        .ph-hero-greeting {
-          font-size: 18px;
-          color: #a5b4fc;
+        /* ── Eyebrow (matches pj-eyebrow / sk-eyebrow exactly) ── */
+        .ph-eyebrow {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: #4a5568;
           margin-bottom: 20px;
-          font-weight: 500;
         }
 
+        .ph-eyebrow-line {
+          display: block;
+          width: 32px;
+          height: 1px;
+          background: #4a5568;
+        }
+
+        /* ── Name — DM Serif Display, same scale as pj-title / sk-title ── */
         .ph-hero-name {
-          font-size: 52px;
-          font-weight: 900;
-          line-height: 1.1;
-          margin-bottom: 15px;
-          letter-spacing: -2px;
-          
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(44px, 5.5vw, 54px);
+          font-weight: 400;
+          line-height: 1.05;
+          color: #f0f4ff;
+          letter-spacing: -1.5px;
+          margin-bottom: 18px;
         }
 
-        .ph-name-text {
-          background: linear-gradient(120deg, #7c8cf8, #e879a0);
-          -webkit-background-clip: text;
-          -webkit-text-fill-colo
+        /* Italic gradient "em" — identical to pj-title-em / sk-title-em */
+        .ph-name-em {
           font-style: italic;
-          background: linear-gradient(135deg, #a4c8d8 0%, #3684cc 100%);
+          background: linear-gradient(120deg, #7c8cf8, #e879a0);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
+          font-size: 0.75em;
         }
 
         .ph-cursor-blink {
-          color: #939bc0;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.65em;
+          color: #4a5568;
           animation: ph-blink 1s infinite;
+          -webkit-text-fill-color: #4a5568;
         }
 
         @keyframes ph-blink {
@@ -564,25 +565,22 @@ const PortfolioHero = ({ isDarkMode }) => {
           51%, 100% { opacity: 0; }
         }
 
+        /* ── Subtitle role line ── */
         .ph-hero-title {
-          font-size: 48px;
-          font-weight: 800;
-          margin-bottom: 30px;
-          line-height: 1.2;
+          font-family: 'DM Sans', sans-serif;
+          font-size: clamp(18px, 2.2vw, 24px);
+          font-weight: 300;
+          margin-bottom: 28px;
+          line-height: 1.5;
+          color: #64748b;
         }
 
         .ph-gradient-text {
-          background: linear-gradient(135deg, #3b87a5 0%, #764ba2 50%, #f093fb 100%);
+          background: linear-gradient(120deg, #7c8cf8, #e879a0);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          background-size: 200% 200%;
-          animation: ph-gradientShift 5s ease infinite;
-        }
-
-        @keyframes ph-gradientShift {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
+          font-weight: 500;
         }
 
         .ph-hero-description {
@@ -594,8 +592,8 @@ const PortfolioHero = ({ isDarkMode }) => {
 
         /* About Me */
         .ph-about-me {
-          background: rgba(102, 126, 234, 0.07);
-          border: 1px solid rgba(102, 126, 234, 0.2);
+          background: rgba(102,126,234,0.07);
+          border: 1px solid rgba(102,126,234,0.2);
           border-radius: 16px;
           padding: 22px 26px;
           margin-bottom: 36px;
@@ -605,7 +603,7 @@ const PortfolioHero = ({ isDarkMode }) => {
 
         @keyframes ph-fadeInUp {
           from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+          to   { opacity: 1; transform: translateY(0); }
         }
 
         .ph-about-header {
@@ -615,9 +613,7 @@ const PortfolioHero = ({ isDarkMode }) => {
           margin-bottom: 12px;
         }
 
-        .ph-about-icon {
-          color: #667eea;
-        }
+        .ph-about-icon { color: #667eea; }
 
         .ph-about-title {
           font-size: 13px;
@@ -646,82 +642,156 @@ const PortfolioHero = ({ isDarkMode }) => {
           align-items: center;
           gap: 6px;
           padding: 6px 14px;
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.12);
           border-radius: 30px;
           font-size: 13px;
           color: #94a3b8;
           font-weight: 500;
         }
 
+        /* ══════════════════════════════════════════════════════
+           CTA BUTTONS — clip-path style matching Projects section
+           (pp-action-btn pattern from PortfolioProjects.jsx)
+           ══════════════════════════════════════════════════════ */
+
         .ph-hero-cta {
           display: flex;
-          gap: 20px;
+          gap: 12px;
           margin-bottom: 40px;
           flex-wrap: wrap;
+          align-items: center;
         }
 
-        .ph-btn-primary, .ph-btn-secondary {
+        /* Shared base — mirrors pp-action-btn */
+        .ph-btn-primary,
+        .ph-btn-secondary,
+        .ph-btn-ghost {
+          position: relative;
           display: inline-flex;
           align-items: center;
+          justify-content: center;
           gap: 10px;
-          padding: 18px 35px;
-          border-radius: 50px;
-          font-size: 16px;
-          font-weight: 700;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          position: relative;
-          overflow: hidden;
+          padding: 15px 28px;
           border: none;
-          margin-top: 10px;
+          border-radius: 0;
+          /* cut-corner shape identical to Projects section */
+          clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          cursor: pointer;
+          text-decoration: none;
+          overflow: hidden;
+          isolation: isolate;
+          transition: color 0.3s cubic-bezier(0.4,0,0.2,1),
+                      box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);
+          margin-top: 8px;
+          white-space: nowrap;
         }
 
+        /* Sliding gradient fill — identical to pp-action-btn::before */
+        .ph-btn-primary::before,
+        .ph-btn-secondary::before,
+        .ph-btn-ghost::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          transform: translateX(-101%);
+          transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+          z-index: -1;
+        }
+
+        /* ── Primary: "View My Work" — mirrors pp-action-btn.pp-primary ── */
         .ph-btn-primary {
-          background: linear-gradient(135deg, #667eea, #764ba2);
-          color: white;
-          box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+          background: #0d1424;
+          color: #7dd3fc;
+          box-shadow: inset 0 0 0 1px rgba(125,211,252,0.35);
+        }
+
+        .ph-btn-primary::before {
+          background: linear-gradient(100deg, #06b6d4, #7c3aed);
         }
 
         .ph-btn-primary:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5);
+          color: #ffffff;
+          box-shadow: inset 0 0 0 1px transparent;
         }
 
-        .ph-btn-primary:hover .ph-btn-icon {
-          transform: translateX(5px);
+        .ph-btn-primary:hover::before {
+          transform: translateX(0);
         }
 
-        .ph-btn-shine {
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-          transition: left 0.5s;
-        }
-
-        .ph-btn-primary:hover .ph-btn-shine {
-          left: 100%;
-        }
-
+        /* ── Secondary: "View CV" — mirrors pp-action-btn.pp-demo-btn ── */
         .ph-btn-secondary {
-          background: rgba(255, 255, 255, 0.1);
-          border: 2px solid rgba(255, 255, 255, 0.2);
-          color: white;
-          backdrop-filter: blur(10px);
+          background: transparent;
+          color: #c4b5fd;
+          box-shadow: inset 0 0 0 1px rgba(196,181,253,0.4);
+        }
+
+        .ph-btn-secondary::before {
+          background: linear-gradient(100deg, #7c3aed, #ec4899);
         }
 
         .ph-btn-secondary:hover {
-          background: rgba(255, 255, 255, 0.15);
-          transform: translateY(-2px);
+          color: #ffffff;
+          box-shadow: inset 0 0 0 1px transparent;
         }
 
-        .ph-btn-icon {
-          transition: transform 0.3s ease;
+        .ph-btn-secondary:hover::before {
+          transform: translateX(0);
         }
 
+        /* ── Ghost: "Download CV" — same cut-corner, muted green tint ── */
+        .ph-btn-ghost {
+          background: transparent;
+          color: #6ee7b7;
+          box-shadow: inset 0 0 0 1px rgba(110,231,183,0.35);
+        }
+
+        .ph-btn-ghost::before {
+          background: linear-gradient(100deg, #059669, #06b6d4);
+        }
+
+        .ph-btn-ghost:hover {
+          color: #ffffff;
+          box-shadow: inset 0 0 0 1px transparent;
+        }
+
+        .ph-btn-ghost:hover::before {
+          transform: translateX(0);
+        }
+
+        /* Light mode overrides for buttons */
+        .ph-light-theme .ph-btn-primary {
+          background: #f0f4ff;
+          color: #4f46e5;
+          box-shadow: inset 0 0 0 1px rgba(79,70,229,0.35);
+        }
+
+        .ph-light-theme .ph-btn-secondary {
+          background: transparent;
+          color: #7c3aed;
+          box-shadow: inset 0 0 0 1px rgba(124,58,237,0.4);
+        }
+
+        .ph-light-theme .ph-btn-ghost {
+          background: transparent;
+          color: #059669;
+          box-shadow: inset 0 0 0 1px rgba(5,150,105,0.35);
+        }
+
+        .ph-light-theme .ph-btn-primary:hover,
+        .ph-light-theme .ph-btn-secondary:hover,
+        .ph-light-theme .ph-btn-ghost:hover {
+          color: #ffffff;
+        }
+
+        /* ══════════════════════════════════════════════════════ */
+
+        /* Social Links */
         .ph-social-links {
           display: flex;
           gap: 15px;
@@ -731,8 +801,8 @@ const PortfolioHero = ({ isDarkMode }) => {
           width: 48px;
           height: 48px;
           border-radius: 50%;
-          background: rgba(255, 255, 255, 0.1);
-          border: 2px solid rgba(255, 255, 255, 0.2);
+          background: rgba(255,255,255,0.1);
+          border: 2px solid rgba(255,255,255,0.2);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -742,8 +812,8 @@ const PortfolioHero = ({ isDarkMode }) => {
         }
 
         .ph-social-link:hover {
-          background: rgba(102, 126, 234, 0.3);
-          border-color: rgba(102, 126, 234, 0.5);
+          background: rgba(102,126,234,0.3);
+          border-color: rgba(102,126,234,0.5);
           transform: translateY(-3px);
         }
 
@@ -752,7 +822,6 @@ const PortfolioHero = ({ isDarkMode }) => {
           height: 48px;
           border-radius: 50%;
           object-fit: contain;
-          transition: filter 0.3s ease;
         }
 
         /* Right Visual */
@@ -762,14 +831,8 @@ const PortfolioHero = ({ isDarkMode }) => {
         }
 
         @keyframes ph-fadeInRight {
-          from {
-            opacity: 0;
-            transform: translateX(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
+          from { opacity: 0; transform: translateX(50px); }
+          to   { opacity: 1; transform: translateX(0); }
         }
 
         .ph-visual-container {
@@ -781,12 +844,12 @@ const PortfolioHero = ({ isDarkMode }) => {
           margin: auto;
           width: 600px;
           margin-top: 170px;
-          background: rgba(17, 24, 39, 0.8);
+          background: rgba(17,24,39,0.8);
           border-radius: 16px;
           overflow: hidden;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255,255,255,0.1);
           backdrop-filter: blur(20px);
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
 
         .ph-main-card {
@@ -796,18 +859,15 @@ const PortfolioHero = ({ isDarkMode }) => {
         }
 
         .ph-card-header {
-          background: rgba(30, 41, 59, 0.8);
+          background: rgba(30,41,59,0.8);
           padding: 15px 20px;
           display: flex;
           align-items: center;
           gap: 15px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .ph-terminal-dots {
-          display: flex;
-          gap: 8px;
-        }
+        .ph-terminal-dots { display: flex; gap: 8px; }
 
         .ph-dot {
           width: 12px;
@@ -815,9 +875,9 @@ const PortfolioHero = ({ isDarkMode }) => {
           border-radius: 50%;
         }
 
-        .ph-dot-red { background: #ef4444; }
+        .ph-dot-red    { background: #ef4444; }
         .ph-dot-yellow { background: #f59e0b; }
-        .ph-dot-green { background: #10b981; }
+        .ph-dot-green  { background: #10b981; }
 
         .ph-file-name {
           color: #94a3b8;
@@ -845,22 +905,10 @@ const PortfolioHero = ({ isDarkMode }) => {
           user-select: none;
         }
 
-        .ph-code-keyword {
-          color: #c084fc;
-        }
-
-        .ph-code-variable {
-          color: #60a5fa;
-        }
-
-        .ph-code-string {
-          color: #34d399;
-        }
-
-        .ph-indent {
-          margin-left: 20px;
-          color: #cbd5e1;
-        }
+        .ph-code-keyword  { color: #c084fc; }
+        .ph-code-variable { color: #60a5fa; }
+        .ph-code-string   { color: #34d399; }
+        .ph-indent        { margin-left: 20px; color: #cbd5e1; }
 
         /* Floating Cards */
         .ph-floating-cards {
@@ -873,36 +921,24 @@ const PortfolioHero = ({ isDarkMode }) => {
 
         .ph-float-card {
           position: absolute;
-          background: rgba(17, 24, 39, 0.9);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(17,24,39,0.9);
+          border: 1px solid rgba(255,255,255,0.1);
           border-radius: 16px;
           padding: 20px;
           backdrop-filter: blur(20px);
-          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 10px 40px rgba(0,0,0,0.3);
           transition: all 0.4s ease;
         }
 
         .ph-float-card:hover {
           transform: translateY(-10px) scale(1.05);
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
 
-        .ph-card-icon {
-          color: #667eea;
-          margin-bottom: 10px;
-        }
+        .ph-card-icon { color: #667eea; margin-bottom: 10px; }
 
-        .ph-card-content h4 {
-          font-size: 16px;
-          margin-bottom: 10px;
-          color: white;
-        }
-
-        .ph-card-content p {
-          font-size: 14px;
-          color: #94a3b8;
-          margin-bottom: 10px;
-        }
+        .ph-card-content h4 { font-size: 16px; margin-bottom: 10px; color: white; }
+        .ph-card-content p  { font-size: 14px; color: #94a3b8; margin-bottom: 10px; }
 
         .ph-tech-card {
           top: -140px;
@@ -910,16 +946,12 @@ const PortfolioHero = ({ isDarkMode }) => {
           animation: ph-float-1 8s ease-in-out infinite;
         }
 
-        .ph-tech-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-        }
+        .ph-tech-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 
         .ph-tech-tag {
           padding: 5px 12px;
-          background: rgba(102, 126, 234, 0.2);
-          border: 1px solid rgba(102, 126, 234, 0.3);
+          background: rgba(102,126,234,0.2);
+          border: 1px solid rgba(102,126,234,0.3);
           border-radius: 20px;
           font-size: 12px;
           color: #a5b4fc;
@@ -934,7 +966,7 @@ const PortfolioHero = ({ isDarkMode }) => {
         .ph-progress-bar {
           width: 100%;
           height: 8px;
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(255,255,255,0.1);
           border-radius: 4px;
           overflow: hidden;
           margin-top: 10px;
@@ -958,17 +990,6 @@ const PortfolioHero = ({ isDarkMode }) => {
           animation: ph-float-3 12s ease-in-out infinite;
         }
 
-        .ph-achievement-badge {
-          display: inline-block;
-          padding: 4px 12px;
-          background: rgba(251, 191, 36, 0.2);
-          border: 1px solid rgba(251, 191, 36, 0.3);
-          border-radius: 12px;
-          font-size: 12px;
-          color: #fcd34d;
-          margin-top: 10px;
-        }
-
         .ph-current-working-card {
           bottom: 450px;
           right: 700px;
@@ -976,8 +997,8 @@ const PortfolioHero = ({ isDarkMode }) => {
         }
 
         .ph-current-working-badge {
-          background: rgba(72, 187, 120, 0.2);
-          border: 1px solid rgba(72, 187, 120, 0.3);
+          background: rgba(72,187,120,0.2);
+          border: 1px solid rgba(72,187,120,0.3);
           color: #86efac;
           display: inline-block;
           padding: 4px 12px;
@@ -1001,10 +1022,9 @@ const PortfolioHero = ({ isDarkMode }) => {
           50% { transform: translateY(-15px) rotate(5deg); }
         }
 
-        /* Animated Rings */
         .ph-animated-ring {
           position: absolute;
-          border: 2px solid rgba(102, 126, 234, 0.2);
+          border: 2px solid rgba(102,126,234,0.2);
           border-radius: 50%;
           top: 50%;
           left: 50%;
@@ -1013,25 +1033,23 @@ const PortfolioHero = ({ isDarkMode }) => {
         }
 
         .ph-ring-1 {
-          width: 500px;
-          height: 500px;
+          width: 500px; height: 500px;
           animation: ph-rotate 20s linear infinite;
         }
 
         .ph-ring-2 {
-          width: 650px;
-          height: 650px;
+          width: 650px; height: 650px;
           animation: ph-rotate-reverse 30s linear infinite;
         }
 
         @keyframes ph-rotate {
           from { transform: translate(-50%, -50%) rotate(0deg); }
-          to { transform: translate(-50%, -50%) rotate(360deg); }
+          to   { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         @keyframes ph-rotate-reverse {
           from { transform: translate(-50%, -50%) rotate(0deg); }
-          to { transform: translate(-50%, -50%) rotate(-360deg); }
+          to   { transform: translate(-50%, -50%) rotate(-360deg); }
         }
 
         /* Scroll Indicator */
@@ -1048,17 +1066,15 @@ const PortfolioHero = ({ isDarkMode }) => {
         }
 
         .ph-mouse {
-          width: 26px;
-          height: 40px;
-          border: 2px solid rgba(255, 255, 255, 0.5);
+          width: 26px; height: 40px;
+          border: 2px solid rgba(255,255,255,0.5);
           border-radius: 13px;
           position: relative;
         }
 
         .ph-wheel {
-          width: 4px;
-          height: 8px;
-          background: rgba(255, 255, 255, 0.8);
+          width: 4px; height: 8px;
+          background: rgba(255,255,255,0.8);
           border-radius: 2px;
           position: absolute;
           top: 8px;
@@ -1068,427 +1084,17 @@ const PortfolioHero = ({ isDarkMode }) => {
         }
 
         @keyframes ph-scroll {
-          0% { opacity: 1; top: 8px; }
+          0%   { opacity: 1; top: 8px; }
           100% { opacity: 0; top: 20px; }
         }
 
         .ph-scroll-text {
           font-size: 14px;
-          color: rgba(255, 255, 255, 0.6);
+          color: rgba(255,255,255,0.6);
           font-weight: 500;
         }
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-          .ph-grid {
-            grid-template-columns: 1fr;
-            gap: 60px;
-          }
-
-          .ph-hero-right {
-            order: -1;
-          }
-
-          .ph-visual-container {
-            height: 400px;
-          }
-
-          .ph-hero-name {
-            font-size: 56px;
-          }
-
-          .ph-hero-title {
-            font-size: 36px;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .ph-hero-container {
-            padding: 60px 40px;
-          }
-
-          .ph-hero-name {
-            font-size: 42px;
-          }
-
-          .ph-hero-title {
-            font-size: 28px;
-          }
-
-          .ph-about-tags {
-            flex-direction: column;
-          }
-
-          .ph-hero-cta {
-            flex-direction: column;
-          }
-
-          .btn-primary, .btn-secondary {
-            width: 100%;
-            justify-content: center;
-          }
-
-          .ph-float-card {
-            transform: scale(0.85);
-          }
-
-          .ph-animated-ring {
-            display: none;
-          }
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-          .ph-hero-grid {
-            grid-template-columns: 1fr;
-            gap: 60px;
-          }
-
-          .ph-hero-right {
-            order: -1;
-          }
-
-          .ph-visual-container {
-            height: 400px;
-          }
-
-          .ph-hero-name {
-            font-size: 40px;
-          }
-
-          .ph-hero-title {
-            font-size: 32px;
-          }
-
-          .ph-code-card {
-            width: 100%;
-            margin-top: 80px;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .ph-hero-container {
-            padding: 80px 20px 60px;
-          }
-
-          .ph-hero-grid {
-            grid-template-columns: 1fr;
-            gap: 40px;
-          }
-
-          .ph-hero-right {
-            display: none;
-          }
-
-          .ph-hero-name {
-            font-size: 30px;
-            letter-spacing: -1px;
-          }
-
-          .ph-hero-title {
-            font-size: 24px;
-          }
-
-          .ph-hero-description {
-            font-size: 15px;
-          }
-
-          .ph-hero-greeting {
-            font-size: 15px;
-          }
-
-          .ph-badge-group {
-            gap: 8px;
-          }
-
-          .ph-status-badge,
-          .ph-verified-badge,
-          .ph-freelancer-badge {
-            font-size: 12px;
-            padding: 8px 14px;
-          }
-
-          .ph-about-me {
-            padding: 16px 18px;
-          }
-
-          .ph-about-text {
-            font-size: 14px;
-          }
-
-          .ph-about-tags {
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 8px;
-          }
-
-          .ph-hero-cta {
-            flex-direction: column;
-            gap: 12px;
-          }
-
-          .ph-btn-primary,
-          .ph-btn-secondary {
-            width: 100%;
-            justify-content: center;
-            padding: 15px 24px;
-            font-size: 15px;
-          }
-
-          .ph-social-links {
-            gap: 10px;
-            flex-wrap: wrap;
-          }
-
-          .ph-scroll-indicator {
-            display: none;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .ph-hero-container {
-            padding: 50px 16px 50px;
-          }
-
-          .ph-hero-name {
-            font-size: 36px;
-          }
-
-          .ph-hero-title {
-            font-size: 20px;
-          }
-
-          .ph-badge-group {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 6px;
-            margin-bottom: 16px;
-          }
-
-          .ph-status-badge,
-          .ph-verified-badge,
-          .ph-freelancer-badge {
-            width: fit-content;
-          }
-
-          .ph-about-tags {
-            flex-direction: column;
-          }
-
-          .ph-social-link {
-            width: 42px;
-            height: 42px;
-          }
-
-          .ph-fiverr-icon {
-            width: 42px;
-            height: 42px;
-          }
-        }
-
-        /* ════════════════════════════════════════════════════════════ */
-        /* ═══ LIGHT MODE — added on top, dark mode CSS above is untouched ═══ */
-        /* ════════════════════════════════════════════════════════════ */
-
-        .ph-light-theme.ph-portfolio-hero {
-          background: linear-gradient(135deg, #f8f9fc 0%, #eef1fa 50%, #e9edf8 100%);
-          color: #1e2433;
-        }
-
-        .ph-light-theme .ph-status-badge {
-          background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(118, 75, 162, 0.12));
-          border: 1px solid rgba(102, 126, 234, 0.25);
-          color: #4f46e5;
-        }
-
-        .ph-light-theme .ph-verified-badge {
-          background: rgba(16, 163, 74, 0.12);
-          border: 1px solid rgba(16, 163, 74, 0.25);
-          color: #15803d;
-        }
-
-        .ph-light-theme .ph-freelancer-badge {
-          background: rgba(161, 90, 49, 0.12);
-          border: 1px solid rgba(161, 90, 49, 0.25);
-          color: #9333ea;
-        }
-
-        .ph-light-theme .ph-hero-greeting {
-          color: #4f46e5;
-        }
-
-        .ph-light-theme .ph-name-text {
-          background: linear-gradient(135deg, #1e3a8a 0%, #4f46e5 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .ph-light-theme .ph-cursor-blink {
-          color: #4f46e5;
-        }
-
-        .ph-light-theme .ph-gradient-text {
-          background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #db2777 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .ph-light-theme .ph-hero-description {
-          color: #475569;
-        }
-
-        .ph-light-theme .ph-about-me {
-          background: rgba(102, 126, 234, 0.05);
-          border: 1px solid rgba(102, 126, 234, 0.15);
-        }
-
-        .ph-light-theme .ph-about-icon {
-          color: #4f46e5;
-        }
-
-        .ph-light-theme .ph-about-title {
-          color: #4f46e5;
-        }
-
-        .ph-light-theme .ph-about-text {
-          color: #475569;
-        }
-
-        .ph-light-theme .ph-about-tag {
-          background: rgba(15, 23, 42, 0.04);
-          border: 1px solid rgba(15, 23, 42, 0.1);
-          color: #475569;
-        }
-
-        .ph-light-theme .ph-btn-primary {
-          background: linear-gradient(135deg, #4f46e5, #7c3aed);
-          color: white;
-          box-shadow: 0 10px 40px rgba(79, 70, 229, 0.25);
-        }
-
-        .ph-light-theme .ph-btn-primary:hover {
-          box-shadow: 0 15px 50px rgba(79, 70, 229, 0.35);
-        }
-
-        .ph-light-theme .ph-btn-secondary {
-          background: rgba(15, 23, 42, 0.04);
-          border: 2px solid rgba(15, 23, 42, 0.12);
-          color: #1e2433;
-        }
-
-        .ph-light-theme .ph-btn-secondary:hover {
-          background: rgba(15, 23, 42, 0.07);
-        }
-
-        .ph-light-theme .ph-social-link {
-          background: rgba(15, 23, 42, 0.04);
-          border: 2px solid rgba(15, 23, 42, 0.1);
-          color: #1e2433;
-        }
-
-        .ph-light-theme .ph-social-link:hover {
-          background: rgba(79, 70, 229, 0.12);
-          border-color: rgba(79, 70, 229, 0.3);
-        }
-
-        .ph-light-theme .ph-code-card {
-          background: rgba(255, 255, 255, 0.85);
-          border: 1px solid rgba(15, 23, 42, 0.1);
-          box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
-        }
-
-        .ph-light-theme .ph-card-header {
-          background: rgba(241, 245, 249, 0.9);
-          border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-        }
-
-        .ph-light-theme .ph-file-name {
-          color: #64748b;
-        }
-
-        .ph-light-theme .ph-line-number {
-          color: #94a3b8;
-        }
-
-        .ph-light-theme .ph-code-keyword {
-          color: #9333ea;
-        }
-
-        .ph-light-theme .ph-code-variable {
-          color: #2563eb;
-        }
-
-        .ph-light-theme .ph-code-string {
-          color: #16a34a;
-        }
-
-        .ph-light-theme .ph-indent {
-          color: #334155;
-        }
-
-        .ph-light-theme .ph-float-card {
-          background: rgba(255, 255, 255, 0.9);
-          border: 1px solid rgba(15, 23, 42, 0.08);
-          box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1);
-        }
-
-        .ph-light-theme .ph-card-icon {
-          color: #4f46e5;
-        }
-
-        .ph-light-theme .ph-card-content h4 {
-          color: #1e2433;
-        }
-
-        .ph-light-theme .ph-card-content p {
-          color: #64748b;
-        }
-
-        .ph-light-theme .ph-tech-tag {
-          background: rgba(79, 70, 229, 0.1);
-          border: 1px solid rgba(79, 70, 229, 0.25);
-          color: #4f46e5;
-        }
-
-        .ph-light-theme .ph-progress-bar {
-          background: rgba(15, 23, 42, 0.08);
-        }
-
-        .ph-light-theme .ph-progress-fill {
-          background: linear-gradient(90deg, #4f46e5, #7c3aed);
-        }
-
-        .ph-light-theme .ph-current-working-badge {
-          background: rgba(16, 163, 74, 0.12);
-          border: 1px solid rgba(16, 163, 74, 0.25);
-          color: #15803d;
-        }
-
-        .ph-light-theme .ph-achievement-badge {
-          background: rgba(217, 119, 6, 0.12);
-          border: 1px solid rgba(217, 119, 6, 0.25);
-          color: #b45309;
-        }
-
-        .ph-light-theme .ph-animated-ring {
-          border: 2px solid rgba(79, 70, 229, 0.15);
-        }
-
-        .ph-light-theme .ph-mouse {
-          border: 2px solid rgba(15, 23, 42, 0.3);
-        }
-
-        .ph-light-theme .ph-wheel {
-          background: rgba(15, 23, 42, 0.5);
-        }
-
-        .ph-light-theme .ph-scroll-text {
-          color: rgba(15, 23, 42, 0.5);
-        }
-
-        /* ── Ticker (same as POS hero) ── */
+        /* Ticker */
         .ph-ticker-wrap {
           position: absolute;
           bottom: 0; left: 0; right: 0;
@@ -1496,7 +1102,7 @@ const PortfolioHero = ({ isDarkMode }) => {
           border-top: 1px solid rgba(255,255,255,0.08);
           overflow: hidden;
           z-index: 10;
-          background: rgba(8, 10, 25, 0.85);
+          background: rgba(8,10,25,0.85);
           backdrop-filter: blur(10px);
           display: flex;
           align-items: center;
@@ -1551,8 +1157,179 @@ const PortfolioHero = ({ isDarkMode }) => {
           to   { transform: translateX(-50%); }
         }
 
+        /* ── Light theme ── */
+        .ph-light-theme.ph-portfolio-hero {
+          background: linear-gradient(135deg, #f8f9fc 0%, #eef1fa 50%, #e9edf8 100%);
+          color: #1e2433;
+        }
+
+        .ph-light-theme .ph-status-badge {
+          background: linear-gradient(135deg, rgba(102,126,234,0.12), rgba(118,75,162,0.12));
+          border: 1px solid rgba(102,126,234,0.25);
+          color: #4f46e5;
+        }
+
+        .ph-light-theme .ph-verified-badge {
+          background: rgba(16,163,74,0.12);
+          border: 1px solid rgba(16,163,74,0.25);
+          color: #15803d;
+        }
+
+        .ph-light-theme .ph-freelancer-badge {
+          background: rgba(161,90,49,0.12);
+          border: 1px solid rgba(161,90,49,0.25);
+          color: #9333ea;
+        }
+
+        .ph-light-theme .ph-eyebrow { color: #64748b; }
+        .ph-light-theme .ph-eyebrow-line { background: #64748b; }
+        .ph-light-theme .ph-hero-name { color: #0f172a; }
+        .ph-light-theme .ph-hero-title { color: #475569; }
+        .ph-light-theme .ph-cursor-blink { color: #94a3b8; -webkit-text-fill-color: #94a3b8; }
+
+        .ph-light-theme .ph-hero-greeting { color: #4f46e5; }
+
+        .ph-light-theme .ph-name-em {
+          background: linear-gradient(135deg, #1e3a8a 0%, #4f46e5 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .ph-light-theme .ph-cursor-blink { color: #4f46e5; }
+
+        .ph-light-theme .ph-gradient-text {
+          background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #db2777 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .ph-light-theme .ph-hero-description { color: #475569; }
+
+        .ph-light-theme .ph-about-me {
+          background: rgba(102,126,234,0.05);
+          border: 1px solid rgba(102,126,234,0.15);
+        }
+
+        .ph-light-theme .ph-about-icon  { color: #4f46e5; }
+        .ph-light-theme .ph-about-title { color: #4f46e5; }
+        .ph-light-theme .ph-about-text  { color: #475569; }
+
+        .ph-light-theme .ph-about-tag {
+          background: rgba(15,23,42,0.04);
+          border: 1px solid rgba(15,23,42,0.1);
+          color: #475569;
+        }
+
+        .ph-light-theme .ph-social-link {
+          background: rgba(15,23,42,0.04);
+          border: 2px solid rgba(15,23,42,0.1);
+          color: #1e2433;
+        }
+
+        .ph-light-theme .ph-social-link:hover {
+          background: rgba(79,70,229,0.12);
+          border-color: rgba(79,70,229,0.3);
+        }
+
+        .ph-light-theme .ph-code-card {
+          background: rgba(255,255,255,0.85);
+          border: 1px solid rgba(15,23,42,0.1);
+          box-shadow: 0 20px 60px rgba(15,23,42,0.12);
+        }
+
+        .ph-light-theme .ph-card-header {
+          background: rgba(241,245,249,0.9);
+          border-bottom: 1px solid rgba(15,23,42,0.08);
+        }
+
+        .ph-light-theme .ph-file-name   { color: #64748b; }
+        .ph-light-theme .ph-line-number { color: #94a3b8; }
+        .ph-light-theme .ph-code-keyword  { color: #9333ea; }
+        .ph-light-theme .ph-code-variable { color: #2563eb; }
+        .ph-light-theme .ph-code-string   { color: #16a34a; }
+        .ph-light-theme .ph-indent        { color: #334155; }
+
+        .ph-light-theme .ph-float-card {
+          background: rgba(255,255,255,0.9);
+          border: 1px solid rgba(15,23,42,0.08);
+          box-shadow: 0 10px 40px rgba(15,23,42,0.1);
+        }
+
+        .ph-light-theme .ph-card-icon    { color: #4f46e5; }
+        .ph-light-theme .ph-card-content h4 { color: #1e2433; }
+        .ph-light-theme .ph-card-content p  { color: #64748b; }
+
+        .ph-light-theme .ph-tech-tag {
+          background: rgba(79,70,229,0.1);
+          border: 1px solid rgba(79,70,229,0.25);
+          color: #4f46e5;
+        }
+
+        .ph-light-theme .ph-progress-bar { background: rgba(15,23,42,0.08); }
+        .ph-light-theme .ph-progress-fill { background: linear-gradient(90deg, #4f46e5, #7c3aed); }
+
+        .ph-light-theme .ph-current-working-badge {
+          background: rgba(16,163,74,0.12);
+          border: 1px solid rgba(16,163,74,0.25);
+          color: #15803d;
+        }
+
+        .ph-light-theme .ph-animated-ring { border: 2px solid rgba(79,70,229,0.15); }
+
+        .ph-light-theme .ph-mouse { border: 2px solid rgba(15,23,42,0.3); }
+        .ph-light-theme .ph-wheel { background: rgba(15,23,42,0.5); }
+        .ph-light-theme .ph-scroll-text { color: rgba(15,23,42,0.5); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+          .ph-hero-grid {
+            grid-template-columns: 1fr;
+            gap: 60px;
+          }
+          .ph-hero-right { order: -1; }
+          .ph-visual-container { height: 400px; }
+          .ph-hero-name  { font-size: 40px; }
+          .ph-hero-title { font-size: 32px; }
+          .ph-code-card  { width: 100%; margin-top: 80px; }
+        }
+
         @media (max-width: 768px) {
+          .ph-hero-container { padding: 80px 20px 60px; }
+          .ph-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+          .ph-hero-right { display: none; }
+          .ph-hero-name  { font-size: 30px; letter-spacing: -1px; }
+          .ph-hero-title { font-size: 24px; }
+          .ph-hero-description { font-size: 15px; }
+          .ph-hero-greeting { font-size: 15px; }
+          .ph-about-me { padding: 16px 18px; }
+          .ph-about-text { font-size: 14px; }
+          .ph-about-tags { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+          /* Stack buttons vertically on mobile */
+          .ph-hero-cta {
+            flex-direction: column;
+            gap: 10px;
+          }
+          .ph-btn-primary,
+          .ph-btn-secondary,
+          .ph-btn-ghost {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 12px;
+          }
+          .ph-social-links { gap: 10px; flex-wrap: wrap; }
+          .ph-scroll-indicator { display: none; }
           .ph-ticker-wrap { display: none; }
+        }
+
+        @media (max-width: 480px) {
+          .ph-hero-container { padding: 50px 16px 50px; }
+          .ph-hero-name  { font-size: 28px; }
+          .ph-hero-title { font-size: 20px; }
+          .ph-about-tags { flex-direction: column; }
+          .ph-social-link { width: 42px; height: 42px; }
+          .ph-fiverr-icon { width: 42px; height: 42px; }
         }
       `}</style>
     </section>

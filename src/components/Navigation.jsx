@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Home, User, Briefcase, Mail, FileText, Github, Linkedin, Twitter, Sun, Moon } from 'lucide-react';
+import { Menu, X, Home, User, Briefcase, Mail, FileText, Github, Linkedin, Twitter, Sun, Moon, Phone } from 'lucide-react';
+import { FaWhatsapp, FaGitlab } from 'react-icons/fa';
 
 const PremiumNavigation = ({ isDarkMode, setIsDarkMode }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -44,10 +45,14 @@ const PremiumNavigation = ({ isDarkMode, setIsDarkMode }) => {
   ];
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/yasirunadeeshaa', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/yasiru-nadeesha-aththanayaka/', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' }
+    { icon: Github,    href: 'https://github.com/yasirunadeeshaa',                                          label: 'GitHub'    },
+    { icon: Linkedin,  href: 'https://www.linkedin.com/in/yasiru-nadeesha-aththanayaka',                   label: 'LinkedIn'  },
+    { icon: Mail,      href: 'mailto:a.y.n.aththanayaka@gmail.com',                                         label: 'Email'     },
+    { icon: Phone,     href: 'tel:+94762873746',                                                            label: 'Phone'     },
+    { icon: FaWhatsapp, href: 'https://wa.me/94741767063',                                                  label: 'WhatsApp'  },
+    { icon: FaGitlab, href: 'https://gitlab.com/yourusername', label: 'GitLab' }
   ];
+
 
   return (
     <div className={isDarkMode ? 'dark-theme' : 'light-theme'}>
@@ -394,12 +399,12 @@ const PremiumNavigation = ({ isDarkMode, setIsDarkMode }) => {
         }
 
         .social-icon {
-          width: 36px;
-          height: 36px;
+          width: 40px;
+          height: 40px;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--text-tertiary);
+          color: var(--text-secondary);
           background: transparent;
           border: 1px solid var(--border-secondary);
           border-radius: 0;
@@ -685,8 +690,8 @@ const PremiumNavigation = ({ isDarkMode, setIsDarkMode }) => {
         }
 
         .mobile-social-icon {
-          width: 44px;
-          height: 44px;
+          width: 50px;
+          height: 50px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -694,7 +699,7 @@ const PremiumNavigation = ({ isDarkMode, setIsDarkMode }) => {
           border: 1px solid var(--border-secondary);
           border-radius: 0;
           clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
-          color: var(--text-tertiary);
+          color: var(--text-primary);
           text-decoration: none;
           transition: all 0.3s ease;
         }
