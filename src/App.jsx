@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import MyProject from './components/Project';
+import CompactProject from './components/CompactProjects';
 import AboutMe from './components/AboutMe';
 import Skill from './components/Skill';
 import Footer from './components/Footer';
@@ -14,8 +15,8 @@ import WeddingProjectDetail from './projects/Wedding';
 import EcommerceDetail from './projects/Ecommerce';
 import StudentManagementDetail from './projects/StudentManagement';
 import TicketBookingSystem from './projects/TicketBookingSystem';
-import TaskManagement from './projects/TaskManagement';
-import AIchat from './projects/AIChat';
+import PlaneTicketBookingSystem from './projects/PlaneTicketBooking';
+import AlgorithmProject from './projects/AlgorithmProject';
 
 import './App.css';
 
@@ -41,6 +42,9 @@ function App() {
               <section id="projects">
                 <MyProject />
               </section>
+              <section id="compact-projects">
+                <CompactProject />
+              </section>
               <section id="skills">
                 <Skill />
               </section>
@@ -62,11 +66,11 @@ function App() {
           
           <Route path="/projects/student-management" element={<StudentManagementDetail />} />
           
-          <Route path="/projects/task-management" element={<TaskManagement />} />
-          
-          <Route path="/projects/aichat" element={<AIchat />} />
+          <Route path="/projects/algorithm" element={<AlgorithmProject />} />
           
           <Route path="/projects/ticket-booking" element={<TicketBookingSystem />} />
+
+          <Route path="/projects/plane-ticket-booking" element={<PlaneTicketBookingSystem />} />
           
         </Routes>
         <Footer />
