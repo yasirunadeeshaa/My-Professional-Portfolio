@@ -32,7 +32,7 @@ import {
 // Import all images
 import doctor1 from "../assets/doctor1.jpg";
 import doctor2 from "../assets/Health/HealthcareHero.png";
-import doctor3 from "../assets/Health/HealthNexus.png";
+import doctor3 from "../assets/Health/Healthnexus.png";
 import heroImg from "../assets/Health/Hero1.png";
 import partners from "../assets/Health/partners.png";
 import doorstep from "../assets/Health/doorstep.png";
