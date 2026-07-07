@@ -4,12 +4,12 @@ import {
   Linkedin,
   Mail,
   Twitter,
-  Send,
+  ArrowRight,
   MapPin,
   Phone,
   Heart,
   ArrowUp,
-  Code2,
+  Sparkles,
   ChevronDown,
 } from 'lucide-react';
 
@@ -45,6 +45,7 @@ const PortfolioFooter = () => {
   const footerLinks = {
     nav: {
       label: 'Navigation',
+      number: '01',
       links: [
         { label: 'About', href: '#about' },
         { label: 'Projects', href: '#projects' },
@@ -55,6 +56,7 @@ const PortfolioFooter = () => {
     },
     svc: {
       label: 'Services',
+      number: '02',
       links: [
         { label: 'Web Development', href: '#web-dev' },
         { label: 'Mobile Apps', href: '#mobile' },
@@ -65,6 +67,7 @@ const PortfolioFooter = () => {
     },
     res: {
       label: 'Resources',
+      number: '03',
       links: [
         { label: 'Blog', href: '#blog' },
         { label: 'Case Studies', href: '#cases' },
@@ -85,10 +88,9 @@ const PortfolioFooter = () => {
   return (
     <footer className="pf-footer">
 
-      {/* Animated top border */}
-      <div className="pf-top-border">
-        <div className="pf-border-slide" />
-      </div>
+      <div className="pf-grid-bg" />
+      <div className="pf-glow pf-glow-1" />
+      <div className="pf-glow pf-glow-2" />
 
       <div className="pf-container">
 
@@ -96,17 +98,23 @@ const PortfolioFooter = () => {
         <div className="pf-cta">
           <div className="pf-cta-eyebrow">
             <span className="pf-eyebrow-line" />
+            <Sparkles size={13} />
             <span>Let's Connect</span>
+            <Sparkles size={13} />
             <span className="pf-eyebrow-line" />
           </div>
           <h2 className="pf-cta-title">
             Have a project <em className="pf-cta-em">in mind?</em><br />
-            Let's create something <em className="pf-cta-em">amazing!</em>
+            Let's create something <em className="pf-cta-em">amazing.</em>
           </h2>
           <p className="pf-cta-sub">
             I'm always open to discussing new projects, creative ideas, or
             opportunities to be part of your vision.
           </p>
+          <a href="mailto:yasiru@example.com" className="pf-cta-btn">
+            <span>Send a message</span>
+            <ArrowRight size={15} />
+          </a>
         </div>
 
         {/* ── Main grid: brand | nav | svc | res | newsletter ── */}
@@ -115,14 +123,12 @@ const PortfolioFooter = () => {
           {/* Brand */}
           <div className="pf-brand-col">
             <div className="pf-brand-head">
-              <div className="pf-brand-logo">
-                <Code2 size={22} />
-              </div>
+              <div className="pf-brand-mark">Y.</div>
               <span className="pf-brand-name">Yasiru Nadeesha</span>
             </div>
             <p className="pf-brand-tag">
-              Crafting digital experiences with passion and precision. Turning
-              ideas into reality, one line of code at a time.
+              Full Stack Developer building toward DevOps — clean architecture
+              paired with intuitive, considered UX.
             </p>
             <div className="pf-contact-list">
               <div className="pf-contact-item">
@@ -151,7 +157,10 @@ const PortfolioFooter = () => {
                   onClick={() => toggleSection(key)}
                   aria-expanded={isOpen}
                 >
-                  <span className="pf-col-title">{section.label}</span>
+                  <span className="pf-col-title">
+                    <span className="pf-col-num">{section.number}</span>
+                    {section.label}
+                  </span>
                   <ChevronDown
                     size={16}
                     className={`pf-chevron${isOpen ? ' pf-chevron-open' : ''}`}
@@ -175,25 +184,24 @@ const PortfolioFooter = () => {
 
           {/* Newsletter */}
           <div className="pf-newsletter-col">
-            <p className="pf-col-title" style={{ marginBottom: 8 }}>Stay Updated</p>
+            <p className="pf-col-title" style={{ marginBottom: 10 }}>
+              <span className="pf-col-num">04</span>Stay Updated
+            </p>
             <p className="pf-newsletter-text">
               Subscribe to get the latest updates on projects, articles, and
               tech insights.
             </p>
             <form onSubmit={handleNewsletterSubmit} className="pf-newsletter-form">
-              <div className="pf-input-wrap">
-                <Mail size={15} className="pf-input-icon" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="pf-newsletter-input"
-                  required
-                />
-              </div>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="pf-newsletter-input"
+                required
+              />
               <button type="submit" className="pf-nl-btn" aria-label="Subscribe">
-                <Send size={16} />
+                <ArrowRight size={15} />
               </button>
             </form>
             {subscribed && <p className="pf-subscribed-msg">✓ You're subscribed!</p>}
@@ -206,7 +214,7 @@ const PortfolioFooter = () => {
                   aria-label={s.label}
                   title={s.label}
                 >
-                  <s.icon size={17} />
+                  <s.icon size={16} />
                 </a>
               ))}
             </div>
@@ -218,13 +226,13 @@ const PortfolioFooter = () => {
         <div className="pf-bottom-bar">
           <p className="pf-copyright">
             © {currentYear} Yasiru Nadeesha. Made with{' '}
-            <Heart size={13} className="pf-heart" /> in Sri Lanka
+            <Heart size={12} className="pf-heart" /> in Sri Lanka
           </p>
           <div className="pf-bottom-links">
             <a href="#privacy" className="pf-bottom-link">Privacy Policy</a>
-            <span className="pf-dot">•</span>
+            <span className="pf-dot">·</span>
             <a href="#terms" className="pf-bottom-link">Terms of Service</a>
-            <span className="pf-dot">•</span>
+            <span className="pf-dot">·</span>
             <a href="#cookies" className="pf-bottom-link">Cookie Policy</a>
           </div>
         </div>
@@ -233,39 +241,45 @@ const PortfolioFooter = () => {
 
       {/* Scroll to top */}
       <button className="pf-scroll-top" onClick={scrollToTop} aria-label="Scroll to top">
-        <ArrowUp size={20} />
+        <ArrowUp size={17} />
       </button>
 
-      {/* BG glows */}
-      <div className="pf-glow pf-glow-1" />
-      <div className="pf-glow pf-glow-2" />
-
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
         .pf-footer {
           position: relative;
-          background: linear-gradient(135deg, #0a0a18 0%, #12121f 50%, #0f1419 100%);
+          background: #080c14;
           color: white;
           overflow: hidden;
           font-family: 'DM Sans', system-ui, sans-serif;
+          border-top: 1px solid rgba(255,255,255,0.07);
         }
 
-        /* ── Animated top border ── */
-        .pf-top-border {
-          height: 1px;
-          background: rgba(255,255,255,0.08);
-          overflow: hidden;
+        .pf-grid-bg {
+          position: absolute;
+          inset: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+          background-size: 72px 72px;
+          pointer-events: none;
         }
-        .pf-border-slide {
-          height: 100%;
-          width: 40%;
-          background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
-          animation: pfBorderSlide 3s ease-in-out infinite;
+
+        .pf-glow {
+          position: absolute;
+          border-radius: 50%;
+          pointer-events: none;
         }
-        @keyframes pfBorderSlide {
-          0%, 100% { transform: translateX(-150%); }
-          50%       { transform: translateX(300%); }
+        .pf-glow-1 {
+          width: 560px; height: 560px;
+          background: radial-gradient(circle, rgba(124,140,248,0.10), transparent 70%);
+          top: -140px; right: -120px;
+        }
+        .pf-glow-2 {
+          width: 460px; height: 460px;
+          background: radial-gradient(circle, rgba(232,121,160,0.08), transparent 70%);
+          bottom: -100px; left: -80px;
         }
 
         /* ── Container ── */
@@ -280,20 +294,22 @@ const PortfolioFooter = () => {
         /* ── CTA ── */
         .pf-cta {
           text-align: center;
-          padding: 64px 0 52px;
+          padding: 88px 0 56px;
         }
         .pf-cta-eyebrow {
           display: flex;
           justify-content: center;
           align-items: center;
-          gap: 14px;
+          gap: 12px;
+          font-family: 'JetBrains Mono', monospace;
           font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 3px;
+          font-weight: 500;
+          letter-spacing: 2.5px;
           text-transform: uppercase;
           color: #4a5568;
           margin-bottom: 28px;
         }
+        .pf-cta-eyebrow svg { color: #4a5568; }
         .pf-eyebrow-line {
           display: block;
           width: 32px;
@@ -302,16 +318,16 @@ const PortfolioFooter = () => {
         }
         .pf-cta-title {
           font-family: 'DM Serif Display', serif;
-          font-size: clamp(36px, 5vw, 58px);
+          font-size: clamp(36px, 5vw, 56px);
           font-weight: 400;
-          line-height: 1.08;
+          line-height: 1.1;
           letter-spacing: -1.5px;
           color: #f0f4ff;
           margin: 0 0 20px;
         }
         .pf-cta-em {
           font-style: italic;
-          background: linear-gradient(120deg, #667eea, #764ba2);
+          background: linear-gradient(120deg, #7c8cf8, #e879a0);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -319,20 +335,53 @@ const PortfolioFooter = () => {
         .pf-cta-sub {
           color: #64748b;
           font-size: 16px;
-          max-width: 500px;
-          margin: 0 auto;
+          max-width: 480px;
+          margin: 0 auto 32px;
           line-height: 1.8;
           font-weight: 300;
         }
+        .pf-cta-btn {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          padding: 14px 26px;
+          border: none;
+          background: #0d1424;
+          color: #e5edff;
+          box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14);
+          clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+          font-size: 12.5px;
+          font-weight: 600;
+          letter-spacing: 0.3px;
+          text-decoration: none;
+          cursor: pointer;
+          font-family: 'DM Sans', sans-serif;
+          overflow: hidden;
+          isolation: isolate;
+          transition: color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pf-cta-btn::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(100deg, #7c8cf8, #e879a0);
+          transform: translateX(-101%);
+          transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+          z-index: -1;
+        }
+        .pf-cta-btn:hover { color: #ffffff; box-shadow: inset 0 0 0 1px rgba(255,255,255,0); }
+        .pf-cta-btn:hover::before { transform: translateX(0); }
+        .pf-cta-btn svg { transition: transform 0.3s ease; }
+        .pf-cta-btn:hover svg { transform: translate(2px, -2px); }
 
         /* ── Main grid ── */
-        /* Desktop: brand(1.6fr) | nav(1fr) | svc(1fr) | res(1fr) | newsletter(1.4fr) */
         .pf-grid {
           display: grid;
           grid-template-columns: 1.6fr 1fr 1fr 1fr 1.4fr;
           gap: 40px;
           align-items: start;
-          border-top: 1px solid rgba(255,255,255,0.08);
+          border-top: 1px solid rgba(255,255,255,0.07);
           padding: 52px 0 48px;
         }
 
@@ -340,36 +389,42 @@ const PortfolioFooter = () => {
         .pf-brand-head {
           display: flex;
           align-items: center;
-          gap: 12px;
-          margin-bottom: 14px;
+          gap: 13px;
+          margin-bottom: 16px;
         }
-        .pf-brand-logo {
-          width: 44px;
-          height: 44px;
-          background: linear-gradient(135deg, #667eea, #764ba2);
-          border-radius: 12px;
+        .pf-brand-mark {
+          width: 42px;
+          height: 42px;
+          border: 1px solid rgba(255,255,255,0.14);
+          border-radius: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
-          color: white;
+          font-family: 'DM Serif Display', serif;
+          font-style: italic;
+          font-size: 19px;
+          color: #7c8cf8;
+          background: rgba(124,140,248,0.06);
         }
         .pf-brand-name {
-          font-size: 18px;
-          font-weight: 900;
+          font-size: 16px;
+          font-weight: 600;
           color: #f0f4ff;
+          letter-spacing: -0.2px;
         }
         .pf-brand-tag {
           color: #64748b;
           font-size: 13px;
-          line-height: 1.75;
-          margin: 0 0 20px;
+          line-height: 1.8;
+          margin: 0 0 22px;
           font-weight: 300;
+          max-width: 30ch;
         }
         .pf-contact-list {
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 11px;
         }
         .pf-contact-item {
           display: flex;
@@ -378,7 +433,7 @@ const PortfolioFooter = () => {
           font-size: 13px;
           color: #94a3b8;
         }
-        .pf-ci-icon { color: #667eea; flex-shrink: 0; }
+        .pf-ci-icon { color: #7c8cf8; flex-shrink: 0; }
 
         /* ── Link columns (nav / svc / res) ── */
         .pf-link-col {
@@ -386,12 +441,11 @@ const PortfolioFooter = () => {
           flex-direction: column;
         }
 
-        /* Desktop: button acts as a plain heading — no pointer, no chevron */
         .pf-acc-btn {
           width: 100%;
           background: none;
           border: none;
-          padding: 0 0 14px;
+          padding: 0 0 16px;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -401,11 +455,21 @@ const PortfolioFooter = () => {
         }
 
         .pf-col-title {
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
           font-size: 11px;
           font-weight: 700;
           letter-spacing: 2px;
           text-transform: uppercase;
           color: #cbd5e1;
+        }
+        .pf-col-num {
+          font-family: 'JetBrains Mono', monospace;
+          font-weight: 500;
+          letter-spacing: 1px;
+          color: #475569;
+          text-transform: none;
         }
 
         .pf-chevron {
@@ -418,7 +482,6 @@ const PortfolioFooter = () => {
           transform: rotate(180deg);
         }
 
-        /* Desktop: list always visible, no animation needed */
         .pf-link-list {
           list-style: none;
           padding: 0;
@@ -450,88 +513,79 @@ const PortfolioFooter = () => {
         .pf-newsletter-text {
           font-size: 13px;
           color: #64748b;
-          margin: 0 0 16px;
+          margin: 0 0 18px;
           line-height: 1.7;
           font-weight: 300;
         }
         .pf-newsletter-form {
           display: flex;
-          gap: 8px;
+          align-items: flex-end;
+          gap: 10px;
           margin-bottom: 14px;
+          border-bottom: 1px solid rgba(255,255,255,0.14);
+          padding-bottom: 8px;
+          transition: border-color 0.3s ease;
         }
-        .pf-input-wrap {
-          position: relative;
+        .pf-newsletter-form:focus-within { border-color: #7c8cf8; }
+        .pf-newsletter-input {
           flex: 1;
           min-width: 0;
-        }
-        .pf-input-icon {
-          position: absolute;
-          left: 13px;
-          top: 50%;
-          transform: translateY(-50%);
-          color: #475569;
-          pointer-events: none;
-        }
-        .pf-newsletter-input {
-          width: 100%;
-          padding: 11px 12px 11px 38px;
-          background: rgba(255,255,255,0.05);
-          border: 1.5px solid rgba(255,255,255,0.08);
-          border-radius: 50px;
+          padding: 6px 0;
+          background: none;
+          border: none;
           color: #f0f4ff;
-          font-size: 13px;
+          font-size: 13.5px;
           outline: none;
-          box-sizing: border-box;
-          transition: border-color 0.3s;
           font-family: inherit;
         }
         .pf-newsletter-input::placeholder { color: #3d4e63; }
-        .pf-newsletter-input:focus { border-color: rgba(102,126,234,0.5); }
         .pf-nl-btn {
-          width: 42px;
-          height: 42px;
-          background: linear-gradient(135deg, #667eea, #764ba2);
-          border: none;
+          flex-shrink: 0;
+          width: 30px;
+          height: 30px;
+          background: none;
+          border: 1px solid rgba(255,255,255,0.14);
           border-radius: 50%;
-          color: white;
+          color: #94a3b8;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          flex-shrink: 0;
-          transition: transform 0.2s, box-shadow 0.2s;
+          transition: border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
         }
         .pf-nl-btn:hover {
-          transform: scale(1.1);
-          box-shadow: 0 8px 24px rgba(102,126,234,0.4);
+          border-color: #7c8cf8;
+          color: #7c8cf8;
+          transform: translateX(2px);
         }
         .pf-subscribed-msg {
-          font-size: 12px;
-          color: #6ee7b7;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11.5px;
+          color: #34d399;
           margin: 0 0 10px;
         }
         .pf-social-row {
           display: flex;
           gap: 8px;
           flex-wrap: wrap;
-          margin-top: 4px;
+          margin-top: 6px;
         }
         .pf-social-link {
-          width: 38px;
-          height: 38px;
+          width: 36px;
+          height: 36px;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(255,255,255,0.04);
-          border: 1.5px solid rgba(255,255,255,0.08);
+          background: none;
+          border: 1px solid rgba(255,255,255,0.1);
           border-radius: 50%;
-          color: #94a3b8;
-          transition: background 0.3s, border-color 0.3s, transform 0.3s;
+          color: #64748b;
+          transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
         }
         .pf-social-link:hover {
-          background: rgba(102,126,234,0.2);
-          border-color: rgba(102,126,234,0.4);
-          transform: translateY(-3px);
+          border-color: #7c8cf8;
+          color: #f0f4ff;
+          transform: translateY(-2px);
         }
 
         /* ── Bottom bar ── */
@@ -546,19 +600,20 @@ const PortfolioFooter = () => {
         }
         .pf-copyright {
           margin: 0;
-          font-size: 13px;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 12px;
           color: #475569;
           display: flex;
           align-items: center;
-          gap: 5px;
+          gap: 6px;
         }
         .pf-heart {
-          color: #ef4444;
-          animation: pfHeartbeat 1.5s ease-in-out infinite;
+          color: #e879a0;
+          animation: pfHeartbeat 1.8s ease-in-out infinite;
         }
         @keyframes pfHeartbeat {
           0%, 100% { transform: scale(1); }
-          25%       { transform: scale(1.3); }
+          25%       { transform: scale(1.25); }
           50%       { transform: scale(1); }
         }
         .pf-bottom-links {
@@ -574,47 +629,34 @@ const PortfolioFooter = () => {
           transition: color 0.2s;
         }
         .pf-bottom-link:hover { color: #a5b4fc; }
-        .pf-dot { color: #2d3748; font-size: 12px; }
+        .pf-dot { color: #2d3748; font-size: 14px; }
 
         /* ── Scroll to top ── */
         .pf-scroll-top {
           position: fixed;
-          bottom: 36px;
-          right: 36px;
-          width: 50px;
-          height: 50px;
-          background: linear-gradient(135deg, #667eea, #764ba2);
-          border: none;
+          bottom: 32px;
+          right: 32px;
+          width: 44px;
+          height: 44px;
+          background: #0d1424;
+          border: 1px solid rgba(255,255,255,0.14);
           border-radius: 50%;
-          color: white;
+          color: #94a3b8;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 8px 28px rgba(102,126,234,0.4);
-          transition: transform 0.3s, box-shadow 0.3s;
+          transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
           z-index: 999;
         }
         .pf-scroll-top:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 14px 36px rgba(102,126,234,0.5);
+          border-color: #7c8cf8;
+          color: #f0f4ff;
+          transform: translateY(-3px);
         }
 
-        /* ── Background glows ── */
-        .pf-glow {
-          position: absolute;
-          border-radius: 50%;
-          pointer-events: none;
-        }
-        .pf-glow-1 {
-          width: 500px; height: 500px;
-          background: radial-gradient(circle, rgba(102,126,234,0.12), transparent 70%);
-          top: -80px; right: -80px;
-        }
-        .pf-glow-2 {
-          width: 420px; height: 420px;
-          background: radial-gradient(circle, rgba(118,75,162,0.1), transparent 70%);
-          bottom: -60px; left: -60px;
+        @media (prefers-reduced-motion: reduce) {
+          .pf-heart { animation: none !important; }
         }
 
         /* ════════════════════════════════
@@ -624,7 +666,7 @@ const PortfolioFooter = () => {
         ════════════════════════════════ */
         @media (max-width: 900px) {
           .pf-container { padding: 0 20px; }
-          .pf-cta { padding: 48px 0 36px; }
+          .pf-cta { padding: 64px 0 40px; }
 
           .pf-grid {
             grid-template-columns: 1fr;
@@ -632,14 +674,12 @@ const PortfolioFooter = () => {
             padding-bottom: 0;
           }
 
-          /* Brand gets bottom border */
           .pf-brand-col {
             padding-bottom: 28px;
             border-bottom: 1px solid rgba(255,255,255,0.07);
             margin-bottom: 0;
           }
 
-          /* Each link col becomes accordion row */
           .pf-link-col {
             border-bottom: 1px solid rgba(255,255,255,0.07);
           }
@@ -652,7 +692,6 @@ const PortfolioFooter = () => {
 
           .pf-chevron { display: block; }
 
-          /* Collapsed by default on mobile */
           .pf-link-list {
             overflow: hidden;
             max-height: 0;
@@ -663,7 +702,6 @@ const PortfolioFooter = () => {
             padding-bottom: 12px;
           }
 
-          /* Newsletter below accordions */
           .pf-newsletter-col {
             padding-top: 24px;
             padding-bottom: 24px;
@@ -678,8 +716,8 @@ const PortfolioFooter = () => {
           .pf-scroll-top {
             bottom: 20px;
             right: 20px;
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
           }
         }
 
