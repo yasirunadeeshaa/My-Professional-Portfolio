@@ -9,6 +9,7 @@ import Skill from './components/Skill';
 import Footer from './components/Footer';
 import PortfolioTestimonials from './components/Testimonials';
 import Contact from './components/ContactMe';
+import GitHub from './components/GitHubStatsWidget';
 
 import HealthcareProjectDetail from './projects/HealthCareApplication';
 import WeddingProjectDetail from './projects/Wedding';
@@ -48,6 +49,9 @@ function App() {
               <section id="skills">
                 <Skill />
               </section>
+              {/* <section id="github">
+                <GitHub />
+              </section> */}
               {/* <section id="testimonials">
                 <PortfolioTestimonials />
               </section> */}
