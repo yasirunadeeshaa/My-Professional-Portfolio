@@ -27,7 +27,7 @@ const SkillsPage = () => {
     {
       id: 'languages',
       title: 'Programming Languages',
-      icon: <Code2 size={22} />,
+      icon: <Code2 size={19} />,
       accent: '#7c8cf8',
       number: '01',
       skills: ['Java', 'Python', 'JavaScript', 'SQL', 'PHP', 'JavaFX', 'Java Swing'],
@@ -35,7 +35,7 @@ const SkillsPage = () => {
     {
       id: 'frontend',
       title: 'Frontend Development',
-      icon: <Palette size={22} />,
+      icon: <Palette size={19} />,
       accent: '#e879a0',
       number: '02',
       skills: ['React.js', 'HTML5', 'CSS3', 'Bootstrap', 'Tailwind CSS'],
@@ -43,7 +43,7 @@ const SkillsPage = () => {
     {
       id: 'backend',
       title: 'Backend Development',
-      icon: <Server size={22} />,
+      icon: <Server size={19} />,
       accent: '#38bdf8',
       number: '03',
       skills: ['Express.js', 'Spring Boot', 'Node.js', 'Python Flask', 'Python Django'],
@@ -51,7 +51,7 @@ const SkillsPage = () => {
     {
       id: 'database',
       title: 'Databases',
-      icon: <Database size={22} />,
+      icon: <Database size={19} />,
       accent: '#34d399',
       number: '04',
       skills: ['MySQL', 'MongoDB'],
@@ -59,7 +59,7 @@ const SkillsPage = () => {
     {
       id: 'version',
       title: 'Version Control',
-      icon: <GitBranch size={22} />,
+      icon: <GitBranch size={19} />,
       accent: '#fb923c',
       number: '05',
       skills: ['Git', 'GitHub', 'GitLab', 'Bitbucket', 'SourceTree'],
@@ -67,30 +67,63 @@ const SkillsPage = () => {
     {
       id: 'tools',
       title: 'Dev Tools & Practices',
-      icon: <Wrench size={22} />,
+      icon: <Wrench size={19} />,
       accent: '#a78bfa',
       number: '06',
       skills: ['RESTful APIs', 'Postman', 'Agile', 'Docker', 'CI/CD'],
     },
   ];
 
+  const maxSkills = Math.max(...skillCategories.map(c => c.skills.length));
+
+  const coreStack = [
+    { name: 'React.js', level: 5, accent: '#e879a0' },
+    { name: 'Java', level: 5, accent: '#7c8cf8' },
+    { name: 'Spring Boot', level: 4, accent: '#38bdf8' },
+    { name: 'Node.js / Express', level: 4, accent: '#34d399' },
+    { name: 'MySQL', level: 4, accent: '#34d399' },
+    { name: 'Git', level: 5, accent: '#fb923c' },
+  ];
+
+  const learningNow = [
+    { name: 'Docker', accent: '#38bdf8' },
+    { name: 'Kubernetes', accent: '#7c8cf8' },
+    { name: 'Terraform', accent: '#a78bfa' },
+    { name: 'AWS', accent: '#fb923c' },
+    { name: 'CI/CD Pipelines', accent: '#34d399' },
+  ];
+
+  const inProduction = [
+    { tech: 'React + Tailwind CSS', usedIn: 'Portfolio, Aththanayaka Supermart, Wedify, NexusPOS, HealthNexus', accent: '#e879a0' },
+    { tech: 'Java + JavaFX', usedIn: 'Real-Time Ticket Booking System (multi-threaded Producer-Consumer)', accent: '#7c8cf8' },
+    { tech: 'Java — core arrays', usedIn: 'Plane Ticket Booking System', accent: '#7c8cf8' },
+    { tech: 'Spring Boot + MySQL', usedIn: 'Hotel Management System', accent: '#38bdf8' },
+  ];
+
+  const credentials = [
+    { label: 'BEng (Hons) Software Engineering', sub: 'University of Westminster' },
+    { label: '4COSC005W', sub: 'Programming — Java, standard arrays' },
+    { label: '5COSC019C', sub: 'Concurrent Programming — JavaFX, threads' },
+  ];
+
+
   return (
     <div className="sk-root" ref={sectionRef}>
 
-      {/* ── Shared background (matches PortfolioProjects) ── */}
+      {/* ── Shared background ── */}
       <div className="sk-grid-bg" />
       <div className="sk-glow-1" />
       <div className="sk-glow-2" />
 
       <div className={`sk-inner ${isVisible ? 'sk-in' : ''}`}>
 
-        {/* ── Header (identical pattern to pj-header) ── */}
+        {/* ── Header ── */}
         <header className="sk-header">
           <div className="sk-eyebrow">
             <span className="sk-eyebrow-line" />
-            <Sparkles size={14} style={{ color: '#4a5568' }} />
+            <Sparkles size={13} />
             <span>Technical Expertise</span>
-            <Sparkles size={14} style={{ color: '#4a5568' }} />
+            <Sparkles size={13} />
             <span className="sk-eyebrow-line" />
           </div>
           <h2 className="sk-title">
@@ -102,7 +135,7 @@ const SkillsPage = () => {
           </p>
         </header>
 
-        {/* ── Bento grid (same 2px gap trick as pp-main-grid) ── */}
+        {/* ── Ledger grid — hairline-separated, editorial ── */}
         <div className="sk-grid">
           {skillCategories.map((cat, i) => (
             <div
@@ -110,48 +143,132 @@ const SkillsPage = () => {
               className={`sk-card ${activeCategory === cat.id ? 'sk-card--active' : ''}`}
               style={{
                 '--accent': cat.accent,
-                animationDelay: `${i * 0.08}s`,
+                animationDelay: `${i * 0.07}s`,
               }}
               onMouseEnter={() => setActiveCategory(cat.id)}
               onMouseLeave={() => setActiveCategory(null)}
             >
-              {/* Top bar — number + icon badge */}
+              <span className="sk-card-ghost" aria-hidden="true">{cat.number}</span>
+
+              {/* Top row — mono index + icon badge */}
               <div className="sk-card-topbar">
                 <span className="sk-card-num">{cat.number}</span>
                 <span className="sk-card-icon">{cat.icon}</span>
               </div>
 
-              {/* Title */}
               <h3 className="sk-card-title">{cat.title}</h3>
 
-              {/* Animated divider */}
               <div className="sk-card-divider">
                 <span className="sk-card-divider-fill" />
               </div>
 
-              {/* Tags — styled like pp-project-tag */}
+              {/* Skill chips */}
               <div className="sk-tags">
                 {cat.skills.map((skill, si) => (
                   <span
                     key={si}
                     className="sk-tag"
-                    style={{ animationDelay: `${i * 0.08 + si * 0.04}s` }}
+                    style={{ animationDelay: `${i * 0.07 + si * 0.035}s` }}
                   >
                     {skill}
                   </span>
                 ))}
               </div>
 
-              {/* Bottom-right accent dot */}
-              <div className="sk-card-corner" />
+              {/* Breadth indicator — quiet, data-driven footer */}
+              <div className="sk-card-footer">
+                <span className="sk-card-count">{String(cat.skills.length).padStart(2, '0')} tools</span>
+                <span className="sk-card-meter">
+                  <span
+                    className="sk-card-meter-fill"
+                    style={{ width: `${(cat.skills.length / maxSkills) * 100}%` }}
+                  />
+                </span>
+              </div>
 
-              {/* Bottom gradient bar — identical to pp-card-border-gradient */}
               <div className="sk-card-bar" />
             </div>
           ))}
         </div>
 
-        {/* ── Footer strip (identical to pj-footer-strip) ── */}
+        {/* ── Below-grid sections — continues the ledger numbering ── */}
+        <div className="sk-below">
+
+          {/* 07 — Core Stack */}
+          <section className="sk-sub">
+            <div className="sk-sub-head">
+              <span className="sk-sub-num">07</span>
+              <h3 className="sk-sub-title">Core Stack</h3>
+              <span className="sk-sub-hint">what I reach for by default</span>
+            </div>
+            <div className="sk-core-list">
+              {coreStack.map((s) => (
+                <div key={s.name} className="sk-core-row" style={{ '--accent': s.accent }}>
+                  <span className="sk-core-name">{s.name}</span>
+                  <span className="sk-core-dots">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <span key={i} className={`sk-core-dot ${i < s.level ? 'sk-core-dot--filled' : ''}`} />
+                    ))}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 08 — Currently Learning */}
+          <section className="sk-sub">
+            <div className="sk-sub-head">
+              <span className="sk-sub-num">08</span>
+              <h3 className="sk-sub-title">Currently Learning</h3>
+              <span className="sk-sub-hint">next stops on the road to DevOps</span>
+            </div>
+            <div className="sk-learning-row">
+              {learningNow.map((s) => (
+                <span key={s.name} className="sk-learning-chip" style={{ '--accent': s.accent }}>
+                  <span className="sk-learning-pulse" />
+                  {s.name}
+                </span>
+              ))}
+            </div>
+          </section>
+
+          {/* 09 — In Production */}
+          <section className="sk-sub">
+            <div className="sk-sub-head">
+              <span className="sk-sub-num">09</span>
+              <h3 className="sk-sub-title">In Production</h3>
+              <span className="sk-sub-hint">where the stack actually shipped</span>
+            </div>
+            <div className="sk-prod-list">
+              {inProduction.map((row) => (
+                <div key={row.tech} className="sk-prod-row" style={{ '--accent': row.accent }}>
+                  <span className="sk-prod-tech">{row.tech}</span>
+                  <span className="sk-prod-used">{row.usedIn}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 10 — Academic & Credentials */}
+          <section className="sk-sub sk-sub--last">
+            <div className="sk-sub-head">
+              <span className="sk-sub-num">10</span>
+              <h3 className="sk-sub-title">Credentials</h3>
+              <span className="sk-sub-hint">the formal record</span>
+            </div>
+            <div className="sk-cred-row">
+              {credentials.map((c) => (
+                <div key={c.label} className="sk-cred-badge">
+                  <span className="sk-cred-label">{c.label}</span>
+                  <span className="sk-cred-sub">{c.sub}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+        </div>
+
+        {/* ── Footer strip ── */}
         <div className="sk-footer-strip">
           {['Continuous Learner', 'Open Source Contributor', 'Clean Code Advocate', 'Agile Practitioner', 'Problem Solver'].map((label, i, arr) => (
             <React.Fragment key={i}>
@@ -164,9 +281,9 @@ const SkillsPage = () => {
       </div>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
-        /* ══ Root & Background (exact match to pj-root) ══ */
+        /* ══ Root & Background ══ */
         .sk-root {
           position: relative;
           min-height: 100vh;
@@ -213,7 +330,7 @@ const SkillsPage = () => {
           to   { transform: translate(-50px, -40px); }
         }
 
-        /* ══ Inner wrapper (exact match to pj-inner) ══ */
+        /* ══ Inner wrapper ══ */
         .sk-inner {
           position: relative;
           z-index: 1;
@@ -229,7 +346,7 @@ const SkillsPage = () => {
           transform: translateY(0);
         }
 
-        /* ══ Header (exact match to pj-header) ══ */
+        /* ══ Header ══ */
         .sk-header {
           text-align: center;
           margin-bottom: 72px;
@@ -243,13 +360,15 @@ const SkillsPage = () => {
           justify-content: center;
           align-items: center;
           gap: 12px;
+          font-family: 'JetBrains Mono', monospace;
           font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 3px;
+          font-weight: 500;
+          letter-spacing: 2.5px;
           text-transform: uppercase;
           color: #4a5568;
           margin-bottom: 28px;
         }
+        .sk-eyebrow svg { color: #4a5568; }
 
         .sk-eyebrow-line {
           display: block;
@@ -259,7 +378,7 @@ const SkillsPage = () => {
 
         .sk-title {
           font-family: 'DM Serif Display', serif;
-          font-size: clamp(52px, 6vw, 60px);
+          font-size: clamp(48px, 6vw, 58px);
           font-weight: 400;
           line-height: 1.0;
           color: #f0f4ff;
@@ -277,50 +396,63 @@ const SkillsPage = () => {
 
         .sk-subtitle {
           margin: 0 auto;
-          font-size: 17px;
+          font-size: 16px;
           line-height: 1.75;
           color: #64748b;
           font-weight: 300;
-          max-width: 540px;
+          max-width: 520px;
         }
 
-        /* ══ Bento grid (exact match to pp-main-grid / pp-sub-grid pattern) ══ */
+        /* ══ Ledger grid — hairline dividers, no card chrome ══ */
         .sk-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 2px;
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.06);
-          border-radius: 24px;
-          overflow: hidden;
+          border-top: 1px solid rgba(255,255,255,0.07);
+          border-left: 1px solid rgba(255,255,255,0.07);
           margin-bottom: 56px;
           width: 100%;
         }
 
-        /* ══ Card (exact match to pp-project-card) ══ */
+        /* ══ Card ══ */
         .sk-card {
           position: relative;
-          background: #0b1120;
-          border: none;
-          border-radius: 0;
+          background: transparent;
           overflow: hidden;
-          padding: 40px 36px;
+          padding: 38px 34px 30px;
           cursor: default;
+          border-right: 1px solid rgba(255,255,255,0.07);
+          border-bottom: 1px solid rgba(255,255,255,0.07);
           transition: background 0.35s ease;
           animation: sk-cardFadeIn 0.6s ease-out both;
         }
 
         @keyframes sk-cardFadeIn {
-          from { opacity: 0; transform: translateY(20px); }
+          from { opacity: 0; transform: translateY(16px); }
           to   { opacity: 1; transform: translateY(0); }
         }
 
         .sk-card:hover,
         .sk-card--active {
-          background: #0f1929;
+          background: color-mix(in srgb, var(--accent) 4%, #0b1120);
         }
 
-        /* Top accent bar on hover — identical to pp-card-border-gradient logic but top */
+        /* Ghost numeral watermark */
+        .sk-card-ghost {
+          position: absolute;
+          top: 4px; right: 16px;
+          font-family: 'DM Serif Display', serif;
+          font-style: italic;
+          font-size: 76px;
+          line-height: 1;
+          color: var(--accent);
+          opacity: 0.05;
+          pointer-events: none;
+          user-select: none;
+          transition: opacity 0.35s ease;
+        }
+        .sk-card--active .sk-card-ghost { opacity: 0.09; }
+
+        /* Top accent bar on hover */
         .sk-card::before {
           content: '';
           position: absolute;
@@ -336,30 +468,11 @@ const SkillsPage = () => {
           transform: scaleX(1);
         }
 
-        /* Radial glow fill — same feel as project card hover */
-        .sk-card::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(
-            ellipse at top left,
-            color-mix(in srgb, var(--accent) 7%, transparent),
-            transparent 65%
-          );
-          opacity: 0;
-          transition: opacity 0.4s ease;
-          pointer-events: none;
-        }
-
-        .sk-card--active::after {
-          opacity: 1;
-        }
-
-        /* Bottom gradient bar — identical to pp-card-border-gradient */
+        /* Bottom gradient bar */
         .sk-card-bar {
           position: absolute;
           bottom: 0; left: 0; right: 0;
-          height: 3px;
+          height: 2px;
           background: linear-gradient(to right, var(--accent), color-mix(in srgb, var(--accent) 40%, #e879a0));
           opacity: 0;
           transition: opacity 0.4s ease;
@@ -371,23 +484,24 @@ const SkillsPage = () => {
 
         /* ── Top bar row ── */
         .sk-card-topbar {
+          position: relative;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 20px;
+          margin-bottom: 22px;
         }
 
         .sk-card-num {
+          font-family: 'JetBrains Mono', monospace;
           font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 2px;
-          color: #2d3748;
+          font-weight: 500;
+          letter-spacing: 1.5px;
+          color: #475569;
           font-variant-numeric: tabular-nums;
         }
 
-        /* Icon badge — identical to pp-featured-badge structure but smaller */
         .sk-card-icon {
-          width: 40px; height: 40px;
+          width: 38px; height: 38px;
           border-radius: 10px;
           display: flex;
           align-items: center;
@@ -405,6 +519,7 @@ const SkillsPage = () => {
 
         /* ── Title ── */
         .sk-card-title {
+          position: relative;
           font-family: 'DM Serif Display', serif;
           font-size: 18px;
           font-weight: 400;
@@ -442,22 +557,23 @@ const SkillsPage = () => {
           width: 100%;
         }
 
-        /* ── Tags — exact match to pp-project-tag ── */
+        /* ── Tags ── */
         .sk-tags {
+          position: relative;
           display: flex;
           flex-wrap: wrap;
           gap: 6px;
-          margin-bottom: 8px;
+          margin-bottom: 22px;
         }
 
         .sk-tag {
           padding: 4px 10px;
-          background: rgba(102,126,234,0.12);
-          border: 1px solid rgba(102,126,234,0.25);
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.08);
           border-radius: 20px;
-          color: #a5b4fc;
+          color: #94a3b8;
           font-size: 11px;
-          font-weight: 600;
+          font-weight: 500;
           opacity: 0;
           animation: sk-tagIn 0.4s ease forwards;
           transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
@@ -468,29 +584,203 @@ const SkillsPage = () => {
           to   { opacity: 1; transform: scale(1); }
         }
 
-        /* On hover: shift tags to the card's accent colour */
         .sk-card--active .sk-tag {
           background: color-mix(in srgb, var(--accent) 10%, transparent);
           border-color: color-mix(in srgb, var(--accent) 28%, transparent);
           color: color-mix(in srgb, var(--accent) 85%, white);
         }
 
-        /* ── Corner accent dot (identical to pj-cc-corner) ── */
-        .sk-card-corner {
-          position: absolute;
-          bottom: 18px; right: 18px;
-          width: 5px; height: 5px;
-          border-radius: 50%;
+        /* ── Breadth footer — quiet data strip ── */
+        .sk-card-footer {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .sk-card-count {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          letter-spacing: 0.5px;
+          color: #3f4b5e;
+          white-space: nowrap;
+          transition: color 0.3s ease;
+        }
+        .sk-card--active .sk-card-count { color: #64748b; }
+        .sk-card-meter {
+          position: relative;
+          flex: 1;
+          height: 2px;
+          border-radius: 2px;
+          background: rgba(255,255,255,0.06);
+          overflow: hidden;
+        }
+        .sk-card-meter-fill {
+          display: block;
+          height: 100%;
           background: var(--accent);
-          opacity: 0;
+          opacity: 0.55;
           transition: opacity 0.3s ease;
         }
+        .sk-card--active .sk-card-meter-fill { opacity: 1; }
 
-        .sk-card--active .sk-card-corner {
-          opacity: 0.65;
+        /* ══ Below-grid sections ══ */
+        .sk-below {
+          border-top: 1px solid rgba(255,255,255,0.07);
+          margin-bottom: 8px;
         }
 
-        /* ══ Footer strip (exact match to pj-footer-strip) ══ */
+        .sk-sub {
+          padding: 34px 4px;
+          border-bottom: 1px solid rgba(255,255,255,0.07);
+          display: grid;
+          grid-template-columns: 240px 1fr;
+          gap: 24px;
+        }
+        .sk-sub--last { border-bottom: none; }
+
+        .sk-sub-head {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+        .sk-sub-num {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          letter-spacing: 1.5px;
+          color: #475569;
+        }
+        .sk-sub-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: 20px;
+          font-weight: 400;
+          color: #f0f4ff;
+          letter-spacing: -0.3px;
+        }
+        .sk-sub-hint {
+          font-size: 12px;
+          font-weight: 300;
+          color: #64748b;
+        }
+
+        /* Core Stack */
+        .sk-core-list {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px 40px;
+          align-content: center;
+        }
+        .sk-core-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+        }
+        .sk-core-name {
+          font-size: 13px;
+          font-weight: 500;
+          color: #cbd5e1;
+        }
+        .sk-core-dots {
+          display: flex;
+          gap: 5px;
+          flex: 0 0 auto;
+        }
+        .sk-core-dot {
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.1);
+        }
+        .sk-core-dot--filled {
+          background: var(--accent);
+          box-shadow: 0 0 6px color-mix(in srgb, var(--accent) 60%, transparent);
+        }
+
+        /* Currently Learning */
+        .sk-learning-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          align-content: center;
+        }
+        .sk-learning-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 14px;
+          border-radius: 20px;
+          border: 1px dashed color-mix(in srgb, var(--accent) 40%, transparent);
+          background: color-mix(in srgb, var(--accent) 6%, transparent);
+          color: color-mix(in srgb, var(--accent) 85%, white);
+          font-size: 12px;
+          font-weight: 500;
+        }
+        .sk-learning-pulse {
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: var(--accent);
+          animation: sk-learningPulse 1.8s ease-in-out infinite;
+        }
+        @keyframes sk-learningPulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50%       { opacity: 0.4; transform: scale(1.5); }
+        }
+
+        /* In Production */
+        .sk-prod-list {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          justify-content: center;
+        }
+        .sk-prod-row {
+          display: grid;
+          grid-template-columns: 200px 1fr;
+          gap: 16px;
+          align-items: baseline;
+          padding-left: 12px;
+          border-left: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
+        }
+        .sk-prod-tech {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 12px;
+          color: var(--accent);
+        }
+        .sk-prod-used {
+          font-size: 12.5px;
+          color: #94a3b8;
+          font-weight: 300;
+          line-height: 1.5;
+        }
+
+        /* Credentials */
+        .sk-cred-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          align-content: center;
+        }
+        .sk-cred-badge {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+          padding: 12px 16px;
+          border-radius: 10px;
+          background: rgba(255,255,255,0.02);
+          border: 1px solid rgba(255,255,255,0.07);
+          min-width: 200px;
+        }
+        .sk-cred-label {
+          font-size: 12.5px;
+          font-weight: 600;
+          color: #e2e8f0;
+        }
+        .sk-cred-sub {
+          font-size: 11px;
+          font-weight: 300;
+          color: #64748b;
+        }
+
+        /* ══ Footer strip ══ */
         .sk-footer-strip {
           display: flex;
           align-items: center;
@@ -501,15 +791,16 @@ const SkillsPage = () => {
         }
 
         .sk-strip-item {
-          font-size: 12px;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
           font-weight: 500;
           letter-spacing: 1.5px;
           text-transform: uppercase;
-          color: #2d99c4;
+          color: #64748b;
           transition: color 0.3s ease;
         }
 
-        .sk-strip-item:hover { color: #7e8592; }
+        .sk-strip-item:hover { color: #a5b4fc; }
 
         .sk-strip-dot {
           color: #1e293b;
@@ -517,7 +808,12 @@ const SkillsPage = () => {
           line-height: 1;
         }
 
-        /* ══ Responsive (mirrors pj-root breakpoints) ══ */
+        /* ══ Reduced motion ══ */
+        @media (prefers-reduced-motion: reduce) {
+          .sk-inner, .sk-card, .sk-tag, .sk-glow-1, .sk-glow-2, .sk-learning-pulse { animation: none !important; transition: none !important; }
+        }
+
+        /* ══ Responsive ══ */
         @media (max-width: 1100px) {
           .sk-root { padding: 80px 32px 60px; }
           .sk-grid { grid-template-columns: repeat(2, 1fr); }
@@ -525,16 +821,20 @@ const SkillsPage = () => {
 
         @media (max-width: 900px) {
           .sk-root { padding: 70px 24px 60px; }
+          .sk-sub { grid-template-columns: 1fr; gap: 14px; }
+          .sk-core-list { grid-template-columns: 1fr; }
+          .sk-prod-row { grid-template-columns: 1fr; gap: 4px; }
         }
 
         @media (max-width: 640px) {
           .sk-root { padding: 60px 16px 50px; }
-          .sk-title { font-size: 44px; }
+          .sk-title { font-size: 42px; }
           .sk-grid {
             grid-template-columns: 1fr;
-            border-radius: 16px;
           }
-          .sk-card { padding: 32px 24px; }
+          .sk-card { padding: 30px 22px; }
+          .sk-card-ghost { font-size: 56px; }
+          .sk-sub { padding: 26px 0; }
           .sk-footer-strip { gap: 12px; }
         }
       `}</style>
