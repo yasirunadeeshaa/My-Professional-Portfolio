@@ -812,8 +812,10 @@ const TicketBookingDetail = () => {
         /* thumbnails */
         .tb-thumb-breakout {
           position: relative;
-          max-width: 1300px;
-           padding: 0 24px; box-sizing: border-box;
+          width: 100vw;
+          margin-left: calc(-50vw + 50%);
+          padding: 0 140px;
+          box-sizing: border-box;
         }
         .tb-thumb-row { display: flex; align-items: center; gap: 12px; }
         .tb-thumb-scroll-btn {
